@@ -1,0 +1,51 @@
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #462B9C , #644AB5);/* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it covers everything */
+}
+
+.logo {
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+}
+
+
+/*Animation*/
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* Adjust as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it covers everything */
+}
+
+.logo {
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+    animation: zoomIn 2s ease-out; /* Adjust duration and easing as needed */
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.5); /* Start with a smaller size */
+        opacity: 0; /* Start as invisible */
+    }
+    100% {
+        transform: scale(1); /* Scale to full size */
+        opacity: 1; /* End as fully visible */
+    }
+}
+
