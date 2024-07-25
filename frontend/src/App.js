@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Order from './components/Order';
 import Navbar from './components/Navbar';
 import LoadingScreen from './components/LoadingScreen';
+import Signup from './components/Signup';
+import Login from './components/Login';
 import './App.css';
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/order" element={<Order />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </Router>
     );
