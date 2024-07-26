@@ -7,7 +7,7 @@ const Navbar = () => {
     <>
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark" id='navbar'>
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/"><img src="./LogoMini.png" style={{height:"60px"}}/></Link>
+                <Link className="navbar-brand" to="/"><img src="./LogoMini.png" alt='QuickQ' style={{height:"60px"}}/></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -17,7 +17,7 @@ const Navbar = () => {
                             <Link className="nav-link active" aria-current="page" to="/order">Orders</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="/cart"><img src="./cart.png" style={{height:"30px"}}/> Cart</Link>
+                            <Link className="nav-link active" aria-current="page" to="/cart"><img src="./cart.png" alt='cart-pic' style={{height:"30px"}}/> Cart</Link>
                         </li>
                     </ul>
                     <form className="d-flex">
