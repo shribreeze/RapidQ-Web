@@ -17,7 +17,7 @@ const SignIn = () => {
       const user = userCredential.user;
       console.log('User signed in:', user);
       window.alert('User signed in successfully');  // Show success alert
-      navigate('/home');  // Redirect to home page
+      navigate('/');  // Redirect to home page
     } catch (error) {
       // Handle sign-in errors
       console.error('Error signing in:', error);
