@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Signup() {
-    const [username, setUsername] = useState('');
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const handleSignup = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/auth/signup', {
+            const response = await fetch('/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password, username })
+                body: JSON.stringify({ email, password })
             });
 
             if (!response.ok) {
@@ -23,22 +24,18 @@ function Signup() {
             }
 
             const data = await response.json();
-            console.log('Signup successful:', data);
-            // Handle successful signup (e.g., redirect to login or show a message)
+            console.log('Login successful:', data);
+            // Handle successful login (e.g., redirect to dashboard or show a message)
         } catch (err) {
             setError(err.message);
+            // Redirect to Signup page if login fails
+            navigate('/signup');
         }
     };
 
     return (
-        <form onSubmit={handleSignup}>
-            <h2>Signup</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+        <form onSubmit={handleLogin}>
+            <h2>Login</h2>
             <input
                 type="email"
                 placeholder="Email"
@@ -51,10 +48,10 @@ function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">Signup</button>
+            <button type="submit">Login</button>
             {error && <p>{error}</p>}
         </form>
     );
 }
 
-export default Signup;
+export default Login;
