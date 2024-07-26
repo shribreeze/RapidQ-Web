@@ -32,8 +32,13 @@ const SignUp = () => {
       console.log("Account Created");
       console.log('Form data:', formData);
     } catch (err) {
-      console.error(err);
-    }
+      if (err.code === 'auth/email-already-in-use') {
+        alert("User already registered with this Email. Please use a different email.");
+      } else {
+        console.error(err);
+        alert("An error occurred. Please try again later.");
+      }
+    };
   };
 
   return (
