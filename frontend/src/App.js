@@ -6,8 +6,8 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
 import LoadingScreen from './components/LoadingScreen';
-import Signup from './components/Signup';
-import Login from './components/Login';
+// import Signup from './components/Signup';
+// import Login from './components/Login';
 import './App.css';
 import Cart from './components/Cart';
 
