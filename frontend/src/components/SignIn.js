@@ -21,7 +21,7 @@ const SignIn = () => {
     } catch (error) {
       // Handle sign-in errors
       console.error('Error signing in:', error);
-      window.alert('Error signing in: ' + error.message);  // Show error alert
+      window.alert('Error Signing in User not registered');  // Show error alert
     }
   };
 
