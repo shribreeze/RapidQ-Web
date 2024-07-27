@@ -1,0 +1,23 @@
+/* CardComponent.css */
+.card {
+    margin: 10px;
+  }
+  
+  @media (max-width: 576px) {
+    .card {
+      width: 16rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      width: 17rem;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .card {
+      width: 18rem;
+    }
+  }
+  

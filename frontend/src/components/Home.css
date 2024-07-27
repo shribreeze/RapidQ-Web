@@ -1,0 +1,45 @@
+body {
+    background-image: url(../../public/food-4k.jpg);
+    background-repeat: repeat-x;
+}
+
+.taglineCard {
+    background-color: rgb(255 255 255 / 0.3);
+    backdrop-filter: blur(3px);
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.display-1 {
+    font-family: "super black marker";
+    color: black;
+    text-shadow: 
+        1px 1px 0 black, 
+        -1px 1px 0 black, 
+        1px -1px 0 black, 
+        -1px -1px 0 black,
+        1px 0 0 black, 
+        -1px 0 0 black, 
+        0 1px 0 black, 
+        0 -1px 0 black;
+        animation: fadeInScale 2s ease-in-out;
+}
+
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
