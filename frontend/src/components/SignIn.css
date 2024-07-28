@@ -1,31 +1,18 @@
-body {
-    background-image: url(../../public/authBg2.avif);
+section {
+    background-image: url(../../public/authMainBg2.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    /* background-color: rgba(255, 255, 240, 0.8); */
 }
 
 #SignInCard {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.8); /* Fallback for browsers that do not support pseudo-elements */
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.7); /* Fallback for browsers that do not support pseudo-elements */
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     transition: .2s;
     overflow: hidden; /* Ensure the pseudo-element is contained within the card */
 }
 
-#SignInCard::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url(../../public/authBg.avif);
-    background-size: cover;
-    background-repeat: no-repeat;
-    filter: blur(0px); /* Adjust the blur amount as needed */
-    z-index: -1; /* Ensure the pseudo-element is behind the content of the card */
-}
 
 #SignInCard:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
