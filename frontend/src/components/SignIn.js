@@ -38,11 +38,11 @@ const SignIn = () => {
 
   useEffect(() => {
     setValue(localStorage.getItem('email'))
-  })
+  }, [])
 
   return (
     <>
-      <section className="bg-light p-3 p-md-4 p-xl-5">
+      <section className="p-3 p-md-4 p-xl-5">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
@@ -51,7 +51,7 @@ const SignIn = () => {
                   <div className="row">
                     <div className="col-12">
                       <div className="mb-5">
-                        <h4 className="text-center">Welcome back, you've been missed!</h4>
+                        <h4 className="text-center" style={{color:"#462B9C"}}><strong>Welcome back, you've been missed!</strong></h4>
                       </div>
                     </div>
                   </div>
@@ -104,7 +104,7 @@ const SignIn = () => {
                       </div>
                       <div className="col-12">
                         <div className="d-grid">
-                          <button className="btn bsb-btn-xl btn-primary" type="submit">Log in now</button>
+                          <button className="btn bsb-btn-xl btn-primary" type="submit" id='SignInBtn'>Log in now</button>
                         </div>
                       </div>
                     </div>
@@ -120,7 +120,7 @@ const SignIn = () => {
                   </div>
                   <div className="row">
                     <div className="col-12">
-                      <p className="mt-5 mb-5">Or continue with</p>
+                      <p className="mt-5 mb-5" style={{color:"#462B9C"}}>Or continue with</p>
                       <div className="d-flex gap-2 gap-sm-3 justify-content-center">
                         <a href="#!" className="btn btn-lg btn-outline-danger p-3 lh-1" onClick={handleClick}>
                           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" className="bi bi-google" viewBox="0 0 16 16">
