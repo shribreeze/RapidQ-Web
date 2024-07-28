@@ -6,10 +6,9 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
 import LoadingScreen from './components/LoadingScreen';
-// import Signup from './components/Signup';
-// import Login from './components/Login';
 import './App.css';
 import Cart from './components/Cart';
+import Outlets from './components/Outlets';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -35,6 +34,7 @@ function App() {
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/outlets" element={<Outlets />} />
             </Routes>
         </Router>
     );

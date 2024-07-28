@@ -39,10 +39,13 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/order">Orders</Link>
+                                <Link className="nav-link active" aria-current="page" to="/outlets">Outlets</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/cart"><img src="./cart.png" alt='cart-pic' style={{height:"30px"}}/> Cart</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/order">Orders</Link>
                             </li>
                         </ul>
                         <form className="d-flex">

@@ -1,16 +1,26 @@
-body {
-    background-image: url(../../public/food-4k.jpg);
-    background-repeat: repeat-x;
-}
-
 .taglineCard {
-    background-color: rgb(255 255 255 / 0.3);
-    backdrop-filter: blur(3px);
+    position: relative;
     height: 420px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    overflow: hidden;
+}
+
+.taglineCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../public/food-4k.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: blur(3px);
+    z-index: -1; 
 }
 
 .display-1 {
@@ -25,9 +35,8 @@ body {
         -1px 0 0 black, 
         0 1px 0 black, 
         0 -1px 0 black;
-        animation: fadeInScale 2s ease-in-out;
+    animation: fadeInScale 2s ease-in-out;
 }
-
 
 @keyframes fadeInScale {
     0% {
