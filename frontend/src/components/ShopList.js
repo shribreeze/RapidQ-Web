@@ -4,7 +4,7 @@ import CardComponent from './CardComponent'
 const ShopList = () => {
   return (
     <>
-      <div className="m-4">
+      <div className="mx-4 mb-4 mt-5">
           <p className='display-5'>Food Outlets for you:</p>
       </div>
 

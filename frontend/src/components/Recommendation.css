@@ -1,0 +1,94 @@
+.scrolling-wrapper {
+  overflow-x: auto;
+}
+
+.card-block {
+  height: 225px;
+  width: 250px;
+  background-color: #fff;
+  border: none;
+  background-position: center;
+  background-size: cover;
+  transition: all 0.2s ease-in-out !important;
+  border-radius: 24px;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: none;
+    opacity: 0.9;
+  }
+}
+
+.card-1 {
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
+}
+
+.card-2 {
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+}
+
+.card-3 {
+  background-color: #00dbde;
+  background-image: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+}
+
+.card-4 {
+  background-color: #fbab7e;
+  background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
+}
+
+.card-5 {
+  background-color: #85ffbd;
+  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+}
+
+.card-6 {
+  background-color: #fa8bff;
+  background-image: linear-gradient(
+    45deg,
+    #fa8bff 0%,
+    #2bd2ff 52%,
+    #2bff88 90%
+  );
+}
+
+.card-7 {
+  background-color: #fa8bff;
+  background-image: linear-gradient(
+    45deg,
+    #fa8bff 0%,
+    #2bd2ff 52%,
+    #2bff88 90%
+  );
+}
+
+.card-8 {
+  background-color: #fbda61;
+  background-image: linear-gradient(45deg, #fbda61 0%, #ff5acd 100%);
+}
+
+.card-9 {
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
+}
+
+.card-10 {
+  background-color: #ff3cac;
+  background-image: linear-gradient(
+    225deg,
+    #ff3cac 0%,
+    #784ba0 50%,
+    #2b86c5 100%
+  );
+}
