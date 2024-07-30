@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, provider } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { signInWithPopup } from 'firebase/auth';
+import './SignUp.css';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -56,17 +57,17 @@ const SignUp = () => {
 
   return (
     <>
-      <section className="bg-light p-3 p-md-4 p-xl-5">
+      <section className="p-3 p-md-4 p-xl-5">
         <div className="container">
-          <div className="row justify-content-center">
+          <div className="row justify-content-left">
             <div className="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
-              <div className="card border border-light-subtle rounded-4">
+              <div className="card border border-light-subtle rounded-4" id='SignUpCard'>
                 <div className="card-body p-3 p-md-4 p-xl-5">
                   <div className="row">
                     <div className="col-12">
                       <div className="mb-5">
-                        <h2 className="h4 text-center">Registration</h2>
-                        <h3 className="fs-6 fw-normal text-secondary text-center m-0">Enter your details to register</h3>
+                        <h2 className="h4 text-center" style={{color:"#462B9C"}}><strong>Registration</strong></h2>
+                        <h3 className="fs-6 fw-normal text-dark text-center m-0">Enter your details to register</h3>
                       </div>
                     </div>
                   </div>
@@ -161,14 +162,14 @@ const SignUp = () => {
                             onChange={handleChange}
                             required
                           />
-                          <label className="form-check-label text-secondary" htmlFor="iAgree">
+                          <label className="form-check-label text-dark" htmlFor="iAgree">
                             I agree to the <a href="#!" className="link-primary text-decoration-none">terms and conditions</a>
                           </label>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="d-grid">
-                          <button className="btn bsb-btn-xl btn-primary" type="submit">Sign up</button>
+                          <button className="btn bsb-btn-xl btn-primary" type="submit" id='SignUpBtn'>Sign up</button>
                         </div>
                       </div>
                     </div>
@@ -176,10 +177,10 @@ const SignUp = () => {
                   <div className="row">
                     <div className="col-12">
                       <hr className="mt-5 mb-4 border-secondary-subtle" />
-                      <p className="m-0 text-secondary text-center">Already have an account? <Link to="/signIn" className="link-primary text-decoration-none">Sign in</Link></p>
+                      <p className="m-0 text-dark text-center">Already have an account? <Link to="/signIn" className="link-primary text-decoration-none">Sign in</Link></p>
                     </div>
                   </div>
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="col-12">
                       <p className="mt-5 mb-5">Or continue with</p>
                       <div className="d-flex gap-2 gap-sm-3 justify-content-center">
@@ -190,7 +191,7 @@ const SignUp = () => {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
