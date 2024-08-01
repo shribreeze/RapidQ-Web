@@ -1,3 +1,9 @@
+#SignupSection {
+    background-image: url(../../public/authMainBg2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 #SignUpCard {
     position: relative;
     right: 0;
@@ -15,3 +21,4 @@
     background-color: #462B9C;
     color: white;
 }
+

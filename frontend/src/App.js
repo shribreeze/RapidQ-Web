@@ -9,6 +9,7 @@ import LoadingScreen from './components/LoadingScreen';
 import './App.css';
 import Cart from './components/Cart';
 import Outlets from './components/Outlets';
+import Footer from './components/Footer';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/outlets" element={<Outlets />} />
             </Routes>
+            <Footer/>
         </Router>
     );
 }
