@@ -1,154 +1,180 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const Footer = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    formData.append('userId', user.uid);
+    fetch('https://formspree.io/f/mnnadgld', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        alert('Your query has been submitted');
+      } else {
+        alert('There was a problem submitting your query');
+      }
+    });
+  };
+
   return (
     <>
-        <footer className="footer py-3 py-xl-8 mt-2">
+      <footer className="footer py-3 py-xl-8 mt-2">
         <div className="container">
-            <div className="container-fluid bg-light">
+          <div className="container-fluid bg-light">
             <div className="row justify-content-center">
-                <div className="col-12 col-md-11">
-
+              <div className="col-12 col-md-11">
                 <section className="py-4 py-md-5 py-xl-8">
-                    <div className="container-fluid overflow-hidden">
+                  <div className="container-fluid overflow-hidden">
                     <div className="row gy-4 gy-lg-0 justify-content-xl-between">
-                        <div className="col-12 col-md-4 col-lg-3 col-xl-2">
+                      <div className="col-12 col-md-4 col-lg-3 col-xl-2">
                         <div className="widget">
-                            <a href="#!">
-                            <img src="./LogoMini.png" alt="BootstrapBrain Logo" height="100"/>
-                            </a>
+                          <a href="#!">
+                            <img src="./LogoMini.png" alt="BootstrapBrain Logo" height="100" />
+                          </a>
                         </div>
-                        </div>
-                        <div className="col-12 col-md-4 col-lg-3 col-xl-2">
+                      </div>
+                      <div className="col-12 col-md-4 col-lg-3 col-xl-2">
                         <div className="widget">
-                            <h4 className="widget-title mb-4">Services</h4>
-                            <ul className="list-unstyled">
+                          <h4 className="widget-title mb-4">Services</h4>
+                          <ul className="list-unstyled">
                             <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">AI Solutions</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Outlets</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">Digital Marketing</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Cart</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">App Development</a>
-                            </li>
-                            <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">SEO Consultancy</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Orders</a>
                             </li>
                             <li className="mb-0">
-                                <a href="#!" className="link-secondary text-decoration-none">Web Design</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Web Design</a>
                             </li>
-                            </ul>
+                          </ul>
                         </div>
-                        </div>
-                        <div className="col-12 col-md-4 col-lg-3 col-xl-2">
+                      </div>
+                      <div className="col-12 col-md-4 col-lg-3 col-xl-2">
                         <div className="widget">
-                            <h4 className="widget-title mb-4">Company</h4>
-                            <ul className="list-unstyled">
+                          <h4 className="widget-title mb-4">Company</h4>
+                          <ul className="list-unstyled">
                             <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">About</a>
+                              <a href="#!" className="link-secondary text-decoration-none">About</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">Contact</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Contact</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">Advertise</a>
-                            </li>
-                            <li className="mb-2">
-                                <a href="#!" className="link-secondary text-decoration-none">Terms of Service</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Terms of Service</a>
                             </li>
                             <li className="mb-0">
-                                <a href="#!" className="link-secondary text-decoration-none">Privacy Policy</a>
+                              <a href="#!" className="link-secondary text-decoration-none">Privacy Policy</a>
                             </li>
-                            </ul>
+                          </ul>
                         </div>
-                        </div>
-                        <div className="col-12 col-lg-3 col-xl-4">
+                      </div>
+                      <div className="col-12 col-lg-3 col-xl-4">
                         <div className="widget">
-                            <h4 className="widget-title mb-4">Our Newsletter</h4>
-                            <p className="mb-4">Subscribe to our newsletter to get our news & discounts delivered to you.</p>
-                            <form action="#!">
-                            <div className="row gy-4">
+                          <h4 className="widget-title mb-4">Your Queries</h4>
+                          <p className="mb-4">Submit your query or valuable feedback.</p>
+                          {user ? (
+                            <form onSubmit={handleSubmit}>
+                              <div className="row gy-4">
                                 <div className="col-12">
-                                <div className="input-group">
+                                  <div className="input-group">
                                     <span className="input-group-text" id="email-newsletter-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope" viewBox="0 0 16 16">
-                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                                    </svg>
+                                      <img src='./query.png' alt='query-logo' width="16" height="16" fill="currentColor" className="bi bi-envelope" viewBox="0 0 16 16" />
                                     </span>
-                                    <input type="email" className="form-control" id="email-newsletter" value="" placeholder="Email Address" aria-label="email-newsletter" aria-describedby="email-newsletter-addon" required/>
-                                </div>
+                                    <textarea className="form-control" id="query" name="message" placeholder="Write your query..." aria-label="user-query" aria-describedby="user-query-addon" required />
+                                  </div>
                                 </div>
                                 <div className="col-12">
-                                <div className="d-grid">
-                                    <button className="btn btn-primary" type="submit">Subscribe</button>
+                                  <div className="d-grid">
+                                    <button className="btn btn-primary" type="submit">Submit</button>
+                                  </div>
                                 </div>
-                                </div>
-                            </div>
+                              </div>
                             </form>
+                          ) : (
+                            <p className="text-danger">Please log in to submit a query.</p>
+                          )}
                         </div>
-                        </div>
+                      </div>
                     </div>
-                    </div>
+                  </div>
                 </section>
 
-                <div className="py-4 py-md-5 py-xl-8 border-top border-light-subtle">
-                    <div className="container-fluid overflow-hidden">
+                <div className="py-4 py-md-3 py-xl-8 border-top border-light-subtle">
+                  <div className="container-fluid overflow-hidden">
                     <div className="row gy-4 gy-md-0 align-items-md-center">
-                        <div className="col-xs-12 col-md-7 order-1 order-md-0">
+                      <div className="col-xs-12 col-md-7 order-1 order-md-0">
                         <div className="copyright text-center text-md-start">
-                            &copy; 2024. All Rights Reserved.
+                          &copy; 2024. All Rights Reserved.
                         </div>
-                        <div className="credits text-secondary text-center text-md-start mt-2 fs-8">
-                            Built by <a href="https://bootstrapbrain.com/" className="link-secondary text-decoration-none">BootstrapBrain</a> with <span className="text-primary">&#9829;</span>
-                        </div>
-                        </div>
+                      </div>
 
-                        <div className="col-xs-12 col-md-5 order-0 order-md-1">
+                      <div className="col-xs-12 col-md-5 order-0 order-md-1">
                         <div className="social-media-wrapper">
-                            <ul className="list-unstyled m-0 p-0 d-flex justify-content-center justify-content-md-end">
+                          <ul className="list-unstyled m-0 p-0 d-flex justify-content-center justify-content-md-end">
                             <li className="me-3">
-                                <a href="#!" className="link-dark link-opacity-75-hover">
+                              <a href="#!" className="link-dark link-opacity-75-hover">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-facebook" viewBox="0 0 16 16">
-                                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
                                 </svg>
-                                </a>
+                              </a>
                             </li>
                             <li className="me-3">
-                                <a href="#!" className="link-dark link-opacity-75-hover">
+                              <a href="#!" className="link-dark link-opacity-75-hover">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-youtube" viewBox="0 0 16 16">
-                                    <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+                                  <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.192-.046-2.253-.1-2.493-.13l-.158-.022a2.007 2.007 0 0 1-1.414-1.42c-.112-.418-.187-.986-.235-1.558l-.009-.104-.008-.105C.006 9.183 0 8.567 0 8.481v-.075c0-.187.009-1.043.074-1.957l.008-.104.022-.26.01-.104c.048-.519.119-1.022.22-1.402a2.006 2.006 0 0 1 1.414-1.42C2.857 2.032 7.159 2 8.051 2zm3.691 2.347a.5.5 0 0 0-.269-.143C10.816 4.066 9.367 4 8.14 4h-.184c-1.302 0-2.928.045-3.332.073a.5.5 0 0 0-.267.143.5.5 0 0 0-.143.267C4.194 5.146 4.162 6.648 4.162 8c0 1.337.03 2.828.072 3.18a.5.5 0 0 0 .143.267.5.5 0 0 0 .267.143c1.001.084 2.542.115 3.33.122l.148.002.148-.001c1.32-.011 2.814-.047 3.171-.075a.5.5 0 0 0 .267-.143.5.5 0 0 0 .143-.267c.083-.732.115-2.234.115-3.179 0-1.336-.03-2.828-.072-3.18a.5.5 0 0 0-.143-.267zM6.75 5.5v5l4-2.5-4-2.5z" />
                                 </svg>
-                                </a>
+                              </a>
                             </li>
                             <li className="me-3">
-                                <a href="#!" className="link-dark link-opacity-75-hover">
+                              <a href="#!" className="link-dark link-opacity-75-hover">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-twitter" viewBox="0 0 16 16">
-                                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+                                  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.423A6.68 6.68 0 0 0 16 3.542a6.533 6.533 0 0 1-1.889.518 3.3 3.3 0 0 0 1.443-1.817 6.533 6.533 0 0 1-2.084.793 3.286 3.286 0 0 0-5.697 2.994 9.325 9.325 0 0 1-6.767-3.429 3.286 3.286 0 0 0 1.018 4.382A3.273 3.273 0 0 1 .64 6.575v.041a3.286 3.286 0 0 0 2.633 3.218 3.203 3.203 0 0 1-.864.114 3.23 3.23 0 0 1-.615-.057 3.286 3.286 0 0 0 3.067 2.28A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.286 9.286 0 0 0 5.026 15z" />
                                 </svg>
-                                </a>
+                              </a>
                             </li>
-                            <li className="">
-                                <a href="#!" className="link-dark link-opacity-75-hover">
+                            <li className="me-0">
+                              <a href="#!" className="link-dark link-opacity-75-hover">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-instagram" viewBox="0 0 16 16">
-                                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+                                  <path d="M8 0c-2.211 0-2.481.009-3.35.048-.87.039-1.467.175-1.992.373a4.78 4.78 0 0 0-1.737 1.137 4.78 4.78 0 0 0-1.136 1.737c-.198.525-.334 1.122-.373 1.991C0 5.76 0 6.029 0 8.001c0 1.971.009 2.24.048 3.109.039.87.175 1.467.373 1.992.198.525.485 1.01.854 1.38.37.369.855.656 1.38.854.525.198 1.122.334 1.991.373.87.039 1.139.048 3.11.048s2.24-.009 3.109-.048c.87-.039 1.467-.175 1.992-.373a4.766 4.766 0 0 0 1.737-1.137 4.766 4.766 0 0 0 1.137-1.737c.198-.525.334-1.122.373-1.991.039-.87.048-1.139.048-3.11s-.009-2.24-.048-3.109c-.039-.87-.175-1.467-.373-1.992a4.78 4.78 0 0 0-1.137-1.737 4.78 4.78 0 0 0-1.737-1.136c-.525-.198-1.122-.334-1.991-.373C10.24 0 9.971 0 8 0zm0 1.459c2.18 0 2.437.008 3.293.047.796.036 1.228.166 1.515.276.382.148.654.326.94.611.286.286.463.558.611.94.11.287.24.719.276 1.515.039.857.047 1.113.047 3.293s-.008 2.437-.047 3.293c-.036.796-.166 1.228-.276 1.515a3.323 3.323 0 0 1-.611.94 3.324 3.324 0 0 1-.94.611c-.287.11-.719.24-1.515.276-.857.039-1.113.047-3.293.047s-2.437-.008-3.293-.047c-.796-.036-1.228-.166-1.515-.276a3.284 3.284 0 0 1-1.551-1.551c-.11-.287-.24-.719-.276-1.515-.039-.857-.047-1.113-.047-3.293s.008-2.437.047-3.293c.036-.796.166-1.228.276-1.515a3.284 3.284 0 0 1 1.551-1.551c.287-.11.719-.24 1.515-.276.857-.039 1.113-.047 3.293-.047zM8 3.918A4.084 4.084 0 1 0 8 12.084 4.084 4.084 0 0 0 8 3.918zm0 6.709A2.625 2.625 0 1 1 8 4.375a2.625 2.625 0 0 1 0 5.252zm4.271-6.709a.957.957 0 1 0-.001 1.915.957.957 0 0 0 .001-1.915z" />
                                 </svg>
-                                </a>
+                              </a>
                             </li>
-                            </ul>
+                          </ul>
                         </div>
-                        </div>
+                      </div>
                     </div>
-                    </div>
+                  </div>
                 </div>
-
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
-        </footer>
+      </footer>
     </>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
