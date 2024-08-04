@@ -19,76 +19,41 @@
 }
 
 .card-1 {
-  background-color: #4158d0;
-  background-image: linear-gradient(
-    43deg,
-    #4158d0 0%,
-    #c850c0 46%,
-    #ffcc70 100%
-  );
+  background-image: url(../../public/Dishes/sandwich.jpg);
 }
 
 .card-2 {
-  background-color: #0093e9;
-  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+  background-image: url(../../public/Dishes/tandooriChicken.jpg);
 }
 
 .card-3 {
-  background-color: #00dbde;
-  background-image: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  background-image: url(../../public/Dishes/shakes.jpg);
 }
 
 .card-4 {
-  background-color: #fbab7e;
-  background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
+  background-image: url(../../public/Dishes/roll.jpg);
 }
 
 .card-5 {
-  background-color: #85ffbd;
-  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+  background-image: url(../../public/Dishes/ChholeSamose.webp);
 }
 
 .card-6 {
-  background-color: #fa8bff;
-  background-image: linear-gradient(
-    45deg,
-    #fa8bff 0%,
-    #2bd2ff 52%,
-    #2bff88 90%
-  );
+  background-image: url(../../public/Dishes/noodles.jpg);
 }
 
 .card-7 {
-  background-color: #fa8bff;
-  background-image: linear-gradient(
-    45deg,
-    #fa8bff 0%,
-    #2bd2ff 52%,
-    #2bff88 90%
-  );
+  background-image: url(../../public/Dishes/burger.jpg);
 }
 
 .card-8 {
-  background-color: #fbda61;
-  background-image: linear-gradient(45deg, #fbda61 0%, #ff5acd 100%);
+  background-image: url(../../public/Dishes/friedRice.jpg);
 }
 
 .card-9 {
-  background-color: #4158d0;
-  background-image: linear-gradient(
-    43deg,
-    #4158d0 0%,
-    #c850c0 46%,
-    #ffcc70 100%
-  );
+  background-image: url(../../public/Dishes/omelette.jpg);
 }
 
 .card-10 {
-  background-color: #ff3cac;
-  background-image: linear-gradient(
-    225deg,
-    #ff3cac 0%,
-    #784ba0 50%,
-    #2b86c5 100%
-  );
+  background-image: url(../../public/Dishes/vegThali.avif);
 }
