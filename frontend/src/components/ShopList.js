@@ -1,5 +1,6 @@
 import React from 'react';
 import CardComponent from './CardComponent';
+import './ShopList.css';
 
 const ShopList = () => {
   return (
@@ -9,66 +10,74 @@ const ShopList = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
               imgSrc="/ShopPics/fast-food-cafe.jpeg"
-              altText="Example Image 1"
-              cardText="Some quick example text to build on the card title and make up the bulk of the card's content."
+              altText="Fast Food Cafe"
+              cardText="Fast Food Cafe"
+              hoverInfo="Fast Food Cafe: Open till 10 PM"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
               imgSrc="/ShopPics/singhs-baker.jpeg"
-              altText="Example Image 2"
-              cardText="Another quick example text to build on the card title and make up the bulk of the card's content."
+              altText="Singh's Baker"
+              cardText="Singh's Baker"
+              hoverInfo="Singh's Baker: Best in town"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
-              imgSrc="https://via.placeholder.com/150"
-              altText="Example Image 3"
-              cardText="Yet another quick example text to build on the card title and make up the bulk of the card's content."
+              imgSrc="/ShopPics/mohali-chaat-bhandar.jpeg"
+              altText="Mohali Chaat Bhandar"
+              cardText="Mohali Chaat Bhandar"
+              hoverInfo="Mohali Chaat Bhandar: Famous for chaat"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
-              imgSrc="https://via.placeholder.com/150"
-              altText="Example Image 4"
-              cardText="A different quick example text to build on the card title and make up the bulk of the card's content."
+              imgSrc="/ShopPics/sizziling-refreshment.jpeg"
+              altText="Sizziling Refreshment"
+              cardText="Sizziling Refreshment"
+              hoverInfo="Sizziling Refreshment: Refreshing drinks"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
-              imgSrc="https://via.placeholder.com/150"
-              altText="Example Image 5"
-              cardText="Some more quick example text to build on the card title and make up the bulk of the card's content."
+              imgSrc="/ShopPics/punjabi-dhaba.jpeg"
+              altText="Punjabi Dhaba"
+              cardText="Punjabi Dhaba"
+              hoverInfo="Punjabi Dhaba: Authentic Punjabi food"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
-              imgSrc="https://via.placeholder.com/150"
-              altText="Example Image 6"
-              cardText="Even more quick example text to build on the card title and make up the bulk of the card's content."
+              imgSrc="/ShopPics/bunkers-coffee.jpeg"
+              altText="Bunkers Coffee"
+              cardText="Bunkers Coffee"
+              hoverInfo="Bunkers Coffee: Cozy place"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
-              imgSrc="https://via.placeholder.com/150"
-              altText="Example Image 7"
-              cardText="Another one quick example text to build on the card title and make up the bulk of the card's content."
+              imgSrc="/ShopPics/jass-pizza.jpeg"
+              altText="Jass Pizza"
+              cardText="Jass Pizza"
+              hoverInfo="Jass Pizza: Delicious pizzas"
             />
           </div>
-          <div className="col-12 col-md-6 col-lg-3">
+          <div className="col">
             <CardComponent
-              imgSrc="https://via.placeholder.com/150"
-              altText="Example Image 8"
-              cardText="The last quick example text to build on the card title and make up the bulk of the card's content."
+              imgSrc="/ShopPics/big-million.jpeg"
+              altText="Big Million"
+              cardText="Big Million"
+              hoverInfo="Big Million: Great deals"
             />
           </div>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default ShopList;
