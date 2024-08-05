@@ -2,7 +2,7 @@
     padding: 1rem;
   }
   
-  .row {
+  #row {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;

@@ -9,7 +9,7 @@ const ShopList = () => {
         <p className='display-5'>Food Outlets for you:</p>
       </div>
       <div className="container">
-        <div className="row">
+        <div className="row" id='row'>
           <div className="col">
             <CardComponent
               imgSrc="/ShopPics/fast-food-cafe.jpeg"
