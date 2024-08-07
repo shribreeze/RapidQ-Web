@@ -1,12 +1,12 @@
-import React from 'react'
-import ShopList from './ShopList'
+import React from 'react';
+import ShopList from './ShopList';
 
 const Outlets = () => {
   return (
     <>
-        <ShopList/>
+      <ShopList />
     </>
-  )
-}
+  );
+};
 
-export default Outlets
+export default Outlets;
