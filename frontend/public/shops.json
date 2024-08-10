@@ -1,0 +1,29 @@
+{
+    "shops": [
+      {
+        "id": 1,
+        "name": "Fast Food Cafe",
+        "address": "Near South Campus Gate",
+        "timing": "Open till 10 PM",
+        "menu": [
+          { "id": 1, "name": "Cheeseburger", "category": "Burgers", "price": 5.99 },
+          { "id": 2, "name": "Veggie Burger", "category": "Burgers", "price": 4.99 },
+          { "id": 3, "name": "Coke", "category": "Drinks", "price": 1.99 },
+          { "id": 4, "name": "Pepsi", "category": "Drinks", "price": 1.99 }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Singh's Baker",
+        "address": "Near C3",
+        "timing": "Open till 10 PM",
+        "menu": [
+          { "id": 1, "name": "Cheeseburger", "category": "Burgers", "price": 5.99 },
+          { "id": 2, "name": "Veggie Burger", "category": "Burgers", "price": 4.99 },
+          { "id": 3, "name": "Coke", "category": "Drinks", "price": 1.99 },
+          { "id": 4, "name": "Pepsi", "category": "Drinks", "price": 1.99 }
+        ]
+      }
+    ]
+  }
+  

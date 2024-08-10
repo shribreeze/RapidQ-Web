@@ -30,3 +30,13 @@
     }
   }
   
+.container .row .col a {
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Inherits color from parent element */
+}
+
+.container .row .col a:hover {
+  text-decoration: none; /* Ensures no underline on hover */
+  color: yellow; /* Keeps color consistent on hover */
+}
+

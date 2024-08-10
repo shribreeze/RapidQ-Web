@@ -11,6 +11,7 @@ import Cart from './components/Cart';
 import Outlets from './components/Outlets';
 import Footer from './components/Footer';
 import ShopDetail from './components/ShopDetail';
+import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -25,14 +26,27 @@ function App() {
     }, []);
 
     const addToCart = (item) => {
+        console.log("Current Cart Items:", cartItems);
+        console.log("New Item:", item);
+    
         setCartItems(prevItems => {
-            const existingItem = prevItems.find(i => i.id === item.id);
-            if (existingItem) {
-                // Update the quantity of the existing item
-                return prevItems.map(i => i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i);
+            if (prevItems.length > 0 && prevItems[0].shopId !== item.shopId) {
+                const replace = window.confirm("You can add and order items from one shop at a time. Do you want to replace the current items with those from this shop?");
+                if (replace) {
+                    console.log("Replacing cart items with:", item);
+                    return [{ ...item, quantity: item.quantity }];
+                } else {
+                    return prevItems;
+                }
+            } else {
+                const existingItem = prevItems.find(i => i.id === item.id);
+                if (existingItem) {
+                    console.log("Updating quantity for existing item:", existingItem);
+                    return prevItems.map(i => i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i);
+                }
+                console.log("Adding new item to cart:", item);
+                return [...prevItems, { ...item, quantity: item.quantity }];
             }
-            // Add the new item to the cart
-            return [...prevItems, { ...item, quantity: item.quantity }];
         });
     };
     
@@ -49,7 +63,6 @@ function App() {
 
     const placeOrder = () => {
         console.log("Order placed:", cartItems);
-        // Add logic to handle order placement, e.g., API call
         setCartItems([]); // Clear the cart after placing the order
     };
 
@@ -62,6 +75,7 @@ function App() {
     return (
         <Router>
             <Navbar />
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/order" element={<Order />} />

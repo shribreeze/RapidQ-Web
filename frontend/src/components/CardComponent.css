@@ -29,6 +29,12 @@
   text-align: center;
 }
 
+.card a {
+  text-decoration: none !important; /* Forces removal of underline */
+  color: inherit !important; /* Ensures color consistency */
+}
+
+
 .card-text {
   font-size: 1rem;
   margin: 0;

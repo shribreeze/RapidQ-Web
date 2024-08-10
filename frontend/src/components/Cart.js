@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Cart = ({ cartItems, removeFromCart, placeOrder, totalAmount }) => {
+
+    // useEffect( () => {
+    //     document.title = 'QuickQ - Cart';
+    // }, []);
+
     return (
         <div>
             <h2>Cart</h2>
