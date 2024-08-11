@@ -7,9 +7,9 @@ const shops = [
   {
     id: 1,
     imgSrc: "/ShopPics/fast-food-cafe.jpeg",
-    altText: "Fast Food Cafe",
-    cardText: "Fast Food Cafe",
-    hoverInfo: "Fast Food Cafe: Open till 10 PM"
+    altText: "Insta Food",
+    cardText: "Insta Food",
+    hoverInfo: "Insta Food: Open till 11 PM"
   },
   {
     id: 2,
