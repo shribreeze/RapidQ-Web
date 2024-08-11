@@ -1,3 +1,185 @@
 .body {
-    margin: 3rem;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.ShopDetailHeading {
+    margin-bottom: 20px;
+}
+
+.ShopDetailHeading h2 { 
+    font-size: 2.5rem;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.ShopDetailHeading p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.ShopDetailMenu {
+    margin-bottom: 20px;
+}
+
+.ShopDetailMenu h3 {
+    font-size: 1.7rem;
+    color: #000;
+}
+
+.ShopDetailMenu label {
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.ShopDetailMenu select {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.h4Menu {
+    color: #000;
+}
+
+
+.menu-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.menu-item p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.menu-item button {
+    background-color: #5736c4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item button:hover {
+    background-color: #301e6c;
+}
+
+.menu-item input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 10px;
+    text-align: center;
+    width: 60px;
+}
+
+
+.menu-item .add-to-cart-button {
+    background-color: #f9d002;
+    color: black;
+    padding: 10px 15px;
+    margin-left: 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item .add-to-cart-button:hover {
+    background-color: #218838;
+    color: white;
+
+}
+
+
+@media (max-width: 768px) {
+    .ShopDetailHeading h2 {
+        font-size: 2.5rem;
+    }
+
+    .ShopDetailMenu h3 {
+        font-size: 1.7rem;
+    }
+
+    .menu-item {
+        padding: 10px;
+    }
+
+    .menu-item p {
+        font-size: 1rem;
+    }
+
+    .menu-item input {
+        width: 50px;
+    }
+
+    .menu-item button {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+
+
+@media (max-width: 480px) {
+    .body {
+        padding: 10px;
+    }
+
+    .ShopDetailHeading h2 {
+        font-size: 2rem;
+    }
+
+    .ShopDetailMenu h3 {
+        font-size: 1.5rem;
+    }
+
+    .menu-item {
+        padding: 8px;
+    }
+
+    .menu-item p {
+        font-size: 1rem;
+    }
+
+    .menu-item input {
+        width: 40px;
+    }
+
+    .menu-item button {
+        padding: 5px 8px;
+        font-size: 0.8rem;
+    }
+}
+
+
+.LinkToCart {
+    display: inline-block;
+    margin-top: 20px;
+    padding-inline: 12px;
+    padding-block: 5px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    color: #000;
+    background-color: #f9d002;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.LinkToCart:hover {
+    background-color: #462B9C;
+    color: white;
 }

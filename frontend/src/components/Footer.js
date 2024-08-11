@@ -49,7 +49,7 @@ const Footer = () => {
                       <div className="col-12 col-md-4 col-lg-3 col-xl-2">
                         <div className="widget">
                           <a href="#!">
-                            <img src="./LogoMini.png" alt="BootstrapBrain Logo" height="100" />
+                            <img src="./LogoMini.png" alt="QuickQ" height="100" />
                           </a>
                         </div>
                       </div>

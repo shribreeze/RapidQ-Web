@@ -48,39 +48,46 @@ const ShopDetail = ({ addToCart }) => {
     ? shop.menu
     : shop.menu.filter(item => item.category === selectedCategory);
 
+
+
   return (
     <div className='body'>
-      <h2>{shop.name}</h2>
-      <p>Address: {shop.address}</p>
-      <p>Timing: {shop.timing}</p>
-
-      <h3>Menu</h3>
-      <div>
-        <label htmlFor="categoryFilter">Filter by category: </label>
-        <select
-          id="categoryFilter"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="All">All</option>
-          {uniqueCategories.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+      <div className='ShopDetailHeading'>
+        <h2>{shop.name}</h2>
+        <p>Address: {shop.address}</p>
+        <p>Timing: {shop.timing}</p>
       </div>
+
+      <div className='ShopDetailMenu'>
+        <h3>Menu</h3>
+        <div>
+          <label htmlFor="categoryFilter">Filter: </label>
+          <select
+            id="categoryFilter"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="All">All</option>
+            {uniqueCategories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <hr/>
 
       {uniqueCategories.map(category => (
         <div key={category}>
           {(selectedCategory === 'All' || selectedCategory === category) && (
             <>
-              <h4>{category}</h4>
+              <h4 className='h4Menu'>{category}</h4>
               {filteredMenu
                 .filter(item => item.category === category)
                 .map(menuItem => (
                   <div key={menuItem.id} className="menu-item">
-                    <p>{menuItem.name} - ${menuItem.price.toFixed(2)}</p>
+                    <p>{menuItem.name} :- &#8377; {menuItem.price.toFixed(2)}</p>
                     <div>
                       <button onClick={() => handleQuantityChange(menuItem.id, -1)}>-</button>
                       <input
@@ -94,7 +101,7 @@ const ShopDetail = ({ addToCart }) => {
                         style={{ width: '50px', textAlign: 'center' }}
                       />
                       <button onClick={() => handleQuantityChange(menuItem.id, 1)}>+</button>
-                      <button onClick={() => handleAddToCart(menuItem)}>Add to Cart</button>
+                      <button className="add-to-cart-button" onClick={() => handleAddToCart(menuItem)}>Add to Cart</button>
                     </div>
                   </div>
                 ))}
@@ -103,7 +110,7 @@ const ShopDetail = ({ addToCart }) => {
         </div>
       ))}
 
-      <Link to="/cart">Go to Cart</Link>
+      <Link to="/cart" className='LinkToCart'>Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px'/></Link>
     </div>
   );
 };

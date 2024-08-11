@@ -2,14 +2,34 @@
     "shops": [
       {
         "id": 1,
-        "name": "Fast Food Cafe",
-        "address": "Near South Campus Gate",
-        "timing": "Open till 10 PM",
+        "name": "Insta Food",
+        "address": "Boys Hostel Food Court, Near NC1",
+        "timing": "Open till 11 PM",
         "menu": [
-          { "id": 1, "name": "Cheeseburger", "category": "Burgers", "price": 5.99 },
-          { "id": 2, "name": "Veggie Burger", "category": "Burgers", "price": 4.99 },
-          { "id": 3, "name": "Coke", "category": "Drinks", "price": 1.99 },
-          { "id": 4, "name": "Pepsi", "category": "Drinks", "price": 1.99 }
+
+          { "id": 1, "name": "Mix Juice - M", "category": "Juice", "price": 70 },
+          { "id": 2, "name": "Mix Juice - L", "category": "Juice", "price": 80 },
+          { "id": 3, "name": "Pineapple Juice - M", "category": "Juice", "price": 70 },
+          { "id": 4, "name": "Pineapple Juice - L", "category": "Juice", "price": 80 },
+          { "id": 5, "name": "Mausami Juice - M", "category": "Juice", "price": 70 },
+          { "id": 6, "name": "Mausami Juice - L", "category": "Juice", "price": 80 },
+          { "id": 7, "name": "Orange Juice - M", "category": "Juice", "price": 70 },
+          { "id": 8, "name": "Orange Juice - L", "category": "Juice", "price": 80 },
+          { "id": 9, "name": "Beet Root Juice - M", "category": "Juice", "price": 70 },
+          { "id": 10, "name": "Beet Root Juice - L", "category": "Juice", "price": 80 },
+          { "id": 11, "name": "Watermelon Juice - M", "category": "Juice", "price": 60 },
+          { "id": 12, "name": "Watermelon Juice - L", "category": "Juice", "price": 70 },
+          { "id": 13, "name": "Carrot Juice - M", "category": "Juice", "price": 70 },
+          { "id": 14, "name": "Carrot Juice - L", "category": "Juice", "price": 80 },
+
+          { "id": 15, "name": "Sweet Lassi", "category": "Lassi", "price": 50 },
+          { "id": 16, "name": "Mango Lassi", "category": "Lassi", "price": 60 },
+          { "id": 17, "name": "Strawberry Lassi", "category": "Lassi", "price": 60 },
+          { "id": 18, "name": "Namkeen Lassi", "category": "Lassi", "price": 50 },
+          { "id": 19, "name": "Chocolate Lassi", "category": "Lassi", "price": 60 },
+          { "id": 20, "name": "Rose Lassi", "category": "Lassi", "price": 50 },
+
+          { "id": 21, "name": "Paneer Tikka Sandwich", "category": "Sandwich", "price": 70 }
         ]
       },
       {
