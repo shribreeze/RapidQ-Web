@@ -1,29 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore'; // Import Firestore methods
+import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'; // Import Firebase Storage
 import './ShopDetail.css';
 
 const ShopDetail = ({ addToCart }) => {
-  const { shopId } = useParams(); // Get shopId from URL
-  const [shop, setShop] = useState(null); // State for shop details
+  const { shopId } = useParams();
+  const [shop, setShop] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
 
   useEffect(() => {
     const fetchShopDetails = async () => {
-      const db = getFirestore(); // Initialize Firestore
+      const db = getFirestore();
+      const storage = getStorage(); // Initialize Firebase Storage
+
       try {
-        // Fetch shop details
         const shopDoc = await getDoc(doc(db, 'shops', shopId));
         if (shopDoc.exists()) {
           const shopData = shopDoc.data();
 
           // Fetch items for this shop
           const itemsSnapshot = await getDocs(collection(db, 'shops', shopId, 'items'));
-          const items = itemsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          const items = await Promise.all(
+            itemsSnapshot.docs.map(async (doc) => {
+              const data = doc.data();
+              let imgSrc = '';
 
-          // Add items to shop data
+              // If imgPath is available, fetch the image URL from Firebase Storage
+              if (data.imgPath) {
+                const imgRef = ref(storage, data.imgPath);
+                imgSrc = await getDownloadURL(imgRef);
+              }
+
+              return {
+                id: doc.id,
+                ...data,
+                imgSrc, // Add the image URL to the item data
+              };
+            })
+          );
+
           setShop({ id: shopId, ...shopData, menu: items });
         } else {
           console.log('No such document!');
@@ -100,6 +118,7 @@ const ShopDetail = ({ addToCart }) => {
                 .filter(item => item.category === category)
                 .map(menuItem => (
                   <div key={menuItem.id} className="menu-item">
+                    <img src={menuItem.imgSrc} alt={menuItem.name} style={{ width: '100px', height: '100px' }} />
                     <p>{menuItem.name} :- &#8377; {menuItem.price.toFixed(2)}</p>
                     <div>
                       <button onClick={() => handleQuantityChange(menuItem.id, -1)}>-</button>
