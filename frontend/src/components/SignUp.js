@@ -46,7 +46,7 @@ const SignUp = () => {
     signInWithPopup(auth, provider).then((data) => {
       setValue(data.user.email)
       localStorage.setItem("email", data.user.email)
-      window.alert('User signed in successfully');  // Show success alert
+      window.alert('User signed in successfull');  // Show success alert
       navigate('/');
     })
   }
@@ -66,7 +66,7 @@ const SignUp = () => {
                   <div className="row">
                     <div className="col-12">
                       <div className="mb-5">
-                        <h2 className="h4 text-center" style={{color:"#462B9C"}}><strong>Registration</strong></h2>
+                        <h2 className="h4 text-center" style={{ color: "#462B9C" }}><strong>Registration</strong></h2>
                         <h3 className="fs-6 fw-normal text-dark text-center m-0">Enter your details to register</h3>
                       </div>
                     </div>

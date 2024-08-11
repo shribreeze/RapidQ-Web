@@ -1,68 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import CardComponent from './CardComponent';
 import './ShopList.css';
 
-const shops = [
-  {
-    id: 1,
-    imgSrc: "/ShopPics/fast-food-cafe.jpeg",
-    altText: "Insta Food",
-    cardText: "Insta Food",
-    hoverInfo: "Insta Food: Open till 11 PM"
-  },
-  {
-    id: 2,
-    imgSrc: "/ShopPics/singhs-baker.jpeg",
-    altText: "Singh's Baker",
-    cardText: "Singh's Baker",
-    hoverInfo: "Singh's Baker: Best in town"
-  },
-  {
-    id: 3,
-    imgSrc: "/ShopPics/mohali-chaat-bhandar.jpeg",
-    altText: "Mohali Chaat Bhandar",
-    cardText: "Mohali Chaat Bhandar",
-    hoverInfo: "Mohali Chaat Bhandar: Famous for chaat"
-  },
-  {
-    id: 4,
-    imgSrc: "/ShopPics/sizziling-refreshment.jpeg",
-    altText: "Sizziling Refreshment",
-    cardText: "Sizziling Refreshment",
-    hoverInfo: "Sizziling Refreshment: Refreshing drinks"
-  },
-  {
-    id: 5,
-    imgSrc: "/ShopPics/punjabi-dhaba.jpeg",
-    altText: "Punjabi Dhaba",
-    cardText: "Punjabi Dhaba",
-    hoverInfo: "Punjabi Dhaba: Authentic Punjabi food"
-  },
-  {
-    id: 6,
-    imgSrc: "/ShopPics/bunkers-coffee.jpeg",
-    altText: "Bunkers Coffee",
-    cardText: "Bunkers Coffee",
-    hoverInfo: "Bunkers Coffee: Cozy place"
-  },
-  {
-    id: 7,
-    imgSrc: "/ShopPics/jass-pizza.jpeg",
-    altText: "Jass Pizza",
-    cardText: "Jass Pizza",
-    hoverInfo: "Jass Pizza: Delicious pizzas"
-  },
-  {
-    id: 8,
-    imgSrc: "/ShopPics/big-million.jpeg",
-    altText: "Big Million",
-    cardText: "Big Million",
-    hoverInfo: "Big Million: Great deals"
-  }
-];
-
 const ShopList = () => {
+  const [shops, setShops] = useState([]);
+
+  useEffect(() => {
+    const fetchShops = async () => {
+      const db = getFirestore();
+      try {
+        const shopsSnapshot = await getDocs(collection(db, 'shops'));
+        const shopsList = shopsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setShops(shopsList);
+      } catch (error) {
+        console.error('Error fetching shops:', error);
+      }
+    };
+
+    fetchShops();
+  }, []);
+
   return (
     <>
       <div className="m-4">
@@ -75,9 +34,9 @@ const ShopList = () => {
               <Link to={`/shop/${shop.id}`}>
                 <CardComponent
                   imgSrc={shop.imgSrc}
-                  altText={shop.altText}
-                  cardText={shop.cardText}
-                  hoverInfo={shop.hoverInfo}
+                  altText={shop.name}
+                  cardText={shop.name}
+                  hoverInfo={`${shop.name}: ${shop.timing}`}
                 />
               </Link>
             </div>

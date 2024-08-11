@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore'; // Import Firestore methods
 import './ShopDetail.css';
 
 const ShopDetail = ({ addToCart }) => {
-  const { shopId } = useParams();
-  const [shop, setShop] = useState(null);
+  const { shopId } = useParams(); // Get shopId from URL
+  const [shop, setShop] = useState(null); // State for shop details
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
 
   useEffect(() => {
     const fetchShopDetails = async () => {
+      const db = getFirestore(); // Initialize Firestore
       try {
-        const response = await fetch('/shops.json');
-        const data = await response.json();
-        const selectedShop = data.shops.find(shop => shop.id === parseInt(shopId));
-        setShop(selectedShop);
+        // Fetch shop details
+        const shopDoc = await getDoc(doc(db, 'shops', shopId));
+        if (shopDoc.exists()) {
+          const shopData = shopDoc.data();
+
+          // Fetch items for this shop
+          const itemsSnapshot = await getDocs(collection(db, 'shops', shopId, 'items'));
+          const items = itemsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+          // Add items to shop data
+          setShop({ id: shopId, ...shopData, menu: items });
+        } else {
+          console.log('No such document!');
+        }
       } catch (error) {
         console.error('Error fetching shop details:', error);
       }
@@ -77,7 +89,7 @@ const ShopDetail = ({ addToCart }) => {
           </select>
         </div>
       </div>
-      <hr/>
+      <hr />
 
       {uniqueCategories.map(category => (
         <div key={category}>
@@ -112,7 +124,7 @@ const ShopDetail = ({ addToCart }) => {
       ))}
 
       <Link to="/cart" className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
-        Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px'/>
+        Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px' />
       </Link>
     </div>
   );
