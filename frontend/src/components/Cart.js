@@ -15,7 +15,7 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, totalAmount }) => {
                 ))}
             </ul>
             <h3 className="cart-total">Total: &#8377; {totalAmount.toFixed(2)}</h3>
-            <button className="cart-button" onClick={placeOrder}>Place Order</button>
+            <button className="cart-button-Cnf" onClick={placeOrder}>Confirm Order</button>
         </div>
     );
 }

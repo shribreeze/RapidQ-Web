@@ -9,7 +9,7 @@
 
 .cart-header {
     font-size: 2rem;
-    color: #007bff;
+    color: #000;
     margin-bottom: 20px;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .cart-button {
-    background-color: #007bff;
+    background-color: red;
     color: white;
     border: none;
     border-radius: 5px;
@@ -50,7 +50,7 @@
 
 .cart-total {
     font-size: 1.5rem;
-    color: #555;
+    color: #000;
     margin-top: 20px;
 }
 
@@ -60,10 +60,25 @@
     margin-top: 10px;
 }
 
+.cart-button-Cnf {
+    background-color: #f9d002;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-button-Cnf:hover {
+    background-color: #218838;
+    color: white;
+}
+
 
 @media (max-width: 768px) {
     .cart-header {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 
     .cart-item {
@@ -91,7 +106,7 @@
     }
 
     .cart-header {
-        font-size: 1.2rem;
+        font-size: 1.9rem;
     }
 
     .cart-item {

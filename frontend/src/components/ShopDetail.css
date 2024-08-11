@@ -168,18 +168,29 @@
 
 .LinkToCart {
     display: inline-block;
-    margin-top: 20px;
     padding-inline: 12px;
     padding-block: 5px;
     font-size: 1.2rem;
     border-radius: 5px;
+    border: 2px solid #000;
     color: #000;
     background-color: #f9d002;
     text-decoration: none;
     transition: color 0.3s ease;
+    position: relative; /* Default position */
+    bottom: 0; /* Default bottom position */
+    right: 0; /* Default right position */
+}
+
+.LinkToCart.active {
+    position: fixed; /* Fixed position when active */
+    bottom: 20px; /* Adjust the distance from the bottom */
+    right: 20px;  /* Adjust the distance from the right */
+    z-index: 1000; /* Ensure it stays on top of other elements */
 }
 
 .LinkToCart:hover {
     background-color: #462B9C;
     color: white;
 }
+

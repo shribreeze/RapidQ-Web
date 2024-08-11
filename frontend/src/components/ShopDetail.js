@@ -7,6 +7,7 @@ const ShopDetail = ({ addToCart }) => {
   const [shop, setShop] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isCartActive, setIsCartActive] = useState(false);
 
   useEffect(() => {
     const fetchShopDetails = async () => {
@@ -33,9 +34,10 @@ const ShopDetail = ({ addToCart }) => {
   const handleAddToCart = (menuItem) => {
     addToCart({ ...menuItem, shopId: shopId, quantity: quantities[menuItem.id] || 1 });
     setQuantities(prevQuantities => ({
-        ...prevQuantities,
-        [menuItem.id]: 1
+      ...prevQuantities,
+      [menuItem.id]: 1
     }));
+    setIsCartActive(true); // Activate the "Go to Cart" button
   };
 
   if (!shop) {
@@ -48,14 +50,13 @@ const ShopDetail = ({ addToCart }) => {
     ? shop.menu
     : shop.menu.filter(item => item.category === selectedCategory);
 
-
-
   return (
     <div className='body'>
       <div className='ShopDetailHeading'>
         <h2>{shop.name}</h2>
         <p>Address: {shop.address}</p>
         <p>Timing: {shop.timing}</p>
+        <p>Delivery: {shop.delivery}</p>
       </div>
 
       <div className='ShopDetailMenu'>
@@ -110,7 +111,9 @@ const ShopDetail = ({ addToCart }) => {
         </div>
       ))}
 
-      <Link to="/cart" className='LinkToCart'>Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px'/></Link>
+      <Link to="/cart" className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
+        Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px'/>
+      </Link>
     </div>
   );
 };
