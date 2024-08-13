@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const [user, setUser] = useState(null);
@@ -114,7 +115,9 @@ const Footer = () => {
                               </div>
                             </form>
                           ) : (
-                            <p className="text-danger">Please log in to submit a query.</p>
+                            <p className="text-danger">
+                              Please <Link to="/signin" className="text-primary">log in</Link> to submit a query.
+                            </p>
                           )}
                         </div>
                       </div>
