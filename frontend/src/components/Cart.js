@@ -1,8 +1,8 @@
 import React from 'react';
 import './Cart.css';
+import Order from './Order';
 
-const Cart = ({ cartItems, removeFromCart, placeOrder, totalAmount }) => {
-
+const Cart = ({ orderId, cartItems, removeFromCart, placeOrder, totalAmount }) => {
     return (
         <div className="cart-container">
             <h2 className="cart-header">Cart</h2>
@@ -16,6 +16,8 @@ const Cart = ({ cartItems, removeFromCart, placeOrder, totalAmount }) => {
             </ul>
             <h3 className="cart-total">Total: &#8377; {totalAmount.toFixed(2)}</h3>
             <button className="cart-button-Cnf" onClick={placeOrder}>Confirm Order</button>
+
+            {orderId && <Order orderId={orderId} />}
         </div>
     );
 }

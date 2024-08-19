@@ -14,7 +14,7 @@
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .card-img-top {
@@ -26,13 +26,13 @@
 
 .card-body {
   padding: 1rem;
-  text-align: center;
+  /* text-align: center; */
 }
 
-.card a {
-  text-decoration: none !important; /* Forces removal of underline */
-  color: inherit !important; /* Ensures color consistency */
-}
+/* .card a {
+  text-decoration: none !important;
+  color: inherit !important; 
+} */
 
 
 .card-text {

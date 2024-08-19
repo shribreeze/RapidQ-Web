@@ -53,7 +53,7 @@ const ShopList = () => {
             <div className="col" key={shop.id}>
               <Link to={`/shop/${shop.id}`}>
                 <CardComponent
-                  imgSrc={shop.imgSrc} // Use the fetched image URL
+                  imgSrc={shop.imgSrc} 
                   altText={shop.name}
                   cardText={shop.name}
                   hoverInfo={`${shop.name}: ${shop.timing}`}

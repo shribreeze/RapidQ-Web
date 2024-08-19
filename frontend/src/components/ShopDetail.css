@@ -53,14 +53,15 @@
     margin-bottom: 15px;
     background-color: #fff;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Fixed gap between items */
 }
 
 .menu-item p {
     font-size: 1.2rem;
     margin: 0;
+    flex: 1; /* Allow the name to take up available space */
 }
 
 .menu-item button {
@@ -77,21 +78,25 @@
     background-color: #301e6c;
 }
 
+
+.menu-item div {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Gap between buttons */
+}
+
 .menu-item input {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 5px;
-    margin: 0 10px;
     text-align: center;
     width: 60px;
 }
-
 
 .menu-item .add-to-cart-button {
     background-color: #f9d002;
     color: black;
     padding: 10px 15px;
-    margin-left: 24px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -101,8 +106,19 @@
 .menu-item .add-to-cart-button:hover {
     background-color: #218838;
     color: white;
-
 }
+
+@media (max-width: 768px) {
+    .menu-item {
+        flex-direction: column; /* Stack items vertically on small devices */
+        align-items: flex-start;
+    }
+
+    .menu-item p {
+        margin-bottom: 10px; /* Add space between name and controls */
+    }
+}
+
 
 
 @media (max-width: 768px) {
