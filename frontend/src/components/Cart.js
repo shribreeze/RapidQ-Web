@@ -1,13 +1,47 @@
+import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import './Cart.css';
 import Order from './Order';
 
-const Cart = ({ orderId, cartItems, removeFromCart, placeOrder, totalAmount }) => {
+const Cart = ({ userId, shopId, cartItems, removeFromCart, totalAmount }) => {
+    const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState(null);
+
+    // Define placeOrder function
+    const placeOrder = async (userId, shopId, cartItems) => {
+        const db = getFirestore();
+
+        try {
+            // Create the order object
+            const order = {
+                shopId: shopId,
+                userId: userId,
+                items: cartItems.map(item => ({
+                    itemId: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                })),
+                status: "pending",
+                preparationTime: null,
+                timestamp: serverTimestamp()
+            };
+
+            // Add the order to the "orders" collection
+            const docRef = await addDoc(collection(db, 'orders'), order);
+            console.log('Order placed with ID:', docRef.id);
+            return docRef.id;
+        } catch (error) {
+            console.error('Error adding order:', error);
+            throw new Error('Failed to place order');
+        }
+    };
 
     const handlePlaceOrder = async () => {
         try {
-            await placeOrder(); // Assuming placeOrder is an async function that places the order
+            const newOrderId = await placeOrder(userId, shopId, cartItems);
+            setOrderId(newOrderId);
+            setError(null);
         } catch (err) {
             setError('Failed to place the order. Please try again.');
         }
