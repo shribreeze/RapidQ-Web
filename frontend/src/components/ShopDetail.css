@@ -55,13 +55,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px; /* Fixed gap between items */
+    gap: 20px;
 }
 
 .menu-item p {
     font-size: 1.2rem;
     margin: 0;
-    flex: 1; /* Allow the name to take up available space */
+    flex: 1;
 }
 
 .menu-item button {
@@ -82,7 +82,7 @@
 .menu-item div {
     display: flex;
     align-items: center;
-    gap: 10px; /* Gap between buttons */
+    gap: 10px;
 }
 
 .menu-item input {
@@ -110,12 +110,12 @@
 
 @media (max-width: 768px) {
     .menu-item {
-        flex-direction: column; /* Stack items vertically on small devices */
+        flex-direction: column;
         align-items: flex-start;
     }
 
     .menu-item p {
-        margin-bottom: 10px; /* Add space between name and controls */
+        margin-bottom: 10px;
     }
 }
 
@@ -193,16 +193,16 @@
     background-color: #f9d002;
     text-decoration: none;
     transition: color 0.3s ease;
-    position: relative; /* Default position */
-    bottom: 0; /* Default bottom position */
-    right: 0; /* Default right position */
+    position: relative;
+    bottom: 0;
 }
 
 .LinkToCart.active {
-    position: fixed; /* Fixed position when active */
-    bottom: 20px; /* Adjust the distance from the bottom */
-    right: 20px;  /* Adjust the distance from the right */
-    z-index: 1000; /* Ensure it stays on top of other elements */
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
 }
 
 .LinkToCart:hover {

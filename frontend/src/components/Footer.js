@@ -50,7 +50,7 @@ const Footer = () => {
                       <div className="col-12 col-md-4 col-lg-3 col-xl-2">
                         <div className="widget">
                           <a href="#!">
-                            <img src="./LogoMini.png" alt="QuickQ" height="100" />
+                            <img src="/LogoMini.png" alt="QuickQ" height="100" />
                           </a>
                         </div>
                       </div>
@@ -102,7 +102,7 @@ const Footer = () => {
                                 <div className="col-12">
                                   <div className="input-group">
                                     <span className="input-group-text" id="email-newsletter-addon">
-                                      <img src='./query.png' alt='query-logo' width="16" height="16" fill="currentColor" className="bi bi-envelope" viewBox="0 0 16 16" />
+                                      <img src='/query.png' alt='query-logo' width="16" height="16" fill="currentColor" className="bi bi-envelope" viewBox="0 0 16 16" />
                                     </span>
                                     <textarea className="form-control" id="query" name="message" placeholder="Write your query..." aria-label="user-query" aria-describedby="user-query-addon" required />
                                   </div>
