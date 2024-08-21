@@ -1,50 +1,57 @@
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Cart.css';
 import Order from './Order';
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
+import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore'; // Import Firestore
 
 const Cart = ({ userId, shopId, cartItems, removeFromCart, totalAmount }) => {
     const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Define placeOrder function
-    const placeOrder = async (userId, shopId, cartItems) => {
+    // Check if the user is logged in
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsAuthenticated(true);
+            } else {
+                setIsAuthenticated(false);
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    const placeOrder = async () => {
+        if (!isAuthenticated) {
+            setError(
+                <>
+                    You must <a href="/SignIn" style={{ textDecoration: 'underline', color: 'blue' }}>log in</a> first to place an order.
+                </>
+            );
+            return;
+        }
         const db = getFirestore();
-
+        const orderRef = collection(db, 'orders');
         try {
-            // Create the order object
-            const order = {
-                shopId: shopId,
-                userId: userId,
-                items: cartItems.map(item => ({
-                    itemId: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                })),
-                status: "pending",
+            const orderDocRef = await addDoc(orderRef, {
+                userId,
+                shopId,
+                items: cartItems,
+                status: 'pending',
                 preparationTime: null,
-                timestamp: serverTimestamp()
-            };
+            });
 
-            // Add the order to the "orders" collection
-            const docRef = await addDoc(collection(db, 'orders'), order);
-            console.log('Order placed with ID:', docRef.id);
-            return docRef.id;
+            return orderDocRef.id; // Return the order ID
         } catch (error) {
-            console.error('Error adding order:', error);
-            throw new Error('Failed to place order');
+            console.error('Error placing order: ', error);
+            throw new Error('Failed to place the order.');
         }
     };
 
-    const handlePlaceOrder = async () => {
-        try {
-            const newOrderId = await placeOrder(userId, shopId, cartItems);
-            setOrderId(newOrderId);
-            setError(null);
-        } catch (err) {
-            setError('Failed to place the order. Please try again.');
-        }
+    const handlePlaceOrder = () => {
+        placeOrder();
     };
 
     return (
