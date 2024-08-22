@@ -28,7 +28,6 @@ const ShopDetail = ({ addToCart }) => {
               const data = doc.data();
               let imgSrc = '';
 
-              // If imgPath is available, fetch the image URL from Firebase Storage
               if (data.imgPath) {
                 const imgRef = ref(storage, data.imgPath);
                 imgSrc = await getDownloadURL(imgRef);
@@ -37,7 +36,8 @@ const ShopDetail = ({ addToCart }) => {
               return {
                 id: doc.id,
                 ...data,
-                imgSrc, // Add the image URL to the item data
+                price: data.price !== undefined ? data.price : 0, // Ensure price is defined
+                imgSrc,
               };
             })
           );
@@ -118,27 +118,26 @@ const ShopDetail = ({ addToCart }) => {
                 .filter(item => item.category === category)
                 .map(menuItem => (
                   <div key={menuItem.id} className="menu-item">
-                    {/* <img src={menuItem.imgSrc} alt={menuItem.name} /> */}
-                    <p>{menuItem.name} :- &#8377; {menuItem.price.toFixed(2)}</p>
+                    <p>{menuItem.name} :- &#8377; {(menuItem.price !== undefined ? menuItem.price.toFixed(2) : 'N/A')}</p>
                     <div>
-                        <button onClick={() => handleQuantityChange(menuItem.id, -1)}>-</button>
-                        <input
-                          type="number"
-                          value={quantities[menuItem.id] || 1}
-                          onChange={(e) => setQuantities(prevQuantities => ({
-                            ...prevQuantities,
-                            [menuItem.id]: Number(e.target.value)
-                          }))}
-                          min="1"
-                          style={{ width: '50px', textAlign: 'center' }}
-                        />
-                        <button onClick={() => handleQuantityChange(menuItem.id, 1)}>+</button>
+                      <button onClick={() => handleQuantityChange(menuItem.id, -1)}>-</button>
+                      <input
+                        type="number"
+                        value={quantities[menuItem.id] || 1}
+                        onChange={(e) => setQuantities(prevQuantities => ({
+                          ...prevQuantities,
+                          [menuItem.id]: Number(e.target.value)
+                        }))}
+                        min="1"
+                        style={{ width: '50px', textAlign: 'center' }}
+                      />
+                      <button onClick={() => handleQuantityChange(menuItem.id, 1)}>+</button>
                       <div className='mx-4'>
                         <button className="add-to-cart-button" onClick={() => handleAddToCart(menuItem)}>Add to Cart</button>
                       </div>
                     </div>
                   </div>
-                ))} 
+                ))}
             </>
           )}
         </div>
