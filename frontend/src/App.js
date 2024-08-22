@@ -28,7 +28,7 @@ function App() {
     const addToCart = (item) => {
         console.log("Current Cart Items:", cartItems);
         console.log("New Item:", item);
-    
+
         setCartItems(prevItems => {
             if (prevItems.length > 0 && prevItems[0].shopId !== item.shopId) {
                 const replace = window.confirm("You can add and order items from one shop at a time. Do you want to replace the current items with those from this shop?");
@@ -49,9 +49,14 @@ function App() {
             }
         });
     };
-    
 
-    const removeFromCart = (item) => {
+
+    const removeFromCart = (item, clearAll = false) => {
+        if (clearAll) {
+            setCartItems([]);
+            return;
+        }
+
         setCartItems(prevItems => {
             const existingItem = prevItems.find(i => i.id === item.id);
             if (existingItem.quantity > 1) {
@@ -60,6 +65,7 @@ function App() {
             return prevItems.filter(i => i.id !== item.id);
         });
     };
+
 
     const placeOrder = () => {
         console.log("Order placed:", cartItems);

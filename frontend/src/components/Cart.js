@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './Cart.css';
 import Order from './Order';
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
-import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore'; // Import Firestore
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { db } from '../firebase';  // Import db from firebase.js
+import ParentComponent from './CartOrders';
 
-const Cart = ({ userId, shopId, cartItems, removeFromCart, totalAmount }) => {
+const Cart = ({ shopId, cartItems, removeFromCart, totalAmount }) => {
     const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userId, setUserId] = useState(null);
 
-    // Check if the user is logged in
     useEffect(() => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setIsAuthenticated(true);
+                setUserId(user.uid); // Set userId when user is authenticated
             } else {
-                setIsAuthenticated(false);
+                setUserId(null);
             }
         });
 
@@ -24,34 +25,38 @@ const Cart = ({ userId, shopId, cartItems, removeFromCart, totalAmount }) => {
     }, []);
 
     const placeOrder = async () => {
-        if (!isAuthenticated) {
-            setError(
-                <>
-                    You must <a href="/SignIn" style={{ textDecoration: 'underline', color: 'blue' }}>log in</a> first to place an order.
-                </>
-            );
+        if (!userId) {
+            setError('User is not authenticated.');
             return;
         }
-        const db = getFirestore();
-        const orderRef = collection(db, 'orders');
+
+        console.log('User ID:', userId);
+        console.log('Shop ID:', shopId);  // Log shopId
+        console.log('Cart Items:', cartItems);
+
+        if (!shopId || !cartItems.length) {
+            setError('Invalid order data.');
+            return;
+        }
+
         try {
-            const orderDocRef = await addDoc(orderRef, {
+            const orderDocRef = await addDoc(collection(db, 'orders'), {
                 userId,
-                shopId,
+                shopId,  // Use shopId here
                 items: cartItems,
                 status: 'pending',
                 preparationTime: null,
+                timestamp: Timestamp.now(),
             });
-
-            return orderDocRef.id; // Return the order ID
+            setOrderId(orderDocRef.id); // Set the order ID on successful addition
         } catch (error) {
-            console.error('Error placing order: ', error);
-            throw new Error('Failed to place the order.');
+            console.error('Error placing order: ', error.message);
+            setError('Failed to place the order. Please try again.');
         }
     };
 
-    const handlePlaceOrder = () => {
-        placeOrder();
+    const handlePlaceOrder = async () => {
+        await placeOrder();
     };
 
     return (
@@ -72,6 +77,6 @@ const Cart = ({ userId, shopId, cartItems, removeFromCart, totalAmount }) => {
             {orderId && <Order orderId={orderId} />}
         </div>
     );
-}
+};
 
 export default Cart;
