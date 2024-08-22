@@ -87,6 +87,7 @@ const ShopDetail = ({ addToCart }) => {
         <p>Address: {shop.address}</p>
         <p>Timing: {shop.timing}</p>
         <p>Delivery: {shop.delivery}</p>
+        <p>Contact: {shop.Contact}</p>
       </div>
 
       <div className='ShopDetailMenu'>
