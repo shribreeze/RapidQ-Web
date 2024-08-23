@@ -1,31 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Cart from './Cart';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Cart from './Cart';
 
 const ParentComponent = () => {
-    const [currentUser, setCurrentUser] = useState(null);
-    const { shopId } = useParams();  // Get shopId from URL params or another source
+    const { shopId } = useParams();  // Extract shopId from the URL params
     const [cartItems, setCartItems] = useState([]);
 
-    useEffect(() => {
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-        });
-
-        return () => unsubscribe();
-    }, []);
+    // Log shopId to verify it's being retrieved correctly
+    console.log('Shop ID in ParentComponent:', shopId);
 
     const removeFromCart = (item) => {
-        // Your remove logic here
+        setCartItems(cartItems.filter(cartItem => cartItem !== item));
     };
 
     const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    if (!currentUser) {
-        return <p>Please log in to access the cart.</p>;
-    }
 
     return (
         <Cart

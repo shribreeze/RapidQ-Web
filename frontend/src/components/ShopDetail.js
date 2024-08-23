@@ -163,7 +163,7 @@ const ShopDetail = ({ addToCart }) => {
         </div>
       ))}
 
-      <Link to="/cart" className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
+      <Link to={`/shop/${shopId}/cart`} className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
         Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px' />
       </Link>
     </div>

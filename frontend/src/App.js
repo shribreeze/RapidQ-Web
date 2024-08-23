@@ -12,6 +12,7 @@ import Outlets from './components/Outlets';
 import Footer from './components/Footer';
 import ShopDetail from './components/ShopDetail';
 import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
+import ParentComponent from './components/CartOrders';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -66,7 +67,6 @@ function App() {
         });
     };
 
-
     const placeOrder = () => {
         console.log("Order placed:", cartItems);
         setCartItems([]); // Clear the cart after placing the order
@@ -87,9 +87,24 @@ function App() {
                 <Route path="/order" element={<Order />} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
-                <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} placeOrder={placeOrder} totalAmount={totalAmount} />} />
+                <Route path="/cart" element={
+                    <Cart
+                        cartItems={cartItems}
+                        removeFromCart={removeFromCart}
+                        placeOrder={placeOrder}
+                        totalAmount={totalAmount}
+                    />
+                } />
                 <Route path="/outlets" element={<Outlets />} />
                 <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
+                <Route path="/shop/:shopId/cart" element={
+                    <ParentComponent
+                        cartItems={cartItems}
+                        removeFromCart={removeFromCart}
+                        placeOrder={placeOrder}
+                        totalAmount={totalAmount}
+                    />
+                } />
             </Routes>
             <Footer />
         </Router>

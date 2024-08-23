@@ -3,10 +3,9 @@ import './Cart.css';
 import Order from './Order';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { db } from '../firebase';  // Import db from firebase.js
-import ParentComponent from './CartOrders';
+import { db } from '../firebase';
 
-const Cart = ({ shopId, cartItems, removeFromCart, totalAmount }) => {
+const Cart = ({ cartItems, removeFromCart, totalAmount, shopId }) => {
     const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState(null);
@@ -15,7 +14,7 @@ const Cart = ({ shopId, cartItems, removeFromCart, totalAmount }) => {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setUserId(user.uid); // Set userId when user is authenticated
+                setUserId(user.uid);
             } else {
                 setUserId(null);
             }
@@ -25,30 +24,20 @@ const Cart = ({ shopId, cartItems, removeFromCart, totalAmount }) => {
     }, []);
 
     const placeOrder = async () => {
-        if (!userId) {
-            setError('User is not authenticated.');
-            return;
-        }
-
-        console.log('User ID:', userId);
-        console.log('Shop ID:', shopId);  // Log shopId
-        console.log('Cart Items:', cartItems);
-
-        if (!shopId || !cartItems.length) {
-            setError('Invalid order data.');
+        if (!shopId) {
+            setError('Shop ID is missing.');
             return;
         }
 
         try {
             const orderDocRef = await addDoc(collection(db, 'orders'), {
                 userId,
-                shopId,  // Use shopId here
+                shopId,
                 items: cartItems,
                 status: 'pending',
-                preparationTime: null,
-                timestamp: Timestamp.now(),
+                timestamp: Timestamp.now()
             });
-            setOrderId(orderDocRef.id); // Set the order ID on successful addition
+            setOrderId(orderDocRef.id);
         } catch (error) {
             console.error('Error placing order: ', error.message);
             setError('Failed to place the order. Please try again.');
@@ -78,5 +67,4 @@ const Cart = ({ shopId, cartItems, removeFromCart, totalAmount }) => {
         </div>
     );
 };
-
 export default Cart;
