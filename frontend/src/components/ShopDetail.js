@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
 import './ShopDetail.css';
 
 const ShopDetail = ({ addToCart }) => {
@@ -11,20 +10,6 @@ const ShopDetail = ({ addToCart }) => {
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Add authentication state
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const fetchShopDetails = async () => {
@@ -76,11 +61,6 @@ const ShopDetail = ({ addToCart }) => {
   };
 
   const handleAddToCart = (menuItem) => {
-    if (!isAuthenticated) {
-      alert("You must log in first to add items to the cart.");
-      return;
-    }
-
     addToCart({ ...menuItem, shopId: shopId, quantity: quantities[menuItem.id] || 1 });
     setQuantities(prevQuantities => ({
       ...prevQuantities,
@@ -106,7 +86,6 @@ const ShopDetail = ({ addToCart }) => {
         <p>Address: {shop.address}</p>
         <p>Timing: {shop.timing}</p>
         <p>Delivery: {shop.delivery}</p>
-        <p>Contact: {shop.Contact}</p>
       </div>
 
       <div className='ShopDetailMenu'>
@@ -163,7 +142,7 @@ const ShopDetail = ({ addToCart }) => {
         </div>
       ))}
 
-      <Link to={`/shop/${shopId}/cart`} className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
+      <Link to="/cart" className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
         Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px' />
       </Link>
     </div>

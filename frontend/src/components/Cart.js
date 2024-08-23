@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const Cart = ({ cartItems, removeFromCart, totalAmount, shopId }) => {
+const Cart = ({ cartItems, removeFromCart, totalAmount }) => {
     const [orderId, setOrderId] = useState(null);
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState(null);
@@ -24,20 +24,15 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, shopId }) => {
     }, []);
 
     const placeOrder = async () => {
-        if (!shopId) {
-            setError('Shop ID is missing.');
-            return;
-        }
-
         try {
             const orderDocRef = await addDoc(collection(db, 'orders'), {
                 userId,
-                shopId,
                 items: cartItems,
                 status: 'pending',
                 timestamp: Timestamp.now()
             });
             setOrderId(orderDocRef.id);
+            console.log('Order placed with ID:', orderDocRef.id);
         } catch (error) {
             console.error('Error placing order: ', error.message);
             setError('Failed to place the order. Please try again.');
@@ -47,6 +42,12 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, shopId }) => {
     const handlePlaceOrder = async () => {
         await placeOrder();
     };
+
+    useEffect(() => {
+        if (orderId) {
+            console.log('Order ID set in Cart:', orderId);
+        }
+    }, [orderId]);
 
     return (
         <div className="cart-container">
@@ -63,8 +64,14 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, shopId }) => {
             <button className="cart-button-Cnf" onClick={handlePlaceOrder}>Confirm Order</button>
 
             {error && <p className="error-message">{error}</p>}
-            {orderId && <Order orderId={orderId} />}
+            {orderId && (
+                <div>
+                    <h3>Order Summary</h3>
+                    <Order orderId={orderId} />
+                </div>
+            )}
         </div>
     );
 };
+
 export default Cart;

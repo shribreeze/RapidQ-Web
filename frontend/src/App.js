@@ -11,8 +11,8 @@ import Cart from './components/Cart';
 import Outlets from './components/Outlets';
 import Footer from './components/Footer';
 import ShopDetail from './components/ShopDetail';
+import OrderPage from './components/OrderPage';
 import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
-import ParentComponent from './components/CartOrders';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -51,7 +51,6 @@ function App() {
         });
     };
 
-
     const removeFromCart = (item, clearAll = false) => {
         if (clearAll) {
             setCartItems([]);
@@ -85,6 +84,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/order" element={<Order />} />
+                <Route path="/order/:orderId" element={<OrderPage />} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/cart" element={
@@ -97,14 +97,6 @@ function App() {
                 } />
                 <Route path="/outlets" element={<Outlets />} />
                 <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
-                <Route path="/shop/:shopId/cart" element={
-                    <ParentComponent
-                        cartItems={cartItems}
-                        removeFromCart={removeFromCart}
-                        placeOrder={placeOrder}
-                        totalAmount={totalAmount}
-                    />
-                } />
             </Routes>
             <Footer />
         </Router>
