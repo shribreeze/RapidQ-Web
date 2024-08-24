@@ -11,7 +11,6 @@ import Cart from './components/Cart';
 import Outlets from './components/Outlets';
 import Footer from './components/Footer';
 import ShopDetail from './components/ShopDetail';
-import OrderPage from './components/OrderPage';
 import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
 
 function App() {
@@ -83,8 +82,8 @@ function App() {
             <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/order" element={<Order />} />
-                <Route path="/order/:orderId" element={<OrderPage />} />
+
+                <Route path='/order' element={<Order />} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/cart" element={
