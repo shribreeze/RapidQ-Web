@@ -11,7 +11,8 @@ import Cart from './components/Cart';
 import Outlets from './components/Outlets';
 import Footer from './components/Footer';
 import ShopDetail from './components/ShopDetail';
-import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
+import ScrollToTop from './components/ScrollToTop';
+// import UserOrders from './components/UserOrders'; 
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -36,67 +37,55 @@ function App() {
                     console.log("Replacing cart items with:", item);
                     return [{ ...item, quantity: item.quantity }];
                 } else {
+                    console.log("Keeping existing cart items.");
                     return prevItems;
                 }
+            }
+
+            const existingItemIndex = prevItems.findIndex(cartItem => cartItem.id === item.id);
+            if (existingItemIndex >= 0) {
+                console.log(`Item ${item.id} already exists in cart. Updating quantity to ${prevItems[existingItemIndex].quantity + item.quantity}.`);
+                const updatedItems = [...prevItems];
+                updatedItems[existingItemIndex].quantity += item.quantity;
+                return updatedItems;
             } else {
-                const existingItem = prevItems.find(i => i.id === item.id);
-                if (existingItem) {
-                    console.log("Updating quantity for existing item:", existingItem);
-                    return prevItems.map(i => i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i);
-                }
-                console.log("Adding new item to cart:", item);
+                console.log(`Item ${item.id} does not exist in cart. Adding as new item.`);
                 return [...prevItems, { ...item, quantity: item.quantity }];
             }
         });
     };
 
-    const removeFromCart = (item, clearAll = false) => {
-        if (clearAll) {
-            setCartItems([]);
-            return;
-        }
-
-        setCartItems(prevItems => {
-            const existingItem = prevItems.find(i => i.id === item.id);
-            if (existingItem.quantity > 1) {
-                return prevItems.map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i);
-            }
-            return prevItems.filter(i => i.id !== item.id);
-        });
+    const removeFromCart = (item) => {
+        setCartItems(prevItems => prevItems.filter(cartItem => cartItem.id !== item.id));
     };
-
-    const placeOrder = () => {
-        console.log("Order placed:", cartItems);
-        setCartItems([]); // Clear the cart after placing the order
-    };
-
-    const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
+    
     if (loading) {
         return <LoadingScreen />;
     }
 
     return (
         <Router>
-            <Navbar />
             <ScrollToTop />
-            <Routes>
-                <Route path="/" element={<Home />} />
-
-                <Route path='/order' element={<Order />} />
-                <Route path="/signIn" element={<SignIn />} />
-                <Route path="/signUp" element={<SignUp />} />
-                <Route path="/cart" element={
-                    <Cart
-                        cartItems={cartItems}
-                        removeFromCart={removeFromCart}
-                        placeOrder={placeOrder}
-                        totalAmount={totalAmount}
+            <Navbar />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route 
+                        path="/cart" 
+                        element={
+                            <Cart 
+                                cartItems={cartItems} 
+                                removeFromCart={removeFromCart} 
+                                totalAmount={cartItems.reduce((total, item) => total + item.price * item.quantity, 0)} 
+                                setCartItems={setCartItems}
+                            />
+                        } 
                     />
-                } />
-                <Route path="/outlets" element={<Outlets />} />
-                <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
-            </Routes>
+                    <Route path="/orders" element={<Order />} />
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/outlets" element={<Outlets />} />
+                    <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
+                </Routes>
             <Footer />
         </Router>
     );

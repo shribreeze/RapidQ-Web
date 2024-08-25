@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './ShopDetail.css';
 
 const ShopDetail = ({ addToCart }) => {
@@ -10,8 +11,18 @@ const ShopDetail = ({ addToCart }) => {
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
+  const [isUserSignedIn, setIsUserSignedIn] = useState(false); // Track user authentication status
 
   useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsUserSignedIn(true); // User is signed in
+      } else {
+        setIsUserSignedIn(false); // No user is signed in
+      }
+    });
+
     const fetchShopDetails = async () => {
       const db = getFirestore();
       const storage = getStorage();
@@ -61,6 +72,11 @@ const ShopDetail = ({ addToCart }) => {
   };
 
   const handleAddToCart = (menuItem) => {
+    if (!isUserSignedIn) {
+      alert('Please sign in to add items to the cart.');
+      return;
+    }
+
     addToCart({ ...menuItem, shopId: shopId, quantity: quantities[menuItem.id] || 1 });
     setQuantities(prevQuantities => ({
       ...prevQuantities,

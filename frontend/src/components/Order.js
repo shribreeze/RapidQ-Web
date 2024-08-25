@@ -1,72 +1,87 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { db } from '../firebase';
 import './Order.css';
 
-const Order = ({ orderId }) => {
-  const [orderDetails, setOrderDetails] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+const Orders = () => {
+    const [orders, setOrders] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [userId, setUserId] = useState(null);
 
-  useEffect(() => {
-    console.log('Received orderId in Order component:', orderId); // Log to verify
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setUserId(user.uid);
+                fetchOrders(user.uid);
+            } else {
+                setUserId(null);
+                setOrders([]);
+            }
+        });
 
-    if (!orderId) {
-      setError('Order ID is missing.');
-      setLoading(false);
-      return;
+        return () => unsubscribe();
+    }, []);
+
+    const fetchOrders = async (userId) => {
+        setLoading(true);
+        try {
+            const q = query(
+                collection(db, 'orders'),
+                where('userId', '==', userId),
+                orderBy('timestamp', 'desc')
+            );
+            const querySnapshot = await getDocs(q);
+            const fetchedOrders = [];
+            querySnapshot.forEach((doc) => {
+                fetchedOrders.push({ id: doc.id, ...doc.data() });
+            });
+            setOrders(fetchedOrders);
+        } catch (error) {
+            console.error('Error fetching orders:', error.message);
+            setError(`Failed to fetch orders. Error: ${error.message}`);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return <p>Loading orders...</p>;
     }
 
-    const db = getFirestore();
-    const orderDocRef = doc(db, 'orders', orderId);
+    if (error) {
+        return <p className="error-message">{error}</p>;
+    }
 
-    const unsubscribe = onSnapshot(orderDocRef, (doc) => {
-      setLoading(false);
-      if (doc.exists()) {
-        const orderData = doc.data();
-        console.log('Order Data:', orderData); // Log to check structure
-        setOrderDetails(orderData);
-      } else {
-        setError('No such order!');
-      }
-    }, (err) => {
-      setLoading(false);
-      setError('Error fetching order details: ' + err.message);
-    });
-
-    return () => unsubscribe();
-  }, [orderId]);
-
-  if (loading) {
-    return <p>Loading order details...</p>;
-  }
-
-  if (error) {
-    return <p className="error-message">{error}</p>;
-  }
-
-  return (
-    <div className="order-container">
-      <h2>Order Details</h2>
-      {orderDetails ? (
-        <div>
-          <p><strong>Order ID:</strong> {orderId}</p>
-          <p><strong>Status:</strong> {orderDetails.status}</p>
-          <p><strong>Timestamp:</strong> {orderDetails.timestamp ? orderDetails.timestamp.toDate().toLocaleString() : 'N/A'}</p>
-          <p><strong>Items:</strong></p>
-          <ul>
-            {orderDetails.items ? orderDetails.items.map((item, index) => (
-              <li key={index}>
-                {item.name} - &#8377; {item.price.toFixed(2)} x {item.quantity}
-              </li>
-            )) : 'No items found.'}
-          </ul>
-          <p><strong>Total Amount:</strong> &#8377; {orderDetails.items ? orderDetails.items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2) : '0.00'}</p>
+    return (
+        <div className="orders-container">
+            <h2>Your Orders</h2>
+            {orders.length > 0 ? (
+                <ul className="orders-list">
+                    {orders.map((order) => (
+                        <li key={order.id} className="order-item">
+                            <p><strong>Order ID:</strong> {order.id}</p>
+                            <p><strong>Shop Name:</strong> {order.shopName}</p>
+                            <p><strong>Status:</strong> {order.status}</p>
+                            <p><strong>Total Items:</strong> {order.items.length}</p>
+                            <p><strong>Timestamp:</strong> {order.timestamp.toDate().toLocaleString()}</p>
+                            <ul>
+                                {order.items.map((item, index) => (
+                                    <li key={index}>
+                                        <strong>Item:</strong> {item.name || 'Unknown Item'} - Quantity: {item.quantity || 0}
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No orders found.</p>
+            )}
         </div>
-      ) : (
-        <p>No order details available.</p>
-      )}
-    </div>
-  );
+    );
 };
 
-export default Order;
+export default Orders;
