@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage'; 
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import CardComponent from './CardComponent';
 import './ShopList.css';
 
@@ -14,7 +14,7 @@ const ShopList = () => {
     useEffect(() => {
         const fetchShops = async () => {
             const db = getFirestore();
-            const storage = getStorage(); 
+            const storage = getStorage();
 
             try {
                 const shopsSnapshot = await getDocs(collection(db, 'shops'));
@@ -31,7 +31,7 @@ const ShopList = () => {
                         return {
                             id: doc.id,
                             ...data,
-                            imgSrc, 
+                            imgSrc,
                         };
                     })
                 );
@@ -61,7 +61,7 @@ const ShopList = () => {
                         <div className="col" key={shop.id}>
                             <Link to={`/shop/${shop.id}`}>
                                 <CardComponent
-                                    imgSrc={shop.imgSrc} 
+                                    imgSrc={shop.imgSrc}
                                     altText={shop.name}
                                     cardText={shop.name}
                                     hoverInfo={`${shop.name}: ${shop.timing}`}
