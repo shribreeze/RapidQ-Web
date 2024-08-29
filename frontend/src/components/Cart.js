@@ -18,7 +18,24 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
 
                 if (cartDoc.exists()) {
                     const cartData = cartDoc.data();
-                    setCartItems(cartData.items || []); // Set the fetched cart items to state
+                    const fetchedItems = cartData.items;
+                    
+                    console.log('Fetched items from Firestore:', fetchedItems);
+
+                    if (fetchedItems && typeof fetchedItems === 'object' && !Array.isArray(fetchedItems)) {
+                        // Convert object to array
+                        const itemsArray = Object.values(fetchedItems);
+                        console.log('Converted items to array:', itemsArray);
+                        setCartItems(itemsArray);
+                    } else if (Array.isArray(fetchedItems)) {
+                        setCartItems(fetchedItems);
+                    } else {
+                        console.error('Cart data items is not an array or object:', fetchedItems);
+                        setCartItems([]); // Fallback to an empty array
+                    }
+                } else {
+                    console.log('No cart document found for user:', userId);
+                    setCartItems([]); // Fallback to an empty array
                 }
             } catch (error) {
                 console.error('Error fetching cart items:', error);
@@ -39,14 +56,17 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
         return () => unsubscribe();
     }, [setCartItems]);
 
-
-    // Use useCallback to memoize fetchCartItems
-
     const saveCartItems = async (updatedCartItems) => {
         const auth = getAuth();
         const user = auth.currentUser;
         if (user) {
-            await setDoc(doc(db, 'carts', user.uid), { items: updatedCartItems });
+            // Convert array to object with item IDs as keys before saving
+            const itemsObject = updatedCartItems.reduce((obj, item) => {
+                obj[item.id] = item;
+                return obj;
+            }, {});
+            console.log('Saving items to Firestore:', itemsObject);
+            await setDoc(doc(db, 'carts', user.uid), { items: itemsObject });
         }
     };
 
@@ -89,7 +109,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
         <div className="cart-container">
             <h2 className="cart-header">Cart</h2>
             <ul className="cart-list">
-                {cartItems.map((item, index) => (
+                {Array.isArray(cartItems) && cartItems.map((item, index) => (
                     <li key={index} className="cart-item">
                         <div className="cart-item-details">
                             <p className="item-name">{item.name}</p>

@@ -6,7 +6,7 @@ import { getAuth } from 'firebase/auth';
 
 const ParentComponent = () => {
     const { shopId } = useParams();
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]); // Initialize as an empty array
     const db = getFirestore();
     const auth = getAuth();
 
@@ -17,14 +17,19 @@ const ParentComponent = () => {
                 const cartDocRef = doc(db, 'carts', user.uid);
                 const cartDoc = await getDoc(cartDocRef);
                 if (cartDoc.exists()) {
-                    setCartItems(cartDoc.data().items || []);
+                    const fetchedItems = cartDoc.data().items;
+                    if (Array.isArray(fetchedItems)) {
+                        setCartItems(fetchedItems); // Ensure cartItems is an array
+                    } else {
+                        console.error('Fetched items is not an array:', fetchedItems);
+                        setCartItems([]); // Fallback to an empty array
+                    }
                 }
             }
         };
 
         fetchCartItems();
     }, [auth, db]);
-
 
     useEffect(() => {
         const saveCartItems = async () => {
@@ -37,8 +42,6 @@ const ParentComponent = () => {
         saveCartItems();
     }, [cartItems, auth, db]);
 
-
-
     const addToCart = async (item) => {
         const updatedCartItems = [...cartItems, item];
         setCartItems(updatedCartItems);
@@ -47,7 +50,6 @@ const ParentComponent = () => {
 
     const removeFromCart = async (item) => {
         const updatedCartItems = cartItems.filter(cartItem => cartItem.name !== item.name);
-
         setCartItems(updatedCartItems);
 
         const user = auth.currentUser;
@@ -56,8 +58,7 @@ const ParentComponent = () => {
         }
     };
 
-
-    const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    const totalAmount = Array.isArray(cartItems) ? cartItems.reduce((total, item) => total + item.price * item.quantity, 0) : 0;
 
     return (
         <Cart
