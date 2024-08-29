@@ -58,7 +58,7 @@ function App() {
     const removeFromCart = (item) => {
         setCartItems(prevItems => prevItems.filter(cartItem => cartItem.id !== item.id));
     };
-    
+
     if (loading) {
         return <LoadingScreen />;
     }
@@ -67,25 +67,25 @@ function App() {
         <Router>
             <ScrollToTop />
             <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route 
-                        path="/cart" 
-                        element={
-                            <Cart 
-                                cartItems={cartItems} 
-                                removeFromCart={removeFromCart} 
-                                totalAmount={cartItems.reduce((total, item) => total + item.price * item.quantity, 0)} 
-                                setCartItems={setCartItems}
-                            />
-                        } 
-                    />
-                    <Route path="/orders" element={<Order />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/outlets" element={<Outlets />} />
-                    <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
-                </Routes>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                    path="/cart"
+                    element={
+                        <Cart
+                            cartItems={cartItems}
+                            removeFromCart={removeFromCart}
+                            totalAmount={cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}
+                            setCartItems={setCartItems}
+                        />
+                    }
+                />
+                <Route path="/orders" element={<Order />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/outlets" element={<Outlets />} />
+                <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
+            </Routes>
             <Footer />
         </Router>
     );

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { collection, getDocs } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './ShopDetail.css';
 
@@ -11,16 +12,12 @@ const ShopDetail = ({ addToCart }) => {
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
-  const [isUserSignedIn, setIsUserSignedIn] = useState(false); // Track user authentication status
+  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsUserSignedIn(true); // User is signed in
-      } else {
-        setIsUserSignedIn(false); // No user is signed in
-      }
+      setIsUserSignedIn(!!user);
     });
 
     const fetchShopDetails = async () => {
@@ -65,35 +62,75 @@ const ShopDetail = ({ addToCart }) => {
   }, [shopId]);
 
   const handleQuantityChange = (itemId, value) => {
-    setQuantities(prevQuantities => ({
+    setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [itemId]: Math.max(1, (prevQuantities[itemId] || 1) + value)
+      [itemId]: Math.max(1, (prevQuantities[itemId] || 1) + value),
     }));
   };
 
-  const handleAddToCart = (menuItem) => {
+  const handleAddToCart = async (item) => {
     if (!isUserSignedIn) {
       alert('Please sign in to add items to the cart.');
       return;
     }
 
-    addToCart({ ...menuItem, shopId: shopId, quantity: quantities[menuItem.id] || 1 });
-    setQuantities(prevQuantities => ({
-      ...prevQuantities,
-      [menuItem.id]: 1
-    }));
-    setIsCartActive(true); // Activate the "Go to Cart" button
+    const db = getFirestore();
+    const auth = getAuth();
+    const userId = auth.currentUser?.uid;
+
+    if (!userId) {
+      console.error('User ID not found. Ensure the user is signed in.');
+      return;
+    }
+
+    const quantity = quantities[item.id] || 1;
+
+    const cartItem = {
+      ...item,
+      shopId,
+      quantity,
+      timestamp: new Date(),
+    };
+
+    try {
+      const cartDocRef = doc(db, 'carts', userId);
+      const cartDoc = await getDoc(cartDocRef);
+
+      if (cartDoc.exists()) {
+        const existingCartData = cartDoc.data();
+        const updatedItems = { ...existingCartData.items };
+
+        if (updatedItems[item.id]) {
+          updatedItems[item.id].quantity += quantity;
+        } else {
+          updatedItems[item.id] = cartItem;
+        }
+
+        await setDoc(cartDocRef, { items: updatedItems }, { merge: true });
+      } else {
+        await setDoc(cartDocRef, { items: { [item.id]: cartItem } });
+      }
+
+      addToCart(cartItem);
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [item.id]: 1,
+      }));
+      setIsCartActive(true);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
   };
 
   if (!shop) {
     return <div>Loading...</div>;
   }
 
-  const uniqueCategories = [...new Set(shop.menu.map(item => item.category))];
+  const uniqueCategories = [...new Set(shop.menu.map((item) => item.category))];
 
   const filteredMenu = selectedCategory === 'All'
     ? shop.menu
-    : shop.menu.filter(item => item.category === selectedCategory);
+    : shop.menu.filter((item) => item.category === selectedCategory);
 
   return (
     <div className='body'>
@@ -114,7 +151,7 @@ const ShopDetail = ({ addToCart }) => {
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
             <option value="All">All</option>
-            {uniqueCategories.map(category => (
+            {uniqueCategories.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
@@ -124,31 +161,31 @@ const ShopDetail = ({ addToCart }) => {
       </div>
       <hr />
 
-      {uniqueCategories.map(category => (
+      {uniqueCategories.map((category) => (
         <div key={category}>
           {(selectedCategory === 'All' || selectedCategory === category) && (
             <>
               <h4 className='h4Menu'>{category}</h4>
               {filteredMenu
-                .filter(item => item.category === category)
-                .map(menuItem => (
-                  <div key={menuItem.id} className="menu-item">
-                    <p>{menuItem.name} :- &#8377; {(menuItem.price !== undefined ? menuItem.price.toFixed(2) : 'N/A')}</p>
+                .filter((item) => item.category === category)
+                .map((item) => (
+                  <div key={item.id} className="menu-item">
+                    <p>{item.name} :- &#8377; {(item.price !== undefined ? item.price.toFixed(2) : 'N/A')}</p>
                     <div>
-                      <button onClick={() => handleQuantityChange(menuItem.id, -1)}>-</button>
+                      <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
                       <input
                         type="number"
-                        value={quantities[menuItem.id] || 1}
-                        onChange={(e) => setQuantities(prevQuantities => ({
+                        value={quantities[item.id] || 1}
+                        onChange={(e) => setQuantities((prevQuantities) => ({
                           ...prevQuantities,
-                          [menuItem.id]: Number(e.target.value)
+                          [item.id]: Number(e.target.value),
                         }))}
                         min="1"
                         style={{ width: '50px', textAlign: 'center' }}
                       />
-                      <button onClick={() => handleQuantityChange(menuItem.id, 1)}>+</button>
+                      <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
                       <div className='mx-4'>
-                        <button className="add-to-cart-button" onClick={() => handleAddToCart(menuItem)}>Add to Cart</button>
+                        <button className="add-to-cart-button" onClick={() => handleAddToCart(item)}>Add to Cart</button>
                       </div>
                     </div>
                   </div>
