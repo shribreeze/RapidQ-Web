@@ -38,7 +38,7 @@ const ShopList = () => {
 
                 // Filter shops based on the search query
                 const filteredShops = shopsList.filter((shop) =>
-                    shop.shopName.toLowerCase().includes(searchQuery)
+                    shop.name.toLowerCase().includes(searchQuery)
                 );
 
                 setShops(filteredShops);
@@ -62,9 +62,9 @@ const ShopList = () => {
                             <Link to={`/shop/${shop.id}`}>
                                 <CardComponent
                                     imgSrc={shop.imgSrc}
-                                    altText={shop.shopName}
-                                    cardText={shop.shopName}
-                                    hoverInfo={`${shop.shopName}: ${shop.timing}`}
+                                    altText={shop.name}
+                                    cardText={shop.name}
+                                    hoverInfo={`${shop.name}: ${shop.timing}`}
                                 />
                             </Link>
                         </div>

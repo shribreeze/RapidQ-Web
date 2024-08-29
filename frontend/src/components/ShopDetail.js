@@ -7,7 +7,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './ShopDetail.css';
 
 const ShopDetail = ({ addToCart }) => {
-  const { shopId, shopName } = useParams();
+  const { shopId } = useParams();
   const [shop, setShop] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -88,7 +88,6 @@ const ShopDetail = ({ addToCart }) => {
     const cartItem = {
       ...item,
       shopId,
-      shopName,
       quantity,
       timestamp: new Date(),
     };
@@ -136,7 +135,7 @@ const ShopDetail = ({ addToCart }) => {
   return (
     <div className='body'>
       <div className='ShopDetailHeading'>
-        <h2>{shop.shopName}</h2>
+        <h2>{shop.name}</h2>
         <p>Address: {shop.address}</p>
         <p>Timing: {shop.timing}</p>
         <p>Delivery: {shop.delivery}</p>
