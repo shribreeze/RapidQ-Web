@@ -128,9 +128,9 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 {Array.isArray(cartItems) && cartItems.map((item, index) => (
                     <li key={index} className="cart-item">
                         <div className="cart-item-details">
-                            <p className="item-name">{item.name}</p>
+                            <p className="item-name">{item.name} - ₹ {item.price}</p>
                             <p className="item-quantity">Quantity: {item.quantity}</p>
-                            <p className="item-price">Price: ₹{item.price * item.quantity}</p>
+                            <p className="item-price">Price: ₹ {item.price * item.quantity}</p>
                         </div>
                         <button className="remove-item" onClick={() => handleRemoveOneQuantity(item)}>
                             Remove
@@ -141,7 +141,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             <div className="cart-total">
                 <p>Total: ₹{totalAmount}</p>
             </div>
-            <button className="place-order" onClick={handlePlaceOrder}>Place Order</button>
+            <button className="place-order" onClick={handlePlaceOrder}>Confirm Order</button>
             {error && <p className="error-message">{error}</p>}
         </div>
     );

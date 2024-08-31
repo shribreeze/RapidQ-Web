@@ -54,7 +54,7 @@ const ShopList = () => {
     }, [searchQuery]);
 
     if (loading) {
-        return <p style={{margin:'10px', fontSize:'20px'}}>Loading Outlets...</p>;
+        return <p className="loading-message">Loading Outlets...</p>;
     }
 
     return (

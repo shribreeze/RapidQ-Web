@@ -7,6 +7,14 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
+
+  .loading-message {
+    text-align: center;
+    color: #7f8c8d;
+    margin-top: 20px;
+    font-size: 1.2rem;
+  }
+  
   
   .col {
     flex: 1 1 calc(25% - 1rem); /* 4 cards per row */

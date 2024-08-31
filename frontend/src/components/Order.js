@@ -48,7 +48,7 @@ const Orders = () => {
     };
 
     if (loading) {
-        return <p>Loading orders...</p>;
+        return <p className="loading-message">Loading orders...</p>;
     }
 
     if (error) {
@@ -62,15 +62,21 @@ const Orders = () => {
                 <ul className="orders-list">
                     {orders.map((order) => (
                         <li key={order.id} className="order-item">
-                            <p><strong>Order ID:</strong> {order.id}</p>
-                            <p><strong>Shop Name:</strong> {order.shopName || 'N/A'}</p>
-                            <p><strong>Status:</strong> {order.status}</p>
-                            <p><strong>Total Items:</strong> {order.items.length}</p>
-                            <p><strong>Timestamp:</strong> {order.timestamp.toDate().toLocaleString()}</p>
+                            <div className="order-details">
+                                <div className="order-info">
+                                    <p><strong>Order ID:</strong> {order.id}</p>
+                                    <p><strong>Shop Name:</strong> {order.shopName || 'N/A'}</p>
+                                    <p><strong>Status:</strong> {order.status}</p>
+                                    <p><strong>Total Items:</strong> {order.items.length}</p>
+                                    <p><strong>Time:</strong> {order.timestamp.toDate().toLocaleString()}</p>
+                                </div>
+                                <button className="view-order-button">View Details</button>
+                            </div>
                             <ul>
                                 {order.items.map((item, index) => (
                                     <li key={index}>
-                                        <strong>Item:</strong> {item.name || 'Unknown Item'} - Quantity: {item.quantity || 0}
+                                        <span><strong>Item:</strong> {item.name || 'Unknown Item'}</span>
+                                        <span>Quantity: {item.quantity || 0}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -78,7 +84,7 @@ const Orders = () => {
                     ))}
                 </ul>
             ) : (
-                <p>No orders found.</p>
+                <p className="no-orders-message">No orders found.</p>
             )}
         </div>
     );

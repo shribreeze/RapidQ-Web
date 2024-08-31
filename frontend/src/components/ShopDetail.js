@@ -132,7 +132,7 @@ const ShopDetail = ({ addToCart }) => {
   };
 
   if (!shop) {
-    return <div>Loading...</div>;
+    return <p className="loading-message">Loading...</p>;
   }
 
   const uniqueCategories = [...new Set(shop.menu.map((item) => item.category))];
