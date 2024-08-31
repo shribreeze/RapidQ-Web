@@ -39,6 +39,10 @@
     margin: 5px 0;
 }
 
+.shop-name {
+    font-size: 20px;
+}
+
 .remove-item {
     background-color: red;
     color: white;

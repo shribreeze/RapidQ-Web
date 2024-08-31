@@ -63,7 +63,7 @@ const Orders = () => {
                     {orders.map((order) => (
                         <li key={order.id} className="order-item">
                             <p><strong>Order ID:</strong> {order.id}</p>
-                            <p><strong>Shop Name:</strong> {order.shopName}</p>
+                            <p><strong>Shop Name:</strong> {order.shopName || 'N/A'}</p>
                             <p><strong>Status:</strong> {order.status}</p>
                             <p><strong>Total Items:</strong> {order.items.length}</p>
                             <p><strong>Timestamp:</strong> {order.timestamp.toDate().toLocaleString()}</p>

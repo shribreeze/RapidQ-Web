@@ -7,6 +7,7 @@ import './ShopList.css';
 
 const ShopList = () => {
     const [shops, setShops] = useState([]);
+    const [loading, setLoading] = useState(true);
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('search')?.toLowerCase() || '';
@@ -36,7 +37,6 @@ const ShopList = () => {
                     })
                 );
 
-                // Filter shops based on the search query
                 const filteredShops = shopsList.filter((shop) =>
                     shop.name.toLowerCase().includes(searchQuery)
                 );
@@ -45,10 +45,17 @@ const ShopList = () => {
             } catch (error) {
                 console.error('Error fetching shops:', error);
             }
+            finally {
+                setLoading(false);
+            }
         };
 
         fetchShops();
-    }, [searchQuery]); // Re-run the effect when the search query changes
+    }, [searchQuery]);
+
+    if (loading) {
+        return <p style={{margin:'10px', fontSize:'20px'}}>Loading Outlets...</p>;
+    }
 
     return (
         <>

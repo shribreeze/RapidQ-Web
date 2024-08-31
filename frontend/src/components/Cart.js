@@ -8,6 +8,8 @@ import { db } from '../firebase';
 const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [shopId, setShopId] = useState(null);
+    const [shopName, setShopName] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,8 +24,11 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                     
                     console.log('Fetched items from Firestore:', fetchedItems);
 
+                    setShopId(cartData.shopId || null);
+                    setShopName(cartData.shopName || null);
+
                     if (fetchedItems && typeof fetchedItems === 'object' && !Array.isArray(fetchedItems)) {
-                        // Convert object to array
+                       
                         const itemsArray = Object.values(fetchedItems);
                         console.log('Converted items to array:', itemsArray);
                         setCartItems(itemsArray);
@@ -31,11 +36,11 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                         setCartItems(fetchedItems);
                     } else {
                         console.error('Cart data items is not an array or object:', fetchedItems);
-                        setCartItems([]); // Fallback to an empty array
+                        setCartItems([]);
                     }
                 } else {
                     console.log('No cart document found for user:', userId);
-                    setCartItems([]); // Fallback to an empty array
+                    setCartItems([]);
                 }
             } catch (error) {
                 console.error('Error fetching cart items:', error);
@@ -47,7 +52,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserId(user.uid);
-                fetchCartItems(user.uid); // Fetch cart items when user is signed in
+                fetchCartItems(user.uid);
             } else {
                 setUserId(null);
             }
@@ -60,20 +65,26 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
         const auth = getAuth();
         const user = auth.currentUser;
         if (user) {
-            // Convert array to object with item IDs as keys before saving
             const itemsObject = updatedCartItems.reduce((obj, item) => {
                 obj[item.id] = item;
                 return obj;
             }, {});
             console.log('Saving items to Firestore:', itemsObject);
-            await setDoc(doc(db, 'carts', user.uid), { items: itemsObject });
+            await setDoc(doc(db, 'carts', user.uid), {
+                items: itemsObject,
+                shopId, 
+                shopName
+            });
         }
     };
 
-    const handleRemoveFromCart = async (item) => {
-        const updatedCartItems = cartItems.filter(cartItem => cartItem.name !== item.name);
+    const handleRemoveOneQuantity = async (item) => {
+        const updatedCartItems = cartItems.map(cartItem => 
+            cartItem.name === item.name ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
+        ).filter(cartItem => cartItem.quantity > 0);
+
         setCartItems(updatedCartItems);
-        await saveCartItems(updatedCartItems); // Update Firestore
+        await saveCartItems(updatedCartItems); // Update Firestore in real-time
     };
 
     const placeOrder = async () => {
@@ -86,6 +97,8 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             const orderDocRef = await addDoc(collection(db, 'orders'), {
                 userId,
                 items: cartItems,
+                shopId,
+                shopName,
                 status: 'pending',
                 timestamp: Timestamp.now()
             });
@@ -93,8 +106,10 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
 
             // Clear the cart after placing an order
             setCartItems([]);
-            await saveCartItems([]); // Clear cart in Firestore
-            navigate('/orders'); // Navigate to the user's orders page
+            setShopId(null);
+            setShopName(null);
+            await saveCartItems([]);
+            navigate('/orders');
         } catch (error) {
             console.error('Error placing order: ', error.message);
             setError('Failed to place the order. Please try again.');
@@ -108,6 +123,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
     return (
         <div className="cart-container">
             <h2 className="cart-header">Cart</h2>
+            <p className="shop-name">{shopName}</p>
             <ul className="cart-list">
                 {Array.isArray(cartItems) && cartItems.map((item, index) => (
                     <li key={index} className="cart-item">
@@ -116,7 +132,9 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                             <p className="item-quantity">Quantity: {item.quantity}</p>
                             <p className="item-price">Price: ₹{item.price * item.quantity}</p>
                         </div>
-                        <button className="remove-item" onClick={() => handleRemoveFromCart(item)}>Remove</button>
+                        <button className="remove-item" onClick={() => handleRemoveOneQuantity(item)}>
+                            Remove
+                        </button>
                     </li>
                 ))}
             </ul>

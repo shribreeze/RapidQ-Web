@@ -88,6 +88,7 @@ const ShopDetail = ({ addToCart }) => {
     const cartItem = {
       ...item,
       shopId,
+      shopName: shop.name,
       quantity,
       timestamp: new Date(),
     };
@@ -106,9 +107,17 @@ const ShopDetail = ({ addToCart }) => {
           updatedItems[item.id] = cartItem;
         }
 
-        await setDoc(cartDocRef, { items: updatedItems }, { merge: true });
+        await setDoc(cartDocRef, {
+          items: updatedItems,
+          shopId,
+          shopName: shop.name,
+        }, { merge: true });
       } else {
-        await setDoc(cartDocRef, { items: { [item.id]: cartItem } });
+        await setDoc(cartDocRef, {
+          items: { [item.id]: cartItem },
+          shopId,
+          shopName: shop.name,
+        });
       }
 
       addToCart(cartItem);
