@@ -1,4 +1,4 @@
-.card {
+.card-cp {
   width: 100%;
   max-width: 350px;
   margin: 20px auto;
@@ -14,43 +14,43 @@
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
+.card-cp:hover {
   transform: scale(1.05);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
-.card-img-container {
+.card-img-container-cp {
   width: 100%;
   position: relative;
 }
 
-.card-img-top {
+.card-img-top-cp {
   width: 100%;
   height: 220px;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
 }
 
-.card-body {
+.card-body-cp {
   padding: 20px;
   text-align: center;
 }
 
-.card-title {
+.card-title-cp {
   font-size: 1.25rem;
   font-weight: 700;
   color: #333;
   margin-bottom: 0.5rem;
 }
 
-.card-text {
+.card-text-cp {
   font-size: 1rem;
   color: #555;
   margin: 0;
   line-height: 1.5;
 }
 
-.card-info {
+.card-info-cp {
   position: absolute;
   top: 0;
   left: 0;
@@ -68,16 +68,16 @@
   flex-direction: column;
 }
 
-.card-img-container:hover .card-info {
+.card-img-container-cp:hover .card-info-cp {
   opacity: 1;
 }
 
-.card-info-text {
+.card-info-text-cp {
   font-size: 1rem;
   margin-bottom: 10px;
 }
 
-.card-info-button {
+.card-info-button-cp {
   background-color: #f9d002;
   color: #462B9C;
   border: none;
@@ -89,7 +89,7 @@
   transition: background-color 0.3s ease;
 }
 
-.card-info-button:hover {
+.card-info-button-cp:hover {
   background-color: #fff;
   color: #462B9C;
 }
