@@ -21,14 +21,14 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 if (cartDoc.exists()) {
                     const cartData = cartDoc.data();
                     const fetchedItems = cartData.items;
-                    
+
                     console.log('Fetched items from Firestore:', fetchedItems);
 
                     setShopId(cartData.shopId || null);
                     setShopName(cartData.shopName || null);
 
                     if (fetchedItems && typeof fetchedItems === 'object' && !Array.isArray(fetchedItems)) {
-                       
+
                         const itemsArray = Object.values(fetchedItems);
                         console.log('Converted items to array:', itemsArray);
                         setCartItems(itemsArray);
@@ -72,14 +72,14 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             console.log('Saving items to Firestore:', itemsObject);
             await setDoc(doc(db, 'carts', user.uid), {
                 items: itemsObject,
-                shopId, 
+                shopId,
                 shopName
             });
         }
     };
 
     const handleRemoveOneQuantity = async (item) => {
-        const updatedCartItems = cartItems.map(cartItem => 
+        const updatedCartItems = cartItems.map(cartItem =>
             cartItem.name === item.name ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
         ).filter(cartItem => cartItem.quantity > 0);
 
@@ -94,7 +94,12 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 return;
             }
 
-            const orderDocRef = await addDoc(collection(db, 'orders'), {
+            const orderDocRef = doc(collection(db, 'orders')); // Generate Firestore auto ID
+            const autoOrderId = orderDocRef.id; // Get the auto-generated ID from the reference
+            const customOrderId = `${shopId}_${autoOrderId}`; // Combine shopId with auto ID
+
+            // Create a new document with the customOrderId
+            await setDoc(doc(db, 'orders', customOrderId), {
                 userId,
                 items: cartItems,
                 shopId,
@@ -144,7 +149,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 </div>
                 <button className="place-order" onClick={handlePlaceOrder}>Confirm Order</button>
                 {error && <p className="error-message">{error}</p>}
-            </div>  
+            </div>
         </>
     );
 };

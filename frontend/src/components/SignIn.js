@@ -69,10 +69,10 @@ const SignIn = () => {
                     </div>
                   </div>
 
-                    <div className='d-flex justify-content-center'>
-                      <p className=''>or</p>
-                    </div>
-                  
+                  <div className='d-flex justify-content-center'>
+                    <p className=''>or</p>
+                  </div>
+
                   <form onSubmit={handleSubmit}>
                     <div className="row gy-3 overflow-hidden">
                       <div className="col-12">
