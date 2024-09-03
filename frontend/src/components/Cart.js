@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Cart.css';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, addDoc, Timestamp, doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, doc, setDoc, getDoc, getDocs, where, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
@@ -42,6 +42,13 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                     console.log('No cart document found for user:', userId);
                     setCartItems([]);
                 }
+                const ordersRef = collection(db, 'orders');
+                const q = query(ordersRef, where('userId', '==', userId), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                const orders = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                console.log('Fetched and sorted orders:', orders);
+
             } catch (error) {
                 console.error('Error fetching cart items:', error);
                 setError('Failed to load cart items. Please try again.');
