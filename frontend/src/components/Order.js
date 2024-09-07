@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { collection, query, where, orderBy, onSnapshot, doc, updateDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import './Order.css';
 
@@ -9,6 +9,8 @@ const Orders = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedOrderId, setSelectedOrderId] = useState(null);
 
     useEffect(() => {
         const auth = getAuth();
@@ -25,7 +27,7 @@ const Orders = () => {
         return () => unsubscribe();
     }, []);
 
-    const fetchOrders = async (userId) => {
+    const fetchOrders = (userId) => {
         setLoading(true);
         try {
             const q = query(
@@ -33,18 +35,65 @@ const Orders = () => {
                 where('userId', '==', userId),
                 orderBy('timestamp', 'desc')
             );
-            const querySnapshot = await getDocs(q);
-            const fetchedOrders = [];
-            querySnapshot.forEach((doc) => {
-                fetchedOrders.push({ id: doc.id, ...doc.data() });
+
+            // Real-time listener
+            const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+                const fetchedOrders = [];
+                for (const docSnapshot of querySnapshot.docs) {
+                    const orderData = docSnapshot.data();
+                    if (orderData.status === 'Paid') {
+                        await moveToPaidOrders(docSnapshot.id, orderData);
+                    } else {
+                        fetchedOrders.push({ id: docSnapshot.id, ...orderData });
+                    }
+                }
+                setOrders(fetchedOrders);
+                setLoading(false);
             });
-            setOrders(fetchedOrders);
+
+            return () => unsubscribe();
         } catch (error) {
             console.error('Error fetching orders:', error.message);
             setError(`Failed to fetch orders. Error: ${error.message}`);
-        } finally {
             setLoading(false);
         }
+    };
+
+    const moveToPaidOrders = async (orderId, orderData) => {
+        try {
+            // Set the document in "paidOrders" collection with the same ID as the original order
+            const paidOrderRef = doc(db, 'paidOrders', orderId);
+            await setDoc(paidOrderRef, {
+                ...orderData,
+                movedAt: new Date(), // Add timestamp of when it was moved
+            });
+
+            // Optionally, delete the order from the "orders" collection after moving
+            const orderRef = doc(db, 'orders', orderId);
+            await deleteDoc(orderRef);
+            console.log(`Order ${orderId} moved to paidOrders and deleted from orders`);
+        } catch (error) {
+            console.error('Error moving order to paidOrders:', error.message);
+        }
+    };
+
+    const handlePayNowClick = (orderId) => {
+        setSelectedOrderId(orderId);
+        setIsPopupOpen(true);
+    };
+
+    const handlePaymentConfirmation = async (confirmation) => {
+        if (confirmation === 'yes' && selectedOrderId) {
+            try {
+                const orderRef = doc(db, 'orders', selectedOrderId);
+                await updateDoc(orderRef, {
+                    status: 'Paid',
+                });
+            } catch (error) {
+                console.error('Error updating order status:', error.message);
+            }
+        }
+        setIsPopupOpen(false);
     };
 
     if (loading) {
@@ -71,7 +120,14 @@ const Orders = () => {
                                     <p><strong>Total Amount:</strong> ₹ {order.totalAmount || 'N/A'}</p>
                                     <p><strong>Time:</strong> {order.timestamp.toDate().toLocaleString()}</p>
                                 </div>
-                                <button className="view-order-button">View Details</button>
+                                {order.status === 'Confirmed' && (
+                                    <button
+                                        className="view-order-button"
+                                        onClick={() => handlePayNowClick(order.id)}
+                                    >
+                                        Pay Now
+                                    </button>
+                                )}
                             </div>
                             <ul>
                                 {order.items.map((item, index) => (
@@ -87,6 +143,17 @@ const Orders = () => {
                 </ul>
             ) : (
                 <p className="no-orders-message">No orders found.</p>
+            )}
+
+            {/* Payment confirmation popup */}
+            {isPopupOpen && (
+                <div className="popup">
+                    <div className="popup-content">
+                        <p>Have you done the payment?</p>
+                        <button onClick={() => handlePaymentConfirmation('yes')}>Yes</button>
+                        <button onClick={() => handlePaymentConfirmation('no')}>No</button>
+                    </div>
+                </div>
             )}
         </div>
     );

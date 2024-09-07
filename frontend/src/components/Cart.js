@@ -121,7 +121,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 shopId,
                 shopName,
                 totalAmount,
-                status: 'pending',
+                status: 'Pending',
                 timestamp: Timestamp.now()
             });
             console.log('Order placed with ID:', orderDocRef.id);
