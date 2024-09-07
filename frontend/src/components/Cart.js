@@ -100,6 +100,14 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 setError('Cannot place an order with an empty cart.');
                 return;
             }
+            const auth = getAuth();
+            const user = auth.currentUser;
+            let userName = null;
+
+            if (user) {
+                userName = user.displayName; // Get user's display name from Firebase Auth
+            }
+
             const totalAmount = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
             const orderDocRef = doc(collection(db, 'orders')); // Generate Firestore auto ID
             const autoOrderId = orderDocRef.id; // Get the auto-generated ID from the reference
@@ -108,6 +116,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             // Create a new document with the customOrderId
             await setDoc(doc(db, 'orders', customOrderId), {
                 userId,
+                userName,
                 items: cartItems,
                 shopId,
                 shopName,
