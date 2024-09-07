@@ -68,6 +68,7 @@ const Orders = () => {
                                     <p><strong>Shop Name:</strong> {order.shopName || 'N/A'}</p>
                                     <p><strong>Status:</strong> {order.status}</p>
                                     <p><strong>Total Items:</strong> {order.items.length}</p>
+                                    <p><strong>Total Amount:</strong> ₹{order.totalAmount || 'N/A'}</p>
                                     <p><strong>Time:</strong> {order.timestamp.toDate().toLocaleString()}</p>
                                 </div>
                                 <button className="view-order-button">View Details</button>
