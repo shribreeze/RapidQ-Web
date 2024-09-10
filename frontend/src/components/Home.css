@@ -15,25 +15,33 @@
     left: -10px;
     right: -10px;
     bottom: -10px;
-    background-image: url(../../public/food-4k.jpg);
+    background-image:
+        radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 40%, rgba(255, 255, 255, 0) 100%),
+        url(../../public/food-4k.jpg);
+    /* Darkens the center, brightens the edges */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    filter: blur(3px);
-    z-index: -1; 
+    filter: blur(3px) saturate(1.5);
+    /* Retains blur and vibrance */
+    z-index: -1;
 }
+
+
+
+
 
 .display-1 {
     font-family: "super black marker";
     color: black;
-    text-shadow: 
-        1px 1px 0 black, 
-        -1px 1px 0 black, 
-        1px -1px 0 black, 
+    text-shadow:
+        1px 1px 0 black,
+        -1px 1px 0 black,
+        1px -1px 0 black,
         -1px -1px 0 black,
-        1px 0 0 black, 
-        -1px 0 0 black, 
-        0 1px 0 black, 
+        1px 0 0 black,
+        -1px 0 0 black,
+        0 1px 0 black,
         0 -1px 0 black;
     animation: fadeInScale 2s ease-in-out;
 }
@@ -43,10 +51,12 @@
         opacity: 0;
         transform: scale(0.8);
     }
+
     50% {
         opacity: 0.5;
         transform: scale(1.1);
     }
+
     100% {
         opacity: 1;
         transform: scale(1);

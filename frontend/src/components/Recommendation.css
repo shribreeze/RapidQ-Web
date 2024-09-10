@@ -5,12 +5,13 @@
 .card-block {
   height: 225px;
   width: 250px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border: none;
   background-position: center;
   background-size: cover;
   transition: all 0.2s ease-in-out !important;
   border-radius: 24px;
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: none;
