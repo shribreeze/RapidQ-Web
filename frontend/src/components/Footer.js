@@ -78,7 +78,7 @@ const Footer = () => {
                           <h4 className="widget-title mb-4">Company</h4>
                           <ul className="list-unstyled">
                             <li className="mb-2">
-                              <a href="#!" className="link-secondary text-decoration-none">About</a>
+                              <Link to="/about" className="link-secondary text-decoration-none">About</Link>
                             </li>
                             <li className="mb-2">
                               <a href="#!" className="link-secondary text-decoration-none">Contact</a>

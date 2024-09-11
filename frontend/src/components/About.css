@@ -1,0 +1,50 @@
+.about-container {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .about-banner {
+    text-align: center;
+    margin-bottom: 2rem;
+    background-color: #462B9C;
+    color: white;
+    padding: 2rem 0;
+  }
+  
+  .about-banner h1 {
+    font-size: 3rem;
+  }
+  
+  .about-banner p {
+    font-size: 1.2rem;
+  }
+  
+  .about-content h2 {
+    font-size: 2rem;
+    color: #462B9C;
+    margin-top: 1.5rem;
+  }
+  
+  .about-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .about-content ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .about-content a {
+    color: #f9d002;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .about-content a:hover {
+    text-decoration: underline;
+  }
+  
