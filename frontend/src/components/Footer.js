@@ -59,17 +59,17 @@ const Footer = () => {
                           <h4 className="widget-title mb-4">Services</h4>
                           <ul className="list-unstyled">
                             <li className="mb-2">
-                              <a href="#!" className="link-secondary text-decoration-none">Outlets</a>
+                              <Link to="/outlets" className="link-secondary text-decoration-none">Outlets</Link>
                             </li>
                             <li className="mb-2">
-                              <a href="#!" className="link-secondary text-decoration-none">Cart</a>
+                              <Link to="/cart" className="link-secondary text-decoration-none">Cart</Link>
                             </li>
                             <li className="mb-2">
-                              <a href="#!" className="link-secondary text-decoration-none">Orders</a>
+                              <Link to="/orders" className="link-secondary text-decoration-none">Orders</Link>
                             </li>
-                            <li className="mb-0">
+                            {/* <li className="mb-0">
                               <a href="#!" className="link-secondary text-decoration-none">Web Design</a>
-                            </li>
+                            </li> */}
                           </ul>
                         </div>
                       </div>
@@ -81,13 +81,13 @@ const Footer = () => {
                               <Link to="/about" className="link-secondary text-decoration-none">About</Link>
                             </li>
                             <li className="mb-2">
-                              <a href="#!" className="link-secondary text-decoration-none">Contact</a>
+                              <Link to="/contact" className="link-secondary text-decoration-none">Contact</Link>
                             </li>
                             <li className="mb-2">
-                              <a href="#!" className="link-secondary text-decoration-none">Terms of Service</a>
+                              <Link to="/terms" className="link-secondary text-decoration-none">Terms of Service</Link>
                             </li>
                             <li className="mb-0">
-                              <a href="#!" className="link-secondary text-decoration-none">Privacy Policy</a>
+                              <Link to="/privacy" className="link-secondary text-decoration-none">Privacy Policy</Link>
                             </li>
                           </ul>
                         </div>

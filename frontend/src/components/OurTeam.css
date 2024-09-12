@@ -1,92 +1,93 @@
 .team-container {
   text-align: center;
-  padding: 4rem;
-  background-color: white;
-  color: black;
-  position: relative;
+  padding: 2rem;
+  /* background-color: rgb(255, 201, 201); */
+  background: linear-gradient(90deg, #fffdd1, #d2e1ff);
 }
 
 .team-heading {
-  font-size: 3rem;
+  font-size: 2.5rem;
+  color: black;
+  margin-bottom: 1rem;
+}
+
+.team-description {
+  font-size: 1.2rem;
+  color: #333;
   margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  animation: fadeIn 1s ease-in;
 }
 
 .team-lineup {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px; /* Adds space between cards */
+  gap: 2rem;
 }
 
 .team-member {
-  position: relative;
-  width: 300px;
-  height: 500px;
-  margin: 20px;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   opacity: 0;
-  transform: scale(0.9) translateY(100%);
-  transition: transform 0.8s ease, opacity 0.8s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  border-radius: 15px;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .team-member.enter {
   opacity: 1;
-  transform: scale(1) translateY(0);
+  transform: translateY(0);
 }
 
 .team-member-video {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-bottom: 5px solid #f9d002; /* Add a border to the video */
-  transition: transform 0.5s ease-in-out;
+  width: 75%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
 }
 
 .team-member-info {
-  padding: 10px;
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  background-color: black;
-  border-radius: 0 0 15px 15px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  color: white;
-  transition: opacity 0.5s ease;
+  text-align: center;
 }
 
 .team-member-info h3 {
-  font-size: 1.5rem;
-  margin: 0.5rem 0;
+  font-size: 1.8rem;
+  color: black;
 }
 
 .team-member-info p {
-  font-size: 1rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 992px) {
+  .team-member {
+    width: 45%;
+  }
 }
 
 @media (max-width: 768px) {
-  .team-lineup {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .team-member {
-    width: 90%;
-    margin-bottom: 2rem;
+    width: 100%;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+@media (max-width: 576px) {
+  .team-heading {
+    font-size: 2rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .team-description {
+    font-size: 1rem;
+  }
+
+  .team-member-info h3 {
+    font-size: 1.5rem;
+  }
+
+  .team-member-info p {
+    font-size: 1rem;
   }
 }

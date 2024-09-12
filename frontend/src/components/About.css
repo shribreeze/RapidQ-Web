@@ -1,50 +1,249 @@
 .about-container {
-    padding: 2rem;
-    background-color: #f9f9f9;
-    font-family: 'Arial', sans-serif;
+  background-color: white;
+  padding: 2rem;
+  color: #333;
+}
+
+.about-banner {
+  background-color: #000000;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-banner::before {
+  content: '';
+  background-image: url('../../public/food-4k.jpg');
+  background-size: cover;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.about-banner h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  z-index: 1;
+  position: relative;
+  animation: fadeInDown 1s ease-in-out;
+}
+
+.about-banner p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  z-index: 1;
+  position: relative;
+  animation: fadeInUp 1.5s ease-in-out;
+}
+
+.about-content {
+  padding: 3rem 0;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.about-content-team {
+  /* padding: 3rem 1.5rem; */
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.about-content h2 {
+  color: #462B9C;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  position: relative;
+  animation: slideInLeft 0.5s ease-in-out;
+}
+
+.about-content p {
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.about-content ul {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+.about-content ul li {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.about-content ul li::before {
+  content: '✓';
+  color: #f9d002;
+  margin-right: 1rem;
+}
+
+.about-content a {
+  color: #462B9C;
+  text-decoration: underline;
+}
+
+.about-content a:hover {
+  color: #f9d002;
+  text-decoration: none;
+}
+
+h2 + p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.section-graphics {
+  margin-top: 3rem;
+}
+
+.our-team-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #462B9C;
+}
+
+.our-team-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #f9d002;
+  margin: 1rem auto;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
   }
-  
-  .about-banner {
-    text-align: center;
-    margin-bottom: 2rem;
-    background-color: #462B9C;
-    color: white;
-    padding: 2rem 0;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1200px) {
   .about-banner h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
-  
   .about-banner p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
-  
-  .about-content h2 {
+}
+
+@media (max-width: 992px) {
+  .about-container {
+    padding: 2rem 1rem;
+  }
+
+  .about-banner h1 {
     font-size: 2rem;
-    color: #462B9C;
-    margin-top: 1.5rem;
   }
-  
-  .about-content p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-  
-  .about-content ul {
-    list-style-type: disc;
-    margin-left: 2rem;
+  .about-banner p {
     font-size: 1.1rem;
   }
-  
-  .about-content a {
-    color: #f9d002;
-    text-decoration: none;
-    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .about-banner {
+    padding: 3rem 1rem;
   }
-  
-  .about-content a:hover {
-    text-decoration: underline;
+  .about-banner h1 {
+    font-size: 1.8rem;
   }
+  .about-banner p {
+    font-size: 1rem;
+  }
+
+  .about-content h2 {
+    font-size: 1.8rem;
+  }
+  .about-content p {
+    font-size: 1rem;
+  }
+  .about-content ul li {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-banner {
+    padding: 2rem 1rem;
+  }
+  .about-banner h1 {
+    font-size: 1.5rem;
+  }
+  .about-banner p {
+    font-size: 0.9rem;
+  }
+
+  .about-content h2 {
+    font-size: 1.5rem;
+  }
+  .about-content p {
+    font-size: 0.9rem;
+  }
+  .about-content ul li {
+    font-size: 0.9rem;
+  }
+} 
+
+.ourStory {
+  display: flex;
+  background-color: #fffdd1;
   
+}
+
+.whatWeDo {
+  display: flex;
+  background-color: #d2e1ff;
+  
+}
+
+.ourMission {
+  display: flex;
+  background-color: #fffdd1;
+} 
+
+.ourValues {
+  display: flex;
+  background-color: #d2e1ff;
+}
+
+@media (max-width: 768px) {
+  .ourStory img,
+  .whatWeDo img,
+  .ourMission img,
+  .ourValues img {
+    display: none;
+  }
+}

@@ -10,19 +10,25 @@ const OurTeam = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          // Reset and play videos when section becomes visible
-          [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
-            if (ref.current) {
-              ref.current.currentTime = 0;
-              ref.current.play();
-            }
-          });
-        } else {
-          setVisible(false);
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
+              if (ref.current && ref.current.paused) {
+                ref.current.currentTime = 0;
+                ref.current.play();
+              }
+            });
+          } else {
+            setVisible(false);
+            [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
+              if (ref.current && !ref.current.paused) {
+                ref.current.pause();
+              }
+            });
+          }
+        });
       },
       { threshold: 0.2 }
     );
@@ -41,13 +47,16 @@ const OurTeam = () => {
   return (
     <div className="team-container" ref={teamSectionRef}>
       <h1 className="team-heading">Meet the QuickQ Team</h1>
+      <p className="team-description">
+        The QuickQ team is composed of passionate innovators, developers, and customer service experts dedicated to making food ordering smarter. 
+        Our team works tirelessly to ensure the app is constantly evolving and stays at the cutting edge of technology.
+      </p>
       
       <div className="team-lineup">
         {/* Sameer */}
         <div className={`team-member ${visible ? 'enter' : ''}`}>
           <video
             ref={sameerVideoRef}
-            autoPlay
             muted
             className="team-member-video"
           >
@@ -63,7 +72,6 @@ const OurTeam = () => {
         <div className={`team-member ${visible ? 'enter' : ''}`}>
           <video
             ref={atharvVideoRef}
-            autoPlay
             muted
             className="team-member-video"
           >
@@ -79,7 +87,6 @@ const OurTeam = () => {
         <div className={`team-member ${visible ? 'enter' : ''}`}>
           <video
             ref={divyanshuVideoRef}
-            autoPlay
             muted
             className="team-member-video"
           >
