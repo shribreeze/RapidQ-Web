@@ -12,6 +12,7 @@ import Outlets from './components/Outlets';
 import Footer from './components/Footer';
 import ShopDetail from './components/ShopDetail';
 import ScrollToTop from './components/ScrollToTop';
+import About from './components/About';
 // import UserOrders from './components/UserOrders'; 
 
 function App() {
@@ -84,6 +85,7 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/outlets" element={<Outlets />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/shop/:shopId" element={<ShopDetail addToCart={addToCart} />} />
             </Routes>
             <Footer />
