@@ -51,7 +51,7 @@ const Navbar = () => {
                                 <Link className="nav-link active" aria-current="page" to="/outlets">Outlets</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/cart"><img src="/cart.png" alt='cart-pic' style={{ height: "30px" }} /> Cart</Link>
+                                <Link className="nav-link active" aria-current="page" to="/cart"> Cart<img src="/cart.png" alt='cart-pic' style={{ height: "30px" }} /></Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/orders">Orders</Link>
@@ -70,7 +70,7 @@ const Navbar = () => {
                         </form>
                         {user ? (
                             <div className="d-flex align-items-center">
-                                <span className="navbar-text me-2 text-white">Hi, {user.displayName}</span>
+                                <span className="navbar-text me-2 text-white">Hi {user.displayName}</span>
                                 <button className="btn btn-outline-warning me-2 m-1" onClick={handleSignOut}>Sign Out</button>
                             </div>
                         ) : (
