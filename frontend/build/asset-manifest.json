@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f341d220.css",
+    "main.js": "/static/js/main.34b48d65.js",
+    "static/media/authMainBg2.jpg": "/static/media/authMainBg2.48f62cf49200cb079fd1.jpg",
+    "static/media/tandooriChicken.jpg": "/static/media/tandooriChicken.5478b4ef5f388581708f.jpg",
+    "static/media/sandwich.jpg": "/static/media/sandwich.b04e7d8c965214cb2b07.jpg",
+    "static/media/food-4k.jpg": "/static/media/food-4k.ac8e582b8210426f34fe.jpg",
+    "static/media/friedRice.jpg": "/static/media/friedRice.10b932f452f17c5b7183.jpg",
+    "static/media/noodles.jpg": "/static/media/noodles.8db79341d9d6e1e968ed.jpg",
+    "static/media/burger.jpg": "/static/media/burger.6858bbd182d8579bcaea.jpg",
+    "static/media/omelette.jpg": "/static/media/omelette.b626f22677b294f03387.jpg",
+    "static/media/roll.jpg": "/static/media/roll.dcd585336b05a4ff8850.jpg",
+    "static/media/shakes.jpg": "/static/media/shakes.3f74637cfed670533ea0.jpg",
+    "static/media/ChholeSamose.webp": "/static/media/ChholeSamose.517f97c6b3d16feda3e6.webp",
+    "static/media/vegThali.avif": "/static/media/vegThali.9a8558c35aa06da7dcbf.avif",
+    "index.html": "/index.html",
+    "main.f341d220.css.map": "/static/css/main.f341d220.css.map",
+    "main.34b48d65.js.map": "/static/js/main.34b48d65.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f341d220.css",
+    "static/js/main.34b48d65.js"
+  ]
+}
