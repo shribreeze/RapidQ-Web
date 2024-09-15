@@ -9,25 +9,33 @@ const OurTeam = () => {
   const divyanshuVideoRef = useRef(null);
 
   useEffect(() => {
+    let timeoutId = null;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisible(true);
-            [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
-              if (ref.current && ref.current.paused) {
-                ref.current.currentTime = 0;
-                ref.current.play();
-              }
-            });
-          } else {
-            setVisible(false);
-            [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
-              if (ref.current && !ref.current.paused) {
-                ref.current.pause();
-              }
-            });
-          }
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => {
+            if (entry.isIntersecting) {
+              setVisible(true);
+              [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
+                if (ref.current && ref.current.paused) {
+                  ref.current.currentTime = 0;
+                  ref.current.play().catch(error => {
+                    // Handle any errors that occur (e.g., user not interacting with the page)
+                    console.error('Error playing the video:', error);
+                  });
+                }
+              });
+            } else {
+              setVisible(false);
+              [sameerVideoRef, atharvVideoRef, divyanshuVideoRef].forEach(ref => {
+                if (ref.current && !ref.current.paused) {
+                  ref.current.pause();
+                }
+              });
+            }
+          }, 100); // 100 ms delay to debounce
         });
       },
       { threshold: 0.2 }
@@ -38,6 +46,7 @@ const OurTeam = () => {
     }
 
     return () => {
+      clearTimeout(timeoutId);
       if (teamSectionRef.current) {
         observer.unobserve(teamSectionRef.current);
       }
@@ -60,7 +69,7 @@ const OurTeam = () => {
             muted
             className="team-member-video"
           >
-            <source src="sameerVid.mp4" type="video/mp4" />
+            <source src="/sameerVid2.mp4" type="video/mp4" />
           </video>
           <div className="team-member-info">
             <h3>Sameer Gautam</h3>
@@ -75,7 +84,7 @@ const OurTeam = () => {
             muted
             className="team-member-video"
           >
-            <source src="atharvVid.mp4" type="video/mp4" />
+            <source src="/atharvVid.mp4" type="video/mp4" />
           </video>
           <div className="team-member-info">
             <h3>Atharv Virmani</h3>
@@ -90,7 +99,7 @@ const OurTeam = () => {
             muted
             className="team-member-video"
           >
-            <source src="divyanshuVid.mp4" type="video/mp4" />
+            <source src="/divyanshuVid.mp4" type="video/mp4" />
           </video>
           <div className="team-member-info">
             <h3>Divyanshu Agarwal</h3>
