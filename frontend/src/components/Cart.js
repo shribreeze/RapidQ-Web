@@ -108,7 +108,11 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 userName = user.displayName; // Get user's display name from Firebase Auth
             }
 
-            const totalAmount = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const itemsWithStatus = cartItems.map(item => ({
+                ...item,
+                item_status: 'Pending' // Add individual status to each item
+            }));
+            const totalAmount = itemsWithStatus.reduce((total, item) => total + (item.price * item.quantity), 0);
             const orderDocRef = doc(collection(db, 'orders')); // Generate Firestore auto ID
             const autoOrderId = orderDocRef.id; // Get the auto-generated ID from the reference
             const customOrderId = `${shopId}_${autoOrderId}`; // Combine shopId with auto ID
@@ -117,7 +121,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             await setDoc(doc(db, 'orders', customOrderId), {
                 userId,
                 userName,
-                items: cartItems,
+                items: itemsWithStatus,
                 shopId,
                 shopName,
                 totalAmount,
