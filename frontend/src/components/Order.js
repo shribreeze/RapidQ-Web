@@ -60,7 +60,7 @@ const Orders = () => {
 
     const fetchPaidOrders = (userId) => {
         setLoading(true);
-        console.log('Fetching paid orders for userId:', userId); 
+        console.log('Fetching paid orders for userId:', userId);
         try {
             const q = query(
                 collection(db, 'paidOrders'),
@@ -119,6 +119,7 @@ const Orders = () => {
                             <p><strong>Total Items:</strong> {order.items.length}</p>
                             <p><strong>Total Amount:</strong> ₹ {order.totalAmount || 'N/A'}</p>
                             <p><strong>Time:</strong> {order.timestamp.toDate().toLocaleString()}</p>
+                            <p><strong>Note:</strong> {order.note}</p>
                         </div>
                         {order.status === 'Confirmed' && (
                             <button
