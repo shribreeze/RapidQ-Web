@@ -1,0 +1,219 @@
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: linear-gradient(145deg, #462B9C, #f9d002);
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .contact-title {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    animation: slideInDown 1s ease-in-out;
+  }
+  
+  .contact-sections {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    color: #000;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .contact-description {
+    font-size: 1.2rem;
+    color: #000;
+    margin-bottom: 20px;
+    animation: slideInUp 1.5s ease-in-out;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .contact-form-section,
+  .shopkeeper-registration-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    animation: zoomIn 1s ease-in-out;
+    margin: 0 auto;
+  }
+  
+  .contact-form {
+    width: 100%;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .input-label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .input-field, .textarea-field {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #f9d002;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .input-field:focus, .textarea-field:focus {
+    border-color: #462B9C;
+  }
+  
+  .textarea-field {
+    resize: none;
+    height: 150px;
+  }
+  
+  .submit-btn {
+    background-color: #462B9C;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #f9d002;
+    color: #462B9C;
+  }
+  
+  .google-form-link {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #462B9C;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  .google-form-link:hover {
+    background-color: #f9d002;
+    color: #462B9C;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .contact-sections {
+      flex-direction: column; /* Stacks sections vertically on smaller screens */
+      gap: 30px; /* Smaller gap between sections */
+    }
+  
+    .contact-title {
+      font-size: 2.5rem; /* Adjust title size for mobile */
+    }
+  
+    .section-title {
+      font-size: 1.8rem;
+    }
+  
+    .contact-description {
+      font-size: 1rem;
+    }
+  
+    .submit-btn {
+      font-size: 1rem; /* Adjust button font size */
+    }
+  
+    .google-form-link {
+      font-size: 1rem; /* Adjust link font size */
+    }
+  }
+  
+  /* Tablet responsiveness */
+  @media (max-width: 1024px) {
+    .contact-title {
+      font-size: 2.7rem;
+    }
+  
+    .section-title {
+      font-size: 1.9rem;
+    }
+  
+    .contact-description {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInDown {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  

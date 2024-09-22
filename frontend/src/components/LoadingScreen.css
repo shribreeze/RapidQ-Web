@@ -4,15 +4,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to bottom, #462B9C , #644AB5);/* Adjust as needed */
+    background-image: linear-gradient(to bottom, #285D41 , #2d704d);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure it covers everything */
+    z-index: 1000;
 }
 
 .logo {
-    width: 150px; /* Adjust size as needed */
+    width: 150px;
     height: auto;
 }
 
@@ -25,27 +25,27 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: white; /* Adjust as needed */
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure it covers everything */
+    z-index: 1000;
 }
 
 .logo {
-    width: 150px; /* Adjust size as needed */
+    width: 150px;
     height: auto;
-    animation: zoomIn 2s ease-out; /* Adjust duration and easing as needed */
+    animation: zoomIn 2s ease-out;
 }
 
 @keyframes zoomIn {
     0% {
-        transform: scale(0.5); /* Start with a smaller size */
-        opacity: 0; /* Start as invisible */
+        transform: scale(0.5);
+        opacity: 0;
     }
     100% {
-        transform: scale(1); /* Scale to full size */
-        opacity: 1; /* End as fully visible */
+        transform: scale(1);
+        opacity: 1;
     }
 }
 

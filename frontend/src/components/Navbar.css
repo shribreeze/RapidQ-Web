@@ -1,5 +1,6 @@
 #navbar {
-    background-color: hsl(149, 40%, 26%);
+    /* background-color: hsl(149, 40%, 26%); */
+    background-color: #285D41;
     font-size: 18px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
