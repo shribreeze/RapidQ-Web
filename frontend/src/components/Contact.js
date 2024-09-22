@@ -21,6 +21,7 @@ const Contact = () => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
+    formData.append('userName', user.displayName);
     formData.append('userId', user.uid);
     fetch('https://formspree.io/f/meojbkee', {
       method: 'POST',
@@ -53,15 +54,15 @@ const Contact = () => {
               <div className="contact-form">
                 <div className="input-group">
                   <label htmlFor="name" className="input-label">Name</label>
-                  <input type="text" id="name" className="input-field" placeholder="Enter your name" required />
+                  <input type="text" id="name" name='name' className="input-field" placeholder="Enter your name" required />
                 </div>
                 <div className="input-group">
                   <label htmlFor="email" className="input-label">Email</label>
-                  <input type="email" id="email" className="input-field" placeholder="Enter your email" required />
+                  <input type="email" id="email" name='email' className="input-field" placeholder="Enter your email" required />
                 </div>
                 <div className="input-group">
                   <label htmlFor="message" className="input-label">Message</label>
-                  <textarea id="message" className="input-field textarea-field" placeholder="Enter your message" required></textarea>
+                  <textarea id="message" name="message" className="input-field textarea-field" placeholder="Enter your message" required></textarea>
                 </div>
                 <button className="submit-btn" type="submit">Send Message</button>
               </div>

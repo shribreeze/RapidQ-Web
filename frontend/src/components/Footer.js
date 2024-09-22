@@ -20,6 +20,7 @@ const Footer = () => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
+    formData.append('userName', user.displayName);
     formData.append('userId', user.uid);
     fetch('https://formspree.io/f/mnnadgld', {
       method: 'POST',
