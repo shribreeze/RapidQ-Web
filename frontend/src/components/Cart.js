@@ -10,7 +10,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
     const [userId, setUserId] = useState(null);
     const [shopId, setShopId] = useState(null);
     const [shopName, setShopName] = useState(null);
-    const [note, setNote] = useState(''); // New state for the note
+    const [note, setNote] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
         ).filter(cartItem => cartItem.quantity > 0);
 
         setCartItems(updatedCartItems);
-        await saveCartItems(updatedCartItems); // Update Firestore in real-time
+        await saveCartItems(updatedCartItems);
     };
 
     const placeOrder = async () => {
@@ -106,12 +106,12 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             let userName = null;
 
             if (user) {
-                userName = user.displayName; // Get user's display name from Firebase Auth
+                userName = user.displayName;
             }
 
             const itemsWithStatus = cartItems.map(item => ({
                 ...item,
-                item_status: 'Pending' // Add individual status to each item
+                itemStatus: 'Selected' // Add individual status to each item
             }));
             const totalAmount = itemsWithStatus.reduce((total, item) => total + (item.price * item.quantity), 0);
             const orderDocRef = doc(collection(db, 'orders')); // Generate Firestore auto ID

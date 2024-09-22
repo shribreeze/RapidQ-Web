@@ -45,7 +45,6 @@ const Contact = () => {
       <div className="contact-sections">
         {/* General Contact Form */}
         <div className="contact-form-section">
-          <h2 className="section-title">General Inquiry</h2>
           <p className="contact-description">
             We would love to hear from you! Feel free to reach out with any questions or feedback.
           </p>

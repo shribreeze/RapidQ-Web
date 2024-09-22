@@ -135,6 +135,17 @@
   cursor: pointer;
 }
 
+.removed-item {
+  color: red;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.removed-item-message {
+  color: red;
+  font-size: 0.9rem;
+}
+
 
 @media (max-width: 768px) {
   .orders-container {

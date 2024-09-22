@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
+import { setDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { collection, query, where, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import './Order.css';
@@ -93,19 +94,44 @@ const Orders = () => {
         setIsPopupOpen(true);
     };
 
+    
+
     const handlePaymentConfirmation = async (confirmation) => {
         if (confirmation === 'yes' && selectedOrderId) {
             try {
                 const orderRef = doc(db, 'orders', selectedOrderId);
-                await updateDoc(orderRef, {
-                    status: 'Paid',
-                });
+                const orderSnapshot = await getDoc(orderRef);
+                const orderData = orderSnapshot.data();
+    
+                // Filter items with itemStatus "Selected"
+                const selectedItems = orderData.items.filter(item => item.itemStatus === 'Selected');
+    
+                if (selectedItems.length > 0) {
+                    // Create the paid order data
+                    const paidOrderData = {
+                        ...orderData,
+                        items: selectedItems, // Only include selected items
+                        status: 'Paid',
+                        timestamp: new Date(),
+                    };
+    
+                    await setDoc(doc(db, 'paidOrders', selectedOrderId), paidOrderData);
+
+                    await updateDoc(orderRef, {
+                        status: 'Paid',
+                    });
+
+                    await deleteDoc(orderRef);
+                } else {
+                    console.error('No items selected for payment.');
+                }
             } catch (error) {
                 console.error('Error updating order status:', error.message);
             }
         }
         setIsPopupOpen(false);
     };
+    
 
     const renderOrders = (ordersList) => (
         <ul className="orders-list">
@@ -129,13 +155,27 @@ const Orders = () => {
                                 Pay Now
                             </button>
                         )}
+
+                        {order.status === 'Declined' && (
+                            <>
+                                <img src="/misc/cancelled.webp" style={{width:"100px"}}/>
+                                <p><strong>Reason:</strong> {order.declineReason}</p>
+                            </>
+                        )}
+
                     </div>
                     <ul>
                         {order.items.map((item, index) => (
-                            <li key={index}>
+                            
+                            <li key={index} className={`item ${item.itemStatus === 'Removed' ? 'removed-item' : ''}`}>
                                 <span><strong>Item:</strong> {item.name || 'Unknown Item'}</span>
-                                <span>Quantity: {item.quantity || 0}</span>
+                                <span>Qty: {item.quantity || 0}</span>
                                 <span>Price: ₹ {item.price || 0}</span>
+                                {item.itemStatus === 'Removed' && (
+                                    <>
+                                <p className="removed-item-message">Item not available</p>
+                                    </>
+                            )}
                             </li>
                         ))}
                     </ul>

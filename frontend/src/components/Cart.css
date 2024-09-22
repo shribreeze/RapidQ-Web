@@ -93,6 +93,13 @@
     font-weight: 500;
 }
 
+.note-input {
+    width: 100%;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: #f9d002;
+}
+
 .place-order {
     background-color: #f9d002;
     color: black;
