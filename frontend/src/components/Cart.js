@@ -10,6 +10,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
     const [userId, setUserId] = useState(null);
     const [shopId, setShopId] = useState(null);
     const [shopName, setShopName] = useState(null);
+    const [note, setNote] = useState(''); // New state for the note
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -108,7 +109,11 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 userName = user.displayName; // Get user's display name from Firebase Auth
             }
 
-            const totalAmount = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const itemsWithStatus = cartItems.map(item => ({
+                ...item,
+                item_status: 'Pending' // Add individual status to each item
+            }));
+            const totalAmount = itemsWithStatus.reduce((total, item) => total + (item.price * item.quantity), 0);
             const orderDocRef = doc(collection(db, 'orders')); // Generate Firestore auto ID
             const autoOrderId = orderDocRef.id; // Get the auto-generated ID from the reference
             const customOrderId = `${shopId}_${autoOrderId}`; // Combine shopId with auto ID
@@ -117,9 +122,10 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             await setDoc(doc(db, 'orders', customOrderId), {
                 userId,
                 userName,
-                items: cartItems,
+                items: itemsWithStatus,
                 shopId,
                 shopName,
+                note,
                 totalAmount,
                 status: 'Pending',
                 timestamp: Timestamp.now()
@@ -130,6 +136,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             setCartItems([]);
             setShopId(null);
             setShopName(null);
+            setNote(''); // Clear the note input
             await saveCartItems([]);
             navigate('/orders');
         } catch (error) {
@@ -164,6 +171,15 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 <div className="cart-total">
                     <p>Total: ₹{totalAmount}</p>
                 </div>
+
+                {/* New Textarea for Note */}
+                <textarea
+                    className="note-input"
+                    placeholder="Add a note for the shopkeeper"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                ></textarea>
+
                 <button className="place-order" onClick={handlePlaceOrder}>Confirm Order</button>
                 {error && <p className="error-message">{error}</p>}
             </div>
