@@ -2,7 +2,8 @@
   max-width: 900px;
   margin: 20px auto;
   padding: 30px;
-  background: linear-gradient(90deg, #fffdd1, #d2e1ff);
+  /* background: linear-gradient(90deg, #fffdd1, #d2e1ff);   */
+  background: linear-gradient(90deg, #fffdd1, #d6fde8);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Roboto', sans-serif;
