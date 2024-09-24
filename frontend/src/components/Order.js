@@ -20,8 +20,8 @@ const Orders = () => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 setUserId(user.uid);
-                fetchPendingOrders(user.uid);
-                fetchPaidOrders(user.uid);
+                fetchOrders(user.uid, 'orders', setOrders);
+                fetchOrders(user.uid, 'paidOrders', setPaidOrders);
             } else {
                 setUserId(null);
                 setOrders([]);
@@ -32,11 +32,11 @@ const Orders = () => {
         return () => unsubscribe();
     }, []);
 
-    const fetchPendingOrders = (userId) => {
+    const fetchOrders = (userId, collectionName, setOrderFunction) => {
         setLoading(true);
         try {
             const q = query(
-                collection(db, 'orders'),
+                collection(db, collectionName),
                 where('userId', '==', userId),
                 orderBy('timestamp', 'desc')
             );
@@ -47,91 +47,31 @@ const Orders = () => {
                     const orderData = docSnapshot.data();
                     fetchedOrders.push({ id: docSnapshot.id, ...orderData });
                 });
-                setOrders(fetchedOrders);
+                setOrderFunction(fetchedOrders);
                 setLoading(false);
             });
 
             return () => unsubscribe();
         } catch (error) {
-            console.error('Error fetching pending orders:', error.message);
-            setError(`Failed to fetch pending orders. Error: ${error.message}`);
+            console.error(`Error fetching ${collectionName}:`, error.message);
+            setError(`Failed to fetch ${collectionName}. Error: ${error.message}`);
             setLoading(false);
         }
     };
 
-    const fetchPaidOrders = (userId) => {
-        setLoading(true);
-        console.log('Fetching paid orders for userId:', userId);
-        try {
-            const q = query(
-                collection(db, 'paidOrders'),
-                where('userId', '==', userId),
-                orderBy('timestamp', 'desc')
-            );
-
-
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const fetchedPaidOrders = [];
-                querySnapshot.forEach((docSnapshot) => {
-                    const orderData = docSnapshot.data();
-                    fetchedPaidOrders.push({ id: docSnapshot.id, ...orderData });
-                });
-                console.log('Fetched paid orders:', fetchedPaidOrders);
-                setPaidOrders(fetchedPaidOrders);
-                setLoading(false);
-            });
-
-            return () => unsubscribe();
-        } catch (error) {
-            console.error('Error fetching paid orders:', error.message);
-            setError(`Failed to fetch paid orders. Error: ${error.message}`);
-            setLoading(false);
-        }
+    const calculateRemainingTime = (order) => {
+        const currentTime = Date.now();
+        const countdownEnd = order.timestamp.toMillis() + order.estimateTime * 60 * 1000;
+        const timeLeft = Math.floor((countdownEnd - currentTime) / 1000);
+        return timeLeft >= 0 ? timeLeft : -1;
     };
 
-    const handlePayNowClick = (orderId) => {
-        setSelectedOrderId(orderId);
-        setIsPopupOpen(true);
+    const formatTime = (time) => {
+        if (time < 0) return 'Time overdue';
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
-
-    
-
-    const handlePaymentConfirmation = async (confirmation) => {
-        if (confirmation === 'yes' && selectedOrderId) {
-            try {
-                const orderRef = doc(db, 'orders', selectedOrderId);
-                const orderSnapshot = await getDoc(orderRef);
-                const orderData = orderSnapshot.data();
-    
-                // Filter items with itemStatus "Selected"
-                const selectedItems = orderData.items.filter(item => item.itemStatus === 'Selected');
-    
-                if (selectedItems.length > 0) {
-                    // Create the paid order data
-                    const paidOrderData = {
-                        ...orderData,
-                        items: selectedItems, // Only include selected items
-                        status: 'Paid',
-                        timestamp: new Date(),
-                    };
-    
-                    await setDoc(doc(db, 'paidOrders', selectedOrderId), paidOrderData);
-
-                    await updateDoc(orderRef, {
-                        status: 'Paid',
-                    });
-
-                    await deleteDoc(orderRef);
-                } else {
-                    console.error('No items selected for payment.');
-                }
-            } catch (error) {
-                console.error('Error updating order status:', error.message);
-            }
-        }
-        setIsPopupOpen(false);
-    };
-    
 
     const renderOrders = (ordersList) => (
         <ul className="orders-list">
@@ -147,35 +87,51 @@ const Orders = () => {
                             <p><strong>Time:</strong> {order.timestamp.toDate().toLocaleString()}</p>
                             <p><strong>Note:</strong> {order.note}</p>
                         </div>
+
+                        {order.status === 'Paid' && (
+                            <p style={{ color: 'green' }}>
+                                Time remaining: {formatTime(calculateRemainingTime(order))}
+                            </p>
+                        )}
+
                         {order.status === 'Confirmed' && (
-                            <button
-                                className="view-order-button"
-                                onClick={() => handlePayNowClick(order.id)}
-                            >
-                                Pay Now
-                            </button>
+                            <div>
+                                <button
+                                    className="view-order-button"
+                                    onClick={() => handlePayNowClick(order.id)}
+                                >
+                                    Pay Now
+                                </button>
+                            </div>
                         )}
 
                         {order.status === 'Declined' && (
-                            <>
-                                <img src="/misc/cancelled.webp" style={{width:"100px"}}/>
-                                <p><strong>Reason:</strong> {order.declineReason}</p>
-                            </>
+                            
+                            <div className="Cancelled">
+                                <img src="/misc/cancelled.webp" className="cancelled-img" alt="Cancelled" />
+                            </div>
+                        )}
+                    </div>
+                    {order.status === 'Confirmed' && (
+                            <div>
+                                <p style={{color:"green"}}><strong style={{color:"green"}}>Estimate Time:</strong> {order.estimateTime} min</p>
+                            </div>
                         )}
 
-                    </div>
+                        {order.status === 'Declined' && (
+                                <div>
+                                    <p className="removed-item-message">Reason: {order.declineReason}</p>
+                                </div>
+                         )}
                     <ul>
                         {order.items.map((item, index) => (
-                            
                             <li key={index} className={`item ${item.itemStatus === 'Removed' ? 'removed-item' : ''}`}>
                                 <span><strong>Item:</strong> {item.name || 'Unknown Item'}</span>
                                 <span>Qty: {item.quantity || 0}</span>
                                 <span>Price: ₹ {item.price || 0}</span>
                                 {item.itemStatus === 'Removed' && (
-                                    <>
-                                <p className="removed-item-message">Item not available</p>
-                                    </>
-                            )}
+                                    <p className="removed-item-message">Item not available</p>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -184,27 +140,62 @@ const Orders = () => {
         </ul>
     );
 
-    if (loading) {
-        return <p className="loading-message">Loading orders...</p>;
-    }
+    const handlePayNowClick = (orderId) => {
+        setSelectedOrderId(orderId);
+        setIsPopupOpen(true);
+    };
 
-    if (error) {
-        return <p className="error-message">{error}</p>;
-    }
+    const handlePaymentConfirmation = async (confirmation) => {
+        if (confirmation === 'yes') {
+            try {
+                await updateDoc(doc(db, 'orders', selectedOrderId), {
+                    status: 'Paid',
+                });
+
+                const orderSnapshot = await getDoc(doc(db, 'orders', selectedOrderId));
+                const orderData = orderSnapshot.data();
+
+                await setDoc(doc(db, 'paidOrders', selectedOrderId), orderData);
+                await deleteDoc(doc(db, 'orders', selectedOrderId));
+                console.log('Payment confirmed, order moved to paidOrders collection.');
+            } catch (error) {
+                console.error('Error updating order status:', error.message);
+                setError(`Failed to update order status. Error: ${error.message}`);
+            }
+        }
+        setIsPopupOpen(false);
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setOrders((prevOrders) =>
+                prevOrders.map((order) => {
+                    if (order.status === 'Paid') {
+                        return { ...order, remainingTime: calculateRemainingTime(order) };
+                    }
+                    return order;
+                })
+            );
+        }, 1000); // Update every second
+
+        return () => clearInterval(interval); // Clean up on unmount
+    }, [orders]);
 
     return (
         <div className="orders-container">
+            {loading && <p>Loading...</p>}
+            {error && <p className="error-message">{error}</p>}
             <h2>Your Orders</h2>
-            <div id="navigation-cards">
+            <div id='navigation-cards'>
                 <button
-                    id="pending-orders"
+                    id='pending-orders'
                     className={`nav-card ${activeTab === 'pending' ? 'active' : ''}`}
                     onClick={() => setActiveTab('pending')}
                 >
                     Pending Orders
                 </button>
                 <button
-                    id="paid-orders"
+                    id='paid-orders'
                     className={`nav-card ${activeTab === 'paid' ? 'active' : ''}`}
                     onClick={() => setActiveTab('paid')}
                 >
@@ -212,18 +203,17 @@ const Orders = () => {
                 </button>
             </div>
 
-            {activeTab === 'pending' ? (
-                orders.length > 0 ? renderOrders(orders) : <p className="no-orders-message">No pending orders found.</p>
-            ) : (
-                paidOrders.length > 0 ? renderOrders(paidOrders) : <p className="no-orders-message">No paid orders found.</p>
-            )}
+            {activeTab === 'pending' && renderOrders(orders)}
+            {activeTab === 'paid' && renderOrders(paidOrders)}
 
             {isPopupOpen && (
                 <div className="popup">
                     <div className="popup-content">
+                        <h3>Payment Confirmation</h3>
                         <p>Have you done the payment?</p>
-                        <button onClick={() => handlePaymentConfirmation('yes')}>Yes</button>
-                        <button onClick={() => handlePaymentConfirmation('no')}>No</button>
+                        <button onClick={() => handlePaymentConfirmation('yes')} disabled={loading}>Yes</button>
+                        <button onClick={() => handlePaymentConfirmation('no')} disabled={loading}>No</button>
+                        <button onClick={() => setIsPopupOpen(false)}>Cancel</button>
                     </div>
                 </div>
             )}

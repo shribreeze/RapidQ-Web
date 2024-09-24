@@ -55,7 +55,7 @@
 }
 
 .about-content h2 {
-  color: #462B9C;
+  color: #285D41;
   margin-bottom: 1rem;
   font-size: 2rem;
   position: relative;
@@ -225,7 +225,7 @@ h2 + p {
 
 .whatWeDo {
   display: flex;
-  background-color: #d2e1ff;
+  background-color: #d6fde8;
   
 }
 
@@ -236,7 +236,7 @@ h2 + p {
 
 .ourValues {
   display: flex;
-  background-color: #d2e1ff;
+  background-color: #d6fde8;
 }
 
 @media (max-width: 768px) {

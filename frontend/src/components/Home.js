@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <>
             <div className='taglineCard'>
-                <p className='display-1' style={{fontFamily:"super black marker", color:"white"}}>Campus Cravings, Order Fast!</p>
+                <p className='display-1'>Campus Cravings, Order Fast!</p>
             </div>
             <Recommendation/>
             <ShopList/>
