@@ -146,21 +146,36 @@ const Orders = () => {
     };
 
     const handlePaymentConfirmation = async (confirmation) => {
-        if (confirmation === 'yes') {
+        if (confirmation === 'yes' && selectedOrderId) {
             try {
-                await updateDoc(doc(db, 'orders', selectedOrderId), {
-                    status: 'Paid',
-                });
-
-                const orderSnapshot = await getDoc(doc(db, 'orders', selectedOrderId));
+                const orderRef = doc(db, 'orders', selectedOrderId);
+                const orderSnapshot = await getDoc(orderRef);
                 const orderData = orderSnapshot.data();
+    
+                // Filter items with itemStatus "Selected"
+                const selectedItems = orderData.items.filter(item => item.itemStatus === 'Selected');
+    
+                if (selectedItems.length > 0) {
+                    // Create the paid order data
+                    const paidOrderData = {
+                        ...orderData,
+                        items: selectedItems, // Only include selected items
+                        status: 'Paid',
+                        timestamp: new Date(),
+                    };
+    
+                    await setDoc(doc(db, 'paidOrders', selectedOrderId), paidOrderData);
 
-                await setDoc(doc(db, 'paidOrders', selectedOrderId), orderData);
-                await deleteDoc(doc(db, 'orders', selectedOrderId));
-                console.log('Payment confirmed, order moved to paidOrders collection.');
+                    await updateDoc(orderRef, {
+                        status: 'Paid',
+                    });
+
+                    await deleteDoc(orderRef);
+                } else {
+                    console.error('No items selected for payment.');
+                }
             } catch (error) {
                 console.error('Error updating order status:', error.message);
-                setError(`Failed to update order status. Error: ${error.message}`);
             }
         }
         setIsPopupOpen(false);
