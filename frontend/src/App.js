@@ -14,6 +14,8 @@ import ShopDetail from './components/ShopDetail';
 import ScrollToTop from './components/ScrollToTop';
 import About from './components/About';
 import Contact from './components/Contact';
+import Recommendation from './components/Recommendation';
+import DishShops from './components/DishShops';
 // import UserOrders from './components/UserOrders'; 
 
 function App() {
@@ -82,6 +84,8 @@ function App() {
                         />
                     }
                 />
+                <Route path="/" element={<Recommendation />} />
+                <Route path="/dishes/:categoryName" element={<DishShops />} />
                 <Route path="/orders" element={<Order />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
