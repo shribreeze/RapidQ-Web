@@ -16,7 +16,8 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Recommendation from './components/Recommendation';
 import DishShops from './components/DishShops';
-// import UserOrders from './components/UserOrders'; 
+import { getAuth } from "firebase/auth";
+import { doc, getFirestore, setDoc, getDoc } from "firebase/firestore";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -33,30 +34,96 @@ function App() {
     const addToCart = (item) => {
         console.log("Current Cart Items:", cartItems);
         console.log("New Item:", item);
-
-        setCartItems(prevItems => {
-            if (prevItems.length > 0 && prevItems[0].shopId !== item.shopId) {
-                const replace = window.confirm("You can add and order items from one shop at a time. Do you want to replace the current items with those from this shop?");
-                if (replace) {
-                    console.log("Replacing cart items with:", item);
-                    return [{ ...item, quantity: item.quantity }];
+    
+        // Check if cart contains items from a different shop
+        if (cartItems.length > 0 && cartItems[0].shopId !== item.shopId) {
+            const replace = window.confirm(
+                "You can add and order items from one shop at a time. Do you want to replace the current items with those from this shop?"
+            );
+            
+            // If user cancels, return immediately to prevent any changes
+            if (!replace) {
+                console.log("Keeping existing cart items.");
+                return; // Exit the function without making changes if the user cancels
+            }
+            
+            console.log("Replacing cart items with items from the new shop.");
+            // Reset the cart to the new shop's item and update the Firebase cart document accordingly
+            const newCartItems = [{ ...item, quantity: item.quantity }];
+            setCartItems(newCartItems);
+            updateFirebaseCart(item, true); // Replace current cart in Firebase
+        } else {
+            // If it's the same shop, update quantity or add new item
+            setCartItems(prevItems => {
+                const existingItemIndex = prevItems.findIndex(cartItem => cartItem.id === item.id);
+                if (existingItemIndex >= 0) {
+                    console.log(`Item ${item.id} already exists in cart. Updating quantity.`);
+                    const updatedItems = [...prevItems];
+                    updatedItems[existingItemIndex].quantity += item.quantity;
+                    updateFirebaseCart(item, false, updatedItems); // Update Firebase with the modified cart
+                    return updatedItems;
                 } else {
-                    console.log("Keeping existing cart items.");
-                    return prevItems;
+                    console.log(`Item ${item.id} does not exist in cart. Adding new item.`);
+                    const updatedItems = [...prevItems, { ...item, quantity: item.quantity }];
+                    updateFirebaseCart(item, false, updatedItems); // Add new item in Firebase
+                    return updatedItems;
+                }
+            });
+        }
+    };    
+
+    const updateFirebaseCart = async (updatedCartItems = [], replaceCart = false) => {
+        const auth = getAuth();
+        const userId = auth.currentUser?.uid;
+
+        if (!userId) {
+            console.error('User ID not found. Ensure the user is signed in.');
+            return;
+        }
+
+        const cartDocRef = doc(getFirestore(), 'carts', userId);
+        try {
+            if (replaceCart) {
+                // Replace the entire cart with new items
+                await setDoc(cartDocRef, {
+                    items: updatedCartItems.reduce((acc, item) => {
+                        acc[item.id] = item;
+                        return acc;
+                    }, {}),
+                    shopId: updatedCartItems[0].shopId,
+                    shopName: updatedCartItems[0].shopName,
+                });
+            } else {
+                // Update Firebase with the modified cart
+                const cartDoc = await getDoc(cartDocRef);
+                if (cartDoc.exists()) {
+                    const existingCartData = cartDoc.data();
+                    const updatedItems = {
+                        ...existingCartData.items,
+                        ...updatedCartItems.reduce((acc, item) => {
+                            acc[item.id] = item;
+                            return acc;
+                        }, {})
+                    };
+                    await setDoc(cartDocRef, {
+                        items: updatedItems,
+                        shopId: updatedCartItems[0].shopId,
+                        shopName: updatedCartItems[0].shopName,
+                    }, { merge: true });
+                } else {
+                    await setDoc(cartDocRef, {
+                        items: updatedCartItems.reduce((acc, item) => {
+                            acc[item.id] = item;
+                            return acc;
+                        }, {}),
+                        shopId: updatedCartItems[0].shopId,
+                        shopName: updatedCartItems[0].shopName,
+                    });
                 }
             }
-
-            const existingItemIndex = prevItems.findIndex(cartItem => cartItem.id === item.id);
-            if (existingItemIndex >= 0) {
-                console.log(`Item ${item.id} already exists in cart. Updating quantity to ${prevItems[existingItemIndex].quantity + item.quantity}.`);
-                const updatedItems = [...prevItems];
-                updatedItems[existingItemIndex].quantity += item.quantity;
-                return updatedItems;
-            } else {
-                console.log(`Item ${item.id} does not exist in cart. Adding as new item.`);
-                return [...prevItems, { ...item, quantity: item.quantity }];
-            }
-        });
+        } catch (error) {
+            console.error('Error updating cart in Firebase:', error);
+        }
     };
 
     const removeFromCart = (item) => {

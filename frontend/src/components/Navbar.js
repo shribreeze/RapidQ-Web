@@ -70,7 +70,7 @@ const Navbar = () => {
                         </form>
                         {user ? (
                             <div className="d-flex align-items-center">
-                                <span className="navbar-text me-2 text-white">Hi {user.displayName}</span>
+                                <span className="navbar-text me-2 text-white">Hi, {user.displayName}</span>
                                 <button className="btn btn-outline-warning me-2 m-1" onClick={handleSignOut}>Sign Out</button>
                             </div>
                         ) : (

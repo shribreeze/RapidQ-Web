@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { collection, getDocs } from 'firebase/firestore';
@@ -8,13 +8,20 @@ import './ShopDetail.css';
 
 const ShopDetail = ({ addToCart }) => {
   const { shopId } = useParams();
+  const location = useLocation();
   const [shop, setShop] = useState(null);
   const [quantities, setQuantities] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
+  const queryParams = new URLSearchParams(location.search); 
+  const categoryFromQuery = queryParams.get('category') || 'All'; // Extract the category from URL query
+
   useEffect(() => {
+    // Set the initial category from query params when component loads
+    setSelectedCategory(categoryFromQuery);
+
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       setIsUserSignedIn(!!user);
@@ -59,7 +66,7 @@ const ShopDetail = ({ addToCart }) => {
     };
 
     fetchShopDetails();
-  }, [shopId]);
+  }, [shopId, categoryFromQuery]); // Re-run when shopId or category query changes
 
   const handleQuantityChange = (itemId, value) => {
     setQuantities((prevQuantities) => ({

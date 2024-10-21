@@ -1,8 +1,8 @@
+// DishShops Component - Modified
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { db } from '../firebase';  // Import your Firebase config
-import { collection, getDocs, setDoc, doc, getDoc, getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { useParams, useNavigate } from 'react-router-dom';
+import { db } from '../firebase'; 
+import { collection, getDocs } from 'firebase/firestore';
 import './DishShops.css';
 
 const DishShops = () => {
@@ -10,18 +10,9 @@ const DishShops = () => {
   const [shops, setShops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [quantities, setQuantities] = useState({});  // Track quantities for each item
-
-  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
-  const [isCartActive, setIsCartActive] = useState(false); // State for tracking cart activity
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const auth = getAuth();
-    auth.onAuthStateChanged((user) => {
-      setIsUserSignedIn(!!user);
-    });
-
     const fetchShops = async () => {
       try {
         const shopsRef = collection(db, 'shops');
@@ -61,81 +52,13 @@ const DishShops = () => {
     fetchShops();
   }, [categoryName]);
 
-  const handleQuantityChange = (itemId, value) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [itemId]: Math.max(1, (prevQuantities[itemId] || 1) + value),
-    }));
-  };
-
-  const handleAddToCart = async (item, shopId, shopName) => {
-    if (!isUserSignedIn) {
-      alert('Please sign in to add items to the cart.');
-      return;
-    }
-
-    const db = getFirestore();
-    const auth = getAuth();
-    const userId = auth.currentUser?.uid;
-
-    if (!userId) {
-      console.error('User ID not found. Ensure the user is signed in.');
-      return;
-    }
-
-    const quantity = quantities[item.id] || 1;
-
-    const cartItem = {
-      ...item,
-      shopId,
-      shopName,
-      quantity,
-      timestamp: new Date(),
-    };
-
-    try {
-      const cartDocRef = doc(db, 'carts', userId);
-      const cartDoc = await getDoc(cartDocRef);
-
-      if (cartDoc.exists()) {
-        const existingCartData = cartDoc.data();
-        const updatedItems = { ...existingCartData.items };
-
-        if (updatedItems[item.id]) {
-          updatedItems[item.id].quantity += quantity;
-        } else {
-          updatedItems[item.id] = cartItem;
-        }
-
-        await setDoc(cartDocRef, {
-          items: updatedItems,
-          shopId,
-          shopName,
-        }, { merge: true });
-      } else {
-        await setDoc(cartDocRef, {
-          items: { [item.id]: cartItem },
-          shopId,
-          shopName,
-        });
-      }
-
-      // Update local cart state
-      setCart((prevCart) => [...prevCart, cartItem]);
-      setQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [item.id]: 1,
-      }));
-      setIsCartActive(true); // Mark cart as active
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-    }
+  const handleShopClick = (shopId) => {
+    navigate(`/shop/${shopId}?category=${categoryName}`); // Passing category via URL query
   };
 
   return (
     <div id="dishShopsContainer">
       <h2 id="categoryHeading">Shops serving {categoryName}</h2>
-
       {loading ? (
         <div id="loadingSpinner">Loading...</div>
       ) : error ? (
@@ -144,37 +67,10 @@ const DishShops = () => {
         <div id="shopsList">
           {shops.length > 0 ? (
             shops.map((shop) => (
-              <div key={shop.id} className="shopCard">
+              <div key={shop.id} className="shopCard" onClick={() => handleShopClick(shop.id)}>
                 <h3>{shop.name}</h3>
                 <p>{shop.address}</p>
                 <p>{shop.description}</p>
-
-                <div className="itemsList">
-                  {shop.items.map((item) => (
-                    <div key={item.id} className="itemCard">
-                      <h4>{item.name}</h4>
-                      <p>{item.price}</p>
-
-                      <div>
-                        <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
-                        <input
-                          type="number"
-                          value={quantities[item.id] || 1}
-                          onChange={(e) => setQuantities((prevQuantities) => ({
-                            ...prevQuantities,
-                            [item.id]: Math.max(1, Number(e.target.value)),
-                          }))}
-                          min="1"
-                          id={`itemQuantityInput-${item.id}`}
-                        />
-                        <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
-                      </div>
-                      <button className="addToCartButton" onClick={() => handleAddToCart(item, shop.id, shop.name)}>
-                        Add to Cart
-                      </button>
-                    </div>
-                  ))}
-                </div>
               </div>
             ))
           ) : (
@@ -182,10 +78,6 @@ const DishShops = () => {
           )}
         </div>
       )}
-
-      <Link to="/cart" className={`linkToCart ${cart.length > 0 ? 'active' : ''}`}>
-        Go to Cart <img src="/ForwardArrow.png" alt="NextArrowLogo" width="35px" />
-      </Link>
     </div>
   );
 };
