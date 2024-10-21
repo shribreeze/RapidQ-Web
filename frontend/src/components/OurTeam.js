@@ -68,12 +68,13 @@ const OurTeam = () => {
             ref={sameerVideoRef}
             muted
             className="team-member-video"
+            preload="metadata"
           >
             <source src="/sameerVid2.mp4" type="video/mp4" />
           </video>
           <div className="team-member-info">
             <h3>Sameer Gautam</h3>
-            <p>Founder & Frontend Developer</p>
+            <p>Founder & Frontend Developer, Mobile App Developer</p>
           </div>
         </div>
 
@@ -83,6 +84,7 @@ const OurTeam = () => {
             ref={atharvVideoRef}
             muted
             className="team-member-video"
+            preload="metadata"
           >
             <source src="/atharvVid.mp4" type="video/mp4" />
           </video>
@@ -98,6 +100,7 @@ const OurTeam = () => {
             ref={divyanshuVideoRef}
             muted
             className="team-member-video"
+            preload="metadata"
           >
             <source src="/divyanshuVid.mp4" type="video/mp4" />
           </video>
