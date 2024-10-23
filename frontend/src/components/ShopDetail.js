@@ -214,7 +214,8 @@ const ShopDetail = ({ addToCart }) => {
       <Link to="/cart" className={`LinkToCart ${isCartActive ? 'active' : ''}`}>
         Go to Cart <img src='/ForwardArrow.png' alt='NextArrowLogo' width='35px' />
       </Link>
-    </div>
+
+    </div >
   );
 };
 

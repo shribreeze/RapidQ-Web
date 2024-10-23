@@ -86,6 +86,9 @@ const Orders = () => {
                             <p><strong>Total Amount:</strong> ₹ {order.totalAmount || 'N/A'}</p>
                             <p><strong>Time:</strong> {order.timestamp.toDate().toLocaleString()}</p>
                             <p><strong>Note:</strong> {order.note}</p>
+                            {order.status === 'Paid' && order.otp && (
+                                <p><strong>OTP:</strong> {order.otp}</p>
+                            )}
                         </div>
 
                         {order.status === 'Paid' && (
@@ -106,23 +109,23 @@ const Orders = () => {
                         )}
 
                         {order.status === 'Declined' && (
-                            
+
                             <div className="Cancelled">
                                 <img src="/misc/cancelled.webp" className="cancelled-img" alt="Cancelled" />
                             </div>
                         )}
                     </div>
                     {order.status === 'Confirmed' && (
-                            <div>
-                                <p style={{color:"green"}}><strong style={{color:"green"}}>Estimate Time:</strong> {order.estimateTime} min</p>
-                            </div>
-                        )}
+                        <div>
+                            <p style={{ color: "green" }}><strong style={{ color: "green" }}>Estimate Time:</strong> {order.estimateTime} min</p>
+                        </div>
+                    )}
 
-                        {order.status === 'Declined' && (
-                                <div>
-                                    <p className="removed-item-message">Reason: {order.declineReason}</p>
-                                </div>
-                         )}
+                    {order.status === 'Declined' && (
+                        <div>
+                            <p className="removed-item-message">Reason: {order.declineReason}</p>
+                        </div>
+                    )}
                     <ul>
                         {order.items.map((item, index) => (
                             <li key={index} className={`item ${item.itemStatus === 'Removed' ? 'removed-item' : ''}`}>
@@ -145,25 +148,33 @@ const Orders = () => {
         setIsPopupOpen(true);
     };
 
+    const generateOTP = () => {
+        return Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit OTP
+    };
+
     const handlePaymentConfirmation = async (confirmation) => {
         if (confirmation === 'yes' && selectedOrderId) {
             try {
                 const orderRef = doc(db, 'orders', selectedOrderId);
                 const orderSnapshot = await getDoc(orderRef);
                 const orderData = orderSnapshot.data();
-    
+
                 // Filter items with itemStatus "Selected"
                 const selectedItems = orderData.items.filter(item => item.itemStatus === 'Selected');
-    
+
                 if (selectedItems.length > 0) {
+                    // Generate a 4-digit OTP
+                    const otp = generateOTP();
+
                     // Create the paid order data
                     const paidOrderData = {
                         ...orderData,
                         items: selectedItems, // Only include selected items
                         status: 'Paid',
                         timestamp: new Date(),
+                        otp,//Add the otp
                     };
-    
+
                     await setDoc(doc(db, 'paidOrders', selectedOrderId), paidOrderData);
 
                     await updateDoc(orderRef, {
