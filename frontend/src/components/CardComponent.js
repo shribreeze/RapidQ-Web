@@ -1,7 +1,7 @@
 import React from 'react';
 import './CardComponent.css';
 
-const CardComponent = ({ imgSrc, altText, cardText, hoverInfo }) => {
+const CardComponent = ({ imgSrc, altText, cardText, hoverInfo, shopcount }) => {
   return (
     <div className="card-cp">
       <div className="card-img-container-cp">
@@ -13,6 +13,8 @@ const CardComponent = ({ imgSrc, altText, cardText, hoverInfo }) => {
       </div>
       <div className="card-body-cp">
         <p className="card-text-cp">{cardText}</p>
+        {/* Display the paid order count */}
+        <p className="card-text-cp"> Accepted Orders: {shopcount}</p>
       </div>
     </div>
   );

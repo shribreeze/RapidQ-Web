@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import CardComponent from './CardComponent';
 import './ShopList.css';
@@ -11,6 +11,18 @@ const ShopList = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+
+    // Function to fetch the count of accepted orders for a specific shop
+    const fetchPaidOrderCount = async (shopId) => {
+        const db = getFirestore();
+        const q = query(
+            collection(db, 'paidOrders'), // Assuming 'orders' is the collection
+            where('shopId', '==', shopId), // Filter by shopId
+        );
+
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.size; // Return the count of 'Paid' orders
+    };
 
     useEffect(() => {
         const fetchShops = async () => {
@@ -29,10 +41,14 @@ const ShopList = () => {
                             imgSrc = await getDownloadURL(imgRef);
                         }
 
+                        // Fetch paid order count for each shop
+                        const paidOrdersCount = await fetchPaidOrderCount(doc.id);
+
                         return {
                             id: doc.id,
                             ...data,
                             imgSrc,
+                            paidOrdersCount, // Add paid order count to shop data
                         };
                     })
                 );
@@ -44,8 +60,7 @@ const ShopList = () => {
                 setShops(filteredShops);
             } catch (error) {
                 console.error('Error fetching shops:', error);
-            }
-            finally {
+            } finally {
                 setLoading(false);
             }
         };
@@ -71,7 +86,8 @@ const ShopList = () => {
                                     imgSrc={shop.imgSrc}
                                     altText={shop.name}
                                     cardText={shop.name}
-                                    hoverInfo={`${shop.name}: ${shop.timing}`}
+                                    shopcount={shop.paidOrdersCount} // Pass paid order count
+                                    hoverInfo={`${shop.name}: ${shop.timing} `} // Add any extra info if necessary
                                 />
                             </Link>
                         </div>
