@@ -12,16 +12,15 @@ const ShopList = () => {
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 
-    // Function to fetch the count of accepted orders for a specific shop
     const fetchPaidOrderCount = async (shopId) => {
         const db = getFirestore();
         const q = query(
-            collection(db, 'paidOrders'), // Assuming 'orders' is the collection
-            where('shopId', '==', shopId), // Filter by shopId
+            collection(db, 'paidOrders'),
+            where('shopId', '==', shopId),
         );
 
         const querySnapshot = await getDocs(q);
-        return querySnapshot.size; // Return the count of 'Paid' orders
+        return querySnapshot.size;
     };
 
     useEffect(() => {
@@ -41,14 +40,13 @@ const ShopList = () => {
                             imgSrc = await getDownloadURL(imgRef);
                         }
 
-                        // Fetch paid order count for each shop
                         const paidOrdersCount = await fetchPaidOrderCount(doc.id);
 
                         return {
                             id: doc.id,
                             ...data,
                             imgSrc,
-                            paidOrdersCount, // Add paid order count to shop data
+                            paidOrdersCount,
                         };
                     })
                 );
@@ -86,8 +84,8 @@ const ShopList = () => {
                                     imgSrc={shop.imgSrc}
                                     altText={shop.name}
                                     cardText={shop.name}
-                                    shopcount={shop.paidOrdersCount} // Pass paid order count
-                                    hoverInfo={`${shop.name}: ${shop.timing} `} // Add any extra info if necessary
+                                    shopcount={shop.paidOrdersCount}
+                                    hoverInfo={`${shop.name}: ${shop.timing} `}
                                 />
                             </Link>
                         </div>

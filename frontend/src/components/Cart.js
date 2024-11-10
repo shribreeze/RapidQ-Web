@@ -95,6 +95,13 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
         await saveCartItems(updatedCartItems);
     };
 
+    const handleRemoveAllQuantity = async (item) => {
+        const updatedCartItems = cartItems.filter(cartItem => cartItem.name !== item.name);
+        
+        setCartItems(updatedCartItems);
+        await saveCartItems(updatedCartItems);
+    };
+
     const placeOrder = async () => {
         try {
             if (!cartItems.length) {
@@ -111,14 +118,13 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
 
             const itemsWithStatus = cartItems.map(item => ({
                 ...item,
-                itemStatus: 'Selected' // Add individual status to each item
+                itemStatus: 'Selected'
             }));
             const totalAmount = itemsWithStatus.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const orderDocRef = doc(collection(db, 'orders')); // Generate Firestore auto ID
-            const autoOrderId = orderDocRef.id; // Get the auto-generated ID from the reference
-            const customOrderId = `${shopId}_${autoOrderId}`; // Combine shopId with auto ID
+            const orderDocRef = doc(collection(db, 'orders')); 
+            const autoOrderId = orderDocRef.id;
+            const customOrderId = `${shopId}_${autoOrderId}`;
 
-            // Create a new document with the customOrderId
             await setDoc(doc(db, 'orders', customOrderId), {
                 userId,
                 userName,
@@ -132,11 +138,10 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
             });
             console.log('Order placed with ID:', orderDocRef.id);
 
-            // Clear the cart after placing an order
             setCartItems([]);
             setShopId(null);
             setShopName(null);
-            setNote(''); // Clear the note input
+            setNote('');
             await saveCartItems([]);
             navigate('/orders');
         } catch (error) {
@@ -165,6 +170,9 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                             <button className="remove-item" onClick={() => handleRemoveOneQuantity(item)}>
                                 Remove
                             </button>
+                            <button className="remove-All-item" onClick={() => handleRemoveAllQuantity(item)}>
+                                Clear All
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -172,7 +180,6 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                     <p>Total: ₹{totalAmount}</p>
                 </div>
 
-                {/* New Textarea for Note */}
                 <textarea
                     className="note-input"
                     placeholder="Add a note for the shopkeeper"

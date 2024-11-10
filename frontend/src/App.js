@@ -35,37 +35,33 @@ function App() {
         console.log("Current Cart Items:", cartItems);
         console.log("New Item:", item);
     
-        // Check if cart contains items from a different shop
         if (cartItems.length > 0 && cartItems[0].shopId !== item.shopId) {
             const replace = window.confirm(
                 "You can add and order items from one shop at a time. Do you want to replace the current items with those from this shop?"
             );
             
-            // If user cancels, return immediately to prevent any changes
             if (!replace) {
                 console.log("Keeping existing cart items.");
-                return; // Exit the function without making changes if the user cancels
+                return;
             }
             
             console.log("Replacing cart items with items from the new shop.");
-            // Reset the cart to the new shop's item and update the Firebase cart document accordingly
             const newCartItems = [{ ...item, quantity: item.quantity }];
             setCartItems(newCartItems);
-            updateFirebaseCart(item, true); // Replace current cart in Firebase
+            updateFirebaseCart(item, true);
         } else {
-            // If it's the same shop, update quantity or add new item
             setCartItems(prevItems => {
                 const existingItemIndex = prevItems.findIndex(cartItem => cartItem.id === item.id);
                 if (existingItemIndex >= 0) {
                     console.log(`Item ${item.id} already exists in cart. Updating quantity.`);
                     const updatedItems = [...prevItems];
                     updatedItems[existingItemIndex].quantity += item.quantity;
-                    updateFirebaseCart(item, false, updatedItems); // Update Firebase with the modified cart
+                    updateFirebaseCart(item, false, updatedItems);
                     return updatedItems;
                 } else {
                     console.log(`Item ${item.id} does not exist in cart. Adding new item.`);
                     const updatedItems = [...prevItems, { ...item, quantity: item.quantity }];
-                    updateFirebaseCart(item, false, updatedItems); // Add new item in Firebase
+                    updateFirebaseCart(item, false, updatedItems);
                     return updatedItems;
                 }
             });
@@ -84,7 +80,6 @@ function App() {
         const cartDocRef = doc(getFirestore(), 'carts', userId);
         try {
             if (replaceCart) {
-                // Replace the entire cart with new items
                 await setDoc(cartDocRef, {
                     items: updatedCartItems.reduce((acc, item) => {
                         acc[item.id] = item;
@@ -94,7 +89,6 @@ function App() {
                     shopName: updatedCartItems[0].shopName,
                 });
             } else {
-                // Update Firebase with the modified cart
                 const cartDoc = await getDoc(cartDocRef);
                 if (cartDoc.exists()) {
                     const existingCartData = cartDoc.data();

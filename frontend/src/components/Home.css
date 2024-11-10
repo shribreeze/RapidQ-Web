@@ -17,7 +17,7 @@
     bottom: -10px;
     background-image:
         radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 40%, rgba(255, 255, 255, 0) 100%),
-        url(../../public/food-4k.jpg);
+        url(../../public/homeBG2.jpg);
     /* Darkens the center, brightens the edges */
     background-size: cover;
     background-repeat: no-repeat;

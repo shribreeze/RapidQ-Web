@@ -16,10 +16,9 @@ const ShopDetail = ({ addToCart }) => {
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
   const queryParams = new URLSearchParams(location.search); 
-  const categoryFromQuery = queryParams.get('category') || 'All'; // Extract the category from URL query
+  const categoryFromQuery = queryParams.get('category') || 'All';
 
   useEffect(() => {
-    // Set the initial category from query params when component loads
     setSelectedCategory(categoryFromQuery);
 
     const auth = getAuth();
@@ -66,7 +65,7 @@ const ShopDetail = ({ addToCart }) => {
     };
 
     fetchShopDetails();
-  }, [shopId, categoryFromQuery]); // Re-run when shopId or category query changes
+  }, [shopId, categoryFromQuery]);
 
   const handleQuantityChange = (itemId, value) => {
     setQuantities((prevQuantities) => ({
