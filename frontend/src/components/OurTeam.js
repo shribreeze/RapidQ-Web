@@ -74,7 +74,7 @@ const OurTeam = () => {
             <source src="/sameerVid2.mp4" type="video/mp4" />
           </video> */}
           <img
-            src="/sameerImage.jpg"
+            src="/sameerImage.jpeg"
             alt="Sameer Gautam"
             className="team-member-image"
           />
@@ -96,7 +96,7 @@ const OurTeam = () => {
             <source src="/atharvVid.mp4" type="video/mp4" />
           </video> */}
           <img
-            src="/atharvImage.jpg"
+            src="/atharvImage.jpeg"
             alt="Atharv Virmani"
             className="team-member-image"
           />
