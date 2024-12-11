@@ -55,23 +55,29 @@ const OurTeam = () => {
 
   return (
     <div className="team-container" ref={teamSectionRef}>
-      <h1 className="team-heading">Meet the QuickQ Team</h1>
+      <h1 className="team-heading">Meet the RapidQ Team</h1>
       <p className="team-description">
-        The QuickQ team is composed of passionate innovators, developers, and customer service experts dedicated to making food ordering smarter. 
+        The RapidQ team is composed of passionate innovators, developers, and customer service experts dedicated to making food ordering smarter.
         Our team works tirelessly to ensure the app is constantly evolving and stays at the cutting edge of technology.
       </p>
-      
+
       <div className="team-lineup">
         {/* Sameer */}
         <div className={`team-member ${visible ? 'enter' : ''}`}>
-          <video
+          {/* Video section commented out */}
+          {/* <video
             ref={sameerVideoRef}
             muted
             className="team-member-video"
             preload="metadata"
           >
             <source src="/sameerVid2.mp4" type="video/mp4" />
-          </video>
+          </video> */}
+          <img
+            src="/sameerImage.jpg"
+            alt="Sameer Gautam"
+            className="team-member-image"
+          />
           <div className="team-member-info">
             <h3>Sameer Gautam</h3>
             <p>Founder & Frontend Developer, Mobile App Developer</p>
@@ -80,14 +86,20 @@ const OurTeam = () => {
 
         {/* Atharv */}
         <div className={`team-member ${visible ? 'enter' : ''}`}>
-          <video
+          {/* Video section commented out */}
+          {/* <video
             ref={atharvVideoRef}
             muted
             className="team-member-video"
             preload="metadata"
           >
             <source src="/atharvVid.mp4" type="video/mp4" />
-          </video>
+          </video> */}
+          <img
+            src="/atharvImage.jpg"
+            alt="Atharv Virmani"
+            className="team-member-image"
+          />
           <div className="team-member-info">
             <h3>Atharv Virmani</h3>
             <p>Co-Founder & Mobile App Developer</p>
@@ -96,14 +108,20 @@ const OurTeam = () => {
 
         {/* Divyanshu */}
         <div className={`team-member ${visible ? 'enter' : ''}`}>
-          <video
+          {/* Video section commented out */}
+          {/* <video
             ref={divyanshuVideoRef}
             muted
             className="team-member-video"
             preload="metadata"
           >
             <source src="/divyanshuVid.mp4" type="video/mp4" />
-          </video>
+          </video> */}
+          <img
+            src="/divyanshuImage.jpeg"
+            alt="Divyanshu Agarwal"
+            className="team-member-image"
+          />
           <div className="team-member-info">
             <h3>Divyanshu Agarwal</h3>
             <p>Co-Founder & Backend Developer</p>

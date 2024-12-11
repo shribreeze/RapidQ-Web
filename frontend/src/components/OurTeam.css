@@ -5,6 +5,32 @@
   background: linear-gradient(90deg, #fffdd1, #d6fde8);
 }
 
+
+
+.team-member-image {
+  width: 300px;
+  /* Set the width to a fixed value */
+  height: 350px;
+  /* Set the height to a fixed value */
+  object-fit: cover;
+  /* Ensures the image covers the area without distortion */
+  border-radius: 10px;
+  /* Rounded corners for a sleek look */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  /* Shadow for a better look */
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Smooth transition for hover effect */
+}
+
+.team-member-image:hover {
+  transform: scale(1.05);
+  /* Slightly enlarge the image on hover */
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+  /* Increase shadow on hover for a popping effect */
+}
+
+
 .team-heading {
   font-size: 2.5rem;
   color: black;
