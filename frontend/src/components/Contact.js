@@ -77,7 +77,7 @@ const Contact = () => {
         <div className="shopkeeper-registration-section">
           <h2 className="section-title">Shopkeeper Registration</h2>
           <p className="contact-description">
-            Are you a shopkeeper interested in joining RapidQ?<br />
+            Are you a shopkeeper interested in joining rapidq?<br />
             Register your shop by filling out our Google Form.
           </p>
           <a

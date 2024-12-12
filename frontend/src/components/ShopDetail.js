@@ -15,7 +15,7 @@ const ShopDetail = ({ addToCart }) => {
   const [isCartActive, setIsCartActive] = useState(false);
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
-  const queryParams = new URLSearchParams(location.search); 
+  const queryParams = new URLSearchParams(location.search);
   const categoryFromQuery = queryParams.get('category') || 'All';
 
   useEffect(() => {
