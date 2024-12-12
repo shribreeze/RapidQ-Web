@@ -34,17 +34,17 @@ function App() {
     const addToCart = (item) => {
         console.log("Current Cart Items:", cartItems);
         console.log("New Item:", item);
-    
+
         if (cartItems.length > 0 && cartItems[0].shopId !== item.shopId) {
             const replace = window.confirm(
                 "You can add and order items from one shop at a time. Do you want to replace the current items with those from this shop?"
             );
-            
+
             if (!replace) {
                 console.log("Keeping existing cart items.");
                 return;
             }
-            
+
             console.log("Replacing cart items with items from the new shop.");
             const newCartItems = [{ ...item, quantity: item.quantity }];
             setCartItems(newCartItems);
@@ -66,7 +66,7 @@ function App() {
                 }
             });
         }
-    };    
+    };
 
     const updateFirebaseCart = async (updatedCartItems = [], replaceCart = false) => {
         const auth = getAuth();

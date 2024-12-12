@@ -51,7 +51,7 @@ const Footer = () => {
                       <div className="col-12 col-md-4 col-lg-3 col-xl-2">
                         <div className="widget">
                           <a href="#!">
-                            <img src="/LogoMini.png" alt="RapidQ" height="100" />
+                            <img src="/LogoMini.png" alt="rapidq" height="100" />
                           </a>
                         </div>
                       </div>

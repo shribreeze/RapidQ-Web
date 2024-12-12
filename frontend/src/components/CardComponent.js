@@ -12,7 +12,7 @@ const CardComponent = ({ imgSrc, altText, cardText, hoverInfo, shopcount }) => {
         </div>
       </div>
       <div className="card-body-cp">
-        <p className="card-text-cp" style={{fontSize: '20px', fontWeight:'bold'}}>{cardText}</p>
+        <p className="card-text-cp" style={{ fontSize: '20px', fontWeight: 'bold' }}>{cardText}</p>
         {/* Display the paid order count */}
         <p className="card-text-cp">Orders in Queue: {shopcount}</p>
       </div>
