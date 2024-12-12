@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.0f9c7cbf.css",
-    "main.js": "/static/js/main.d44a8ad3.js",
+    "main.css": "/static/css/main.21d3cf70.css",
+    "main.js": "/static/js/main.f6fb015e.js",
     "static/media/authMainBg2.jpg": "/static/media/authMainBg2.48f62cf49200cb079fd1.jpg",
+    "static/media/homeBG2.jpg": "/static/media/homeBG2.c69fae894e683197fb7a.jpg",
     "static/media/tandooriChicken.jpg": "/static/media/tandooriChicken.5478b4ef5f388581708f.jpg",
     "static/media/sandwich.jpg": "/static/media/sandwich.b04e7d8c965214cb2b07.jpg",
     "static/media/food-4k.jpg": "/static/media/food-4k.ac8e582b8210426f34fe.jpg",
@@ -15,11 +16,11 @@
     "static/media/ChholeSamose.webp": "/static/media/ChholeSamose.517f97c6b3d16feda3e6.webp",
     "static/media/vegThali.avif": "/static/media/vegThali.9a8558c35aa06da7dcbf.avif",
     "index.html": "/index.html",
-    "main.0f9c7cbf.css.map": "/static/css/main.0f9c7cbf.css.map",
-    "main.d44a8ad3.js.map": "/static/js/main.d44a8ad3.js.map"
+    "main.21d3cf70.css.map": "/static/css/main.21d3cf70.css.map",
+    "main.f6fb015e.js.map": "/static/js/main.f6fb015e.js.map"
   },
   "entrypoints": [
-    "static/css/main.0f9c7cbf.css",
-    "static/js/main.d44a8ad3.js"
+    "static/css/main.21d3cf70.css",
+    "static/js/main.f6fb015e.js"
   ]
 }
