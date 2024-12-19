@@ -20,3 +20,6 @@ const db = getFirestore(app);  // Initialize Firestore
 const provider = new GoogleAuthProvider();
 
 export { auth, provider, db };  // Export db
+
+
+
