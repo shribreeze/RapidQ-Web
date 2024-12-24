@@ -97,7 +97,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
 
     const handleRemoveAllQuantity = async (item) => {
         const updatedCartItems = cartItems.filter(cartItem => cartItem.name !== item.name);
-        
+
         setCartItems(updatedCartItems);
         await saveCartItems(updatedCartItems);
     };
@@ -121,7 +121,7 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                 itemStatus: 'Selected'
             }));
             const totalAmount = itemsWithStatus.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const orderDocRef = doc(collection(db, 'orders')); 
+            const orderDocRef = doc(collection(db, 'orders'));
             const autoOrderId = orderDocRef.id;
             const customOrderId = `${shopId}_${autoOrderId}`;
 
