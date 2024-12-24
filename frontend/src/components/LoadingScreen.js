@@ -4,7 +4,7 @@ import './LoadingScreen.css'; // Create a CSS file for styling
 const LoadingScreen = () => {
     return (
         <div className="loading-screen">
-            <img src="/QQlogo.png" alt="rapidqueue Logo" className="logo" />
+            <img src="/RapidQ.png" alt="rapidqueue Logo" className="logo" />
         </div>
     );
 };
