@@ -4,7 +4,7 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDnDT3fL6zxbeoeXtVYzGZKn8TlFIglSkM",
-    authDomain: "quickq-17384.firebaseapp.com",
+    authDomain: "rapidq.in",
     databaseURL: "https://quickq-17384-default-rtdb.firebaseio.com",
     projectId: "quickq-17384",
     storageBucket: "quickq-17384.appspot.com",
