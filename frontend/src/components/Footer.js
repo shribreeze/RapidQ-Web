@@ -131,7 +131,7 @@ const Footer = () => {
                     <div className="row gy-4 gy-md-0 align-items-md-center">
                       <div className="col-xs-12 col-md-7 order-1 order-md-0">
                         <div className="copyright text-center text-md-start">
-                          &copy; 2024. All Rights Reserved.
+                          &copy; 2025. All Rights Reserved.
                         </div>
                       </div>
 

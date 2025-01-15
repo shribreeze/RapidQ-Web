@@ -1,5 +1,6 @@
 body {
-  font-family: ui-sans-serif, system-ui, sans-serif, "super black marker" "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* font-family: ui-sans-serif, system-ui, sans-serif, "super black marker" "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+  font-family: 'Raleway', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   margin: 0;
   padding: 0;
   background-color: #FFF7F7;

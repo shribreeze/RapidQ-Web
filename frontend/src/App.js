@@ -18,6 +18,7 @@ import Recommendation from './components/Recommendation';
 import DishShops from './components/DishShops';
 import { getAuth } from "firebase/auth";
 import { doc, getFirestore, setDoc, getDoc } from "firebase/firestore";
+import BackgroundShapes from './components/BackgroundShapes';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -132,6 +133,7 @@ function App() {
         <Router>
             <ScrollToTop />
             <Navbar />
+            <BackgroundShapes />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route
