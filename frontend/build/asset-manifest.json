@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.21d3cf70.css",
-    "main.js": "/static/js/main.ecb87c25.js",
+    "main.css": "/static/css/main.14b762b2.css",
+    "main.js": "/static/js/main.771d7b66.js",
     "static/media/authMainBg2.jpg": "/static/media/authMainBg2.48f62cf49200cb079fd1.jpg",
     "static/media/homeBG2.jpg": "/static/media/homeBG2.c69fae894e683197fb7a.jpg",
     "static/media/tandooriChicken.jpg": "/static/media/tandooriChicken.5478b4ef5f388581708f.jpg",
@@ -16,11 +16,11 @@
     "static/media/ChholeSamose.webp": "/static/media/ChholeSamose.517f97c6b3d16feda3e6.webp",
     "static/media/vegThali.avif": "/static/media/vegThali.9a8558c35aa06da7dcbf.avif",
     "index.html": "/index.html",
-    "main.21d3cf70.css.map": "/static/css/main.21d3cf70.css.map",
-    "main.ecb87c25.js.map": "/static/js/main.ecb87c25.js.map"
+    "main.14b762b2.css.map": "/static/css/main.14b762b2.css.map",
+    "main.771d7b66.js.map": "/static/js/main.771d7b66.js.map"
   },
   "entrypoints": [
-    "static/css/main.21d3cf70.css",
-    "static/js/main.ecb87c25.js"
+    "static/css/main.14b762b2.css",
+    "static/js/main.771d7b66.js"
   ]
 }

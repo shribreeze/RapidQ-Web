@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Link } from 'react-router-dom';
+import './Footer.css';
 
 const Footer = () => {
   const [user, setUser] = useState(null);
@@ -42,7 +43,7 @@ const Footer = () => {
     <>
       <footer className="footer py-3 py-xl-8 mt-2">
         <div className="container">
-          <div className="container-fluid bg-light">
+          <div className="container-fluid footerBg">
             <div className="row justify-content-center">
               <div className="col-12 col-md-11">
                 <section className="py-4 py-md-5 py-xl-8">
