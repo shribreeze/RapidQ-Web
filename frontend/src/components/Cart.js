@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, Timestamp, doc, setDoc, getDoc, getDocs, where, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
+import { Helmet } from 'react-helmet';
 
 const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
     const [error, setError] = useState(null);
@@ -156,6 +157,10 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
 
     return (
         <>
+            <Helmet>
+                <title>RapidQ - Your Cart</title>
+                <meta name="description" content="Review your selected items and proceed to checkout!" />
+            </Helmet>
             <div className="cart-container">
                 <h2 className="cart-header">Cart</h2>
                 <p className="shop-name">{shopName}</p>

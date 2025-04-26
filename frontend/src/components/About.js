@@ -1,9 +1,15 @@
 import React from 'react';
 import './About.css';
 import OurTeam from './OurTeam';
+import { Helmet } from 'react-helmet';
 
 const About = () => {
   return (
+    <>
+      <Helmet>
+          <title>RapidQ - About Us</title>
+          <meta name="description" content="Learn more about QuickQueue and how we work." />
+      </Helmet>
     <div className="about-container">
       <section className="about-banner">
         <h1>About RapidQ</h1>
@@ -90,6 +96,7 @@ const About = () => {
           Your feedback helps us grow and improve every day.
         </p> */}
     </div>
+    </>
   );
 };
 
