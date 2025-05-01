@@ -172,12 +172,14 @@ const Cart = ({ cartItems, removeFromCart, totalAmount, setCartItems }) => {
                                 <p className="item-quantity">Quantity: {item.quantity}</p>
                                 <p className="item-price">Price: ₹ {item.price * item.quantity}</p>
                             </div>
-                            <button className="remove-item" onClick={() => handleRemoveOneQuantity(item)}>
-                                Remove
-                            </button>
-                            <button className="remove-All-item" onClick={() => handleRemoveAllQuantity(item)}>
-                                Clear All
-                            </button>
+                            <div className="remove-item">
+                                <button className="remove-one-item" onClick={() => handleRemoveOneQuantity(item)}>
+                                    ➖
+                                </button>
+                                <button className="remove-All-item" onClick={() => handleRemoveAllQuantity(item)}>
+                                    Clear All
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -1,10 +1,10 @@
 import React from 'react';
-import './LoadingScreen.css'; // Create a CSS file for styling
+import './LoadingScreen.css';
 
 const LoadingScreen = () => {
     return (
         <div className="loading-screen">
-            <img src="/RapidQ.png" alt="rapidqueue Logo" className="logo" />
+            <img src="/RapidQ.webp" alt="RapidQ Logo" className="logo" />
         </div>
     );
 };

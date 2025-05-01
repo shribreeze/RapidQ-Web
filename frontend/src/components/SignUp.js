@@ -173,6 +173,7 @@ const SignUp = () => {
                           Password
                         </label>
                       </div>
+                      <small className="text-muted">Min 6 chars: uppercase, lowercase, number & special character</small>
                     </div>
                     <div className="col-12">
                       <div className="form-floating mb-3">

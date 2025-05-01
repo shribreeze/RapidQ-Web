@@ -3,16 +3,16 @@ import "./BackgroundShapes.css";
 
 const BackgroundShapes = () => {
   const images = [
-    "/BgImages/juice.png",
-    "/BgImages/burger.png",
-    "/BgImages/icecream1.png",
-    "/BgImages/pizza.svg",
-    "/BgImages/shakes.svg",
-    "/BgImages/samosa.png",
-    "/BgImages/wrap.svg",
-    "/BgImages/fries.png",
-    "/BgImages/pastry.svg",
-    "/BgImages/momos.png",
+    "/BgImages/juice.webp",
+    "/BgImages/burger.webp",
+    "/BgImages/icecream1.webp",
+    "/BgImages/pizza.webp",
+    "/BgImages/shakes.webp",
+    "/BgImages/samosa.webp",
+    "/BgImages/wrap.webp",
+    "/BgImages/fries.webp",
+    "/BgImages/pastry.webp",
+    "/BgImages/momos.webp",
   ];
 
   const elements = Array.from({ length: 10 }).map((_, index) => ({

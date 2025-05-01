@@ -37,11 +37,34 @@ const Navbar = () => {
         }
     };
 
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+          const toggle = document.querySelector('.navbar-toggler');
+          const menu = document.querySelector('#navbarTogglerDemo02');
+    
+          if (!toggle || !menu) return;
+    
+          const isClickInsideMenu = menu.contains(event.target);
+          const isClickOnToggle = toggle.contains(event.target);
+    
+          if (!isClickInsideMenu && !isClickOnToggle && menu.classList.contains('show')) {
+            toggle.click();
+          }
+        };
+    
+        document.addEventListener('click', handleOutsideClick);
+    
+        // Cleanup the event on unmount
+        return () => {
+          document.removeEventListener('click', handleOutsideClick);
+        };
+      }, []);
+
     return (
         <>
             <nav className="navbar sticky-top navbar-expand-lg navbar-dark" id='navbar'>
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/"><img src="/RapidQ.png" alt='rapidq' style={{ height: "60px" }} /></Link>
+                    <Link className="navbar-brand" to="/"><img src="/RapidQ.webp" alt='rapidq' style={{ height: "60px" }} /></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -51,7 +74,7 @@ const Navbar = () => {
                                 <Link className="nav-link active" aria-current="page" to="/outlets">Outlets</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/cart"> Cart<img src="/cart.png" alt='cart-pic' style={{ height: "30px" }} /></Link>
+                                <Link className="nav-link active" aria-current="page" to="/cart"> Cart<img src="/cart.webp  " alt='cart-pic' style={{ height: "30px" }} /></Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/orders">Orders</Link>

@@ -73,6 +73,28 @@
 }
 
 .remove-item {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-right: 1rem;
+}
+
+.remove-one-item {
+    background-color: #f9d002;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.remove-one-item:hover {
+    background-color: red;
+    transform: scale(1.05);
+}
+.remove-All-item {
     background-color: red;
     color: white;
     border: none;
@@ -83,11 +105,10 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.remove-item:hover {
+.remove-All-item:hover {
     background-color: #462B9C;
     transform: scale(1.05);
 }
-
 .cart-total {
     font-size: 1.5rem;
     color: #000;

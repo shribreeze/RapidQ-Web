@@ -8,6 +8,7 @@ import './Order.css';
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [paidOrders, setPaidOrders] = useState([]);
+    const [historyOrders, setHistoryOrders] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
@@ -22,10 +23,12 @@ const Orders = () => {
                 setUserId(user.uid);
                 fetchOrders(user.uid, 'orders', setOrders);
                 fetchOrders(user.uid, 'paidOrders', setPaidOrders);
+                fetchOrders(user.uid, 'historyOrders', setHistoryOrders);
             } else {
                 setUserId(null);
                 setOrders([]);
                 setPaidOrders([]);
+                setHistoryOrders([]);
             }
         });
 
@@ -228,10 +231,18 @@ const Orders = () => {
                 >
                     Paid Orders
                 </button>
+                <button
+                    id='orders-history'
+                    className={`nav-card ${activeTab === 'completed' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('completed')}
+                >
+                    Orders History
+                </button>
             </div>
 
             {activeTab === 'pending' && renderOrders(orders)}
             {activeTab === 'paid' && renderOrders(paidOrders)}
+            {activeTab === 'completed' && renderOrders(historyOrders)}
 
             {isPopupOpen && (
                 <div className="popup">

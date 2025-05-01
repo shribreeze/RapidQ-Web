@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -10;
     pointer-events: none;
     overflow: hidden;
   }
@@ -13,10 +13,11 @@
     position: absolute;
     bottom: -100px; /* Start just below the screen */
     left: var(--left-offset); /* Use CSS variable for horizontal placement */
-    width: 50px; /* Adjust as needed */
+    width: 40px; /* Adjust as needed */
     height: auto;
     animation: floatUp var(--animation-duration) linear var(--animation-delay) infinite;
     opacity: 0.8;
+    filter: blur(1px);
   }
   
   /* Animation for moving images from bottom to top */

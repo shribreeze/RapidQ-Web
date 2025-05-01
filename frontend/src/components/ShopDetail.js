@@ -14,6 +14,8 @@ const ShopDetail = ({ addToCart }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isCartActive, setIsCartActive] = useState(false);
   const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+  const [addedItemId, setAddedItemId] = useState(null);
+
 
   const queryParams = new URLSearchParams(location.search);
   const categoryFromQuery = queryParams.get('category') || 'All';
@@ -132,6 +134,10 @@ const ShopDetail = ({ addToCart }) => {
         [item.id]: 1,
       }));
       setIsCartActive(true);
+
+      setAddedItemId(item.id);
+      setTimeout(() => setAddedItemId(null), 1000);
+
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
@@ -200,7 +206,7 @@ const ShopDetail = ({ addToCart }) => {
                       />
                       <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
                       <div className='mx-4'>
-                        <button className="add-to-cart-button" onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                        <button className="add-to-cart-button" onClick={() => handleAddToCart(item)}>{addedItemId === item.id ? '✔ Added' : 'Add to Cart'}</button>
                       </div>
                     </div>
                   </div>
