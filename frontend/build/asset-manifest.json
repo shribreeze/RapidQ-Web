@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.338e1aba.css",
-    "main.js": "/static/js/main.52655687.js",
+    "main.css": "/static/css/main.26f450e0.css",
+    "main.js": "/static/js/main.e19b4a01.js",
     "static/media/authMainBg2.jpg": "/static/media/authMainBg2.48f62cf49200cb079fd1.jpg",
-    "static/media/homeBG2.jpg": "/static/media/homeBG2.c69fae894e683197fb7a.jpg",
-    "static/media/tandooriChicken.jpg": "/static/media/tandooriChicken.5478b4ef5f388581708f.jpg",
-    "static/media/sandwich.jpg": "/static/media/sandwich.b04e7d8c965214cb2b07.jpg",
+    "static/media/homeBG.webp": "/static/media/homeBG.095277d47c9f40ff75b4.webp",
     "static/media/food-4k.jpg": "/static/media/food-4k.ac8e582b8210426f34fe.jpg",
-    "static/media/friedRice.jpg": "/static/media/friedRice.10b932f452f17c5b7183.jpg",
-    "static/media/noodles.jpg": "/static/media/noodles.8db79341d9d6e1e968ed.jpg",
-    "static/media/burger.jpg": "/static/media/burger.6858bbd182d8579bcaea.jpg",
-    "static/media/omelette.jpg": "/static/media/omelette.b626f22677b294f03387.jpg",
-    "static/media/roll.jpg": "/static/media/roll.dcd585336b05a4ff8850.jpg",
-    "static/media/shakes.jpg": "/static/media/shakes.3f74637cfed670533ea0.jpg",
-    "static/media/ChholeSamose.webp": "/static/media/ChholeSamose.517f97c6b3d16feda3e6.webp",
-    "static/media/vegThali.avif": "/static/media/vegThali.9a8558c35aa06da7dcbf.avif",
+    "static/media/tandooriChicken.webp": "/static/media/tandooriChicken.b6f0ab4d4c59ba62491b.webp",
+    "static/media/sandwich.webp": "/static/media/sandwich.000dda0a6544eb11a369.webp",
+    "static/media/friedRice.webp": "/static/media/friedRice.e559c54f548bd5c48c3b.webp",
+    "static/media/omelette.webp": "/static/media/omelette.9158dacc50fd705172ca.webp",
+    "static/media/noodles.webp": "/static/media/noodles.bb94240870ec7b4cc089.webp",
+    "static/media/burger.webp": "/static/media/burger.a5e4bb1a88ac1ecabb74.webp",
+    "static/media/vegThali.webp": "/static/media/vegThali.6662a6129bdb63b5d381.webp",
+    "static/media/ChholeSamose.webp": "/static/media/ChholeSamose.76378e05c4b272f1b9b8.webp",
+    "static/media/roll.webp": "/static/media/roll.81ddddfbfc9423566661.webp",
+    "static/media/shakes.webp": "/static/media/shakes.3d8f5351c025c0b4734f.webp",
     "index.html": "/index.html",
-    "main.338e1aba.css.map": "/static/css/main.338e1aba.css.map",
-    "main.52655687.js.map": "/static/js/main.52655687.js.map"
+    "main.26f450e0.css.map": "/static/css/main.26f450e0.css.map",
+    "main.e19b4a01.js.map": "/static/js/main.e19b4a01.js.map"
   },
   "entrypoints": [
-    "static/css/main.338e1aba.css",
-    "static/js/main.52655687.js"
+    "static/css/main.26f450e0.css",
+    "static/js/main.e19b4a01.js"
   ]
 }
